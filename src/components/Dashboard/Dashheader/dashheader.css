@@ -1,0 +1,410 @@
+/* General dashheader Styles */
+.dashheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;  /* Fix the dashheader at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;  /* Ensure it stays above other content */
+   
+}
+
+/* Body content needs to adjust to the fixed dashheader */
+body {
+    margin-top: 80px;  /* Adjust this value based on dashheader height */
+}
+
+.dashheader .navigationscreens {
+    display: flex;
+    justify-content: center; /* Center the items */
+    flex: 1; /* Take up all available space */
+}
+
+
+/* Logo */
+
+.dashheader .websitelogo img {
+    width: 150px;  /*increasing the image */
+    height: auto;
+   
+}
+
+/* Navigation Links */
+.dashheader .navigationscreens a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: #333;
+    font-weight: 500;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.dashheader .navigationscreens a:hover {
+    color: orange;
+}
+
+/* Large Screen Navigation */
+.dashheader .large-screen {
+    display: flex;
+}
+
+/* Mobile Menu */
+.dashheader .mobile-menu {
+    display: none;
+}
+
+.dashheader .menu-toggle {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dashheader .side-navigation {
+ 
+        position: fixed;
+        top: 8%;
+        left: 40%;
+        width: 200px; /* Adjust based on your design */
+        height:auto;
+        background-color: #fff; /* Set your background color */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: for a little shadow effect */
+        padding-top: 20px; /* Adjust based on your needs */
+        z-index: 1000; /* Ensure it stays on top */
+        /* border: 2px solid black; */
+        padding-bottom: 10px;
+      }
+
+
+      @media (max-width:768px) {
+        .dashheader .side-navigation{
+            top: 8%;
+        left: 61%;
+        }
+      }
+      
+
+      @media (max-width:480px) {
+        .dashheader .side-navigation{
+            top: 8%;
+        left: 50%;
+        }
+      }
+      
+
+
+.dashheader .side-navigation a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dashheader .side-navigation a:hover {
+    background-color: orange;
+    color: #fff;
+    border-radius: 3px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .dashheader .large-screen {
+        display: none;
+    }
+    .dashheader .mobile-menu {
+        display: block;
+    }
+}
+
+/* in small screens logo should be center  */
+/* Responsive Design */
+/* @media screen and (max-width: 768px) {
+    /* .dashheader .large-screen {
+        display: none;
+    }
+    .dashheader .mobile-menu {
+        display: block;
+    } */
+
+    /* Center logo in mobile/tablet */
+    /* .dashheader .websitelogo {
+        display: flex;
+        justify-content: center; 
+        flex: 1; 
+    } */
+/* } */
+/* in small screens logo should be center code completed */
+
+/* Close button for side navigation */
+.dashheader .side-navigation .close-menu {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #333;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+   
+  }
+  
+  .dashheader .side-navigation .close-menu:hover {
+    color: orange;
+  }
+  
+  /* Close button for side navigation */
+.dashheader .side-navigation .close-menu {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #333;
+    position: absolute;
+    top: 0px; /* Position the close button */
+    
+    right: 15px;
+    cursor: pointer;
+    
+}
+
+.dashheader .side-navigation .close-menu:hover {
+    color: orange;
+}
+
+/* Side navigation items */
+.dashheader .side-navigation a {
+    display: block;
+    padding: 10px 15px; /* Adequate padding for better spacing */
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 15px; /* Adds space between each item */
+}
+
+/* Add more space between the close button and the first link (Home) */
+.dashheader .side-navigation a:first-child {
+    margin-top: 50px; /* Increased space from the close button */
+}
+
+/* Hover effect on navigation links */
+.dashheader .side-navigation a:hover {
+    background-color: orange;
+    color: #fff;
+    border-radius: 3px;
+}
+
+
+
+
+.logout-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    background-color: rgba(0, 0, 0, 0.7); /* Transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure the popup is on top of other content */
+  }
+  
+  .popup-content {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .popup-actions {
+    margin-top: 20px;
+  }
+  
+  .popup-actions button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #ed712b;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .popup-actions button:hover {
+    background-color: #ed712b;
+  }
+  
+
+
+
+
+ /* Enhanced Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    animation: fadeInOverlay 0.4s ease-in-out;
+}
+
+/* Popup Content */
+.popup-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Heading */
+.popup-content h2 {
+    margin-bottom: 1.8rem;
+    text-align: center;
+    color: #ed712b;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    word-wrap: break-word;
+}
+
+/* Labels */
+.popup-content label {
+    display: block;
+    margin: 1rem 0 0.3rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Inputs */
+.popup-content input[type="text"],
+.popup-content input[type="tel"],
+.popup-content input[type="file"] {
+    width: 90%;
+    padding: 0.7rem;
+    margin-top: 0.2rem;
+    border: 2px solid #dad6d4;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
+}
+
+.popup-content input[type="text"]:focus,
+.popup-content input[type="tel"]:focus,
+.popup-content input[type="file"]:focus {
+    border-color: #333;
+    box-shadow: 0 0 8px rgba(237, 113, 43, 0.5);
+    background-color: #fff;
+}
+
+/* Buttons Container */
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.8rem;
+    gap: 1rem;
+}
+
+/* Button Styles */
+.popup-buttons button {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 48%;
+}
+
+/* Submit Button */
+.popup-buttons .submit-button {
+    background-color: #ed712b;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
+}
+
+.popup-buttons .submit-button:hover {
+    background-color: #d46025;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Cancel Button */
+.popup-buttons .cancel-button {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: 600;
+}
+
+.popup-buttons .cancel-button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+/* Submit Button */
+.popup-buttons .submit-button {
+    background-color: #ed712b;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-buttons .submit-button:hover {
+    background-color: #d46025;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Cancel Button */
+.popup-buttons .cancel-button {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: 600;
+}
+
+.popup-buttons .cancel-button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+
+/* Placeholder Styling */
+.popup-content input::placeholder {
+    color: #888;
+    /* font-style: italic; */
+}
+
+
+

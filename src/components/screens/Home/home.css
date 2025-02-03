@@ -1,0 +1,458 @@
+/* home container */
+.home-container {
+  padding: 0px;
+}
+
+button{
+  cursor: pointer !important;
+}
+
+/* home banner */
+.homelaptopbanner1 {
+  background-image: url('./../../../assests/images/web_banner3.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 0px;
+  /* border: 2px solid black; */
+  display: none;
+  width: 100%;
+  height: 62vh;
+  margin: 0%;
+}
+
+/* Show homehomebanner1 only on laptops (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .homelaptopbanner1 {
+    display: block;
+  }
+}
+
+/* Hero Section */
+.homehero-section {
+  background-image: url('./../../../assests/images/web_banner3.jpg');
+  background-size: cover;
+  background-position: center;
+  color: rgb(250, 246, 246);
+  text-align: center;
+  padding: 100px 20px;
+  /* border: 2px solid black; */
+  width: 93%;
+  height: 20vh;
+}
+
+/* Adjust homehero-section background only for mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .homehero-section {
+    background-image: url('./../../../assests/images/web_banner3.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 91%;
+    height: 10vh;
+    padding: 60px 20px;
+    color: white;
+    
+    
+  }
+.homeherocontent1{
+  height: 6vh !important;
+  
+  width: 60% !important;
+  
+ 
+} 
+
+.homehero-content{
+  margin-top: 12%;
+}
+  .homeherocontent1 h2{
+      font-size: 0.5rem;
+      margin-bottom: 1% !important;
+      
+  }
+  .homeherocontent1 p{
+    font-size: 0.5rem;
+    display: none;
+  }
+  .homecta-btn{
+    padding: 2px 5px;
+    font-size: 0.6rem;
+    margin-top: 0%;
+  }
+  
+}
+
+/* Hide homehero-section on larger screens */
+@media (min-width: 1024px) {
+  .homehero-section {
+    display: none;
+  }
+
+  /* fontsize content for laptop */
+ .homehero-contentlaptop h2{
+  font-size:2rem;
+ }
+}
+
+
+
+.homehero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* alignment for homehero-content */
+.homehero-contentlaptop{
+  position: absolute; /* Or relative, depending on your need */
+  top: 50%;    /* Move from the top */
+  left: 20px;   /* Move from the left */
+  right: 20px;  /* Move from the right */
+  bottom: 20px; /* Move from the bottom */
+  text-align: center;
+}
+.homehero-content {
+  position: absolute; /* Or relative, depending on your need */
+  top: 20%;    /* Move from the top */
+  left: 20px;   /* Move from the left */
+  right: 20px;  /* Move from the right */
+  bottom: 20px; /* Move from the bottom */
+  text-align: center;
+  
+}
+.homeherocontent1{
+  border: 1px solid white;
+  height: 13vh;
+  background-color: rgb(0, 0, 0,0.5);
+  margin-top: 22% !important;
+  width: 80%;
+  margin: auto;
+  border-radius: 5px;
+
+}
+.homeherocontent1 h2{
+  font-size: 1rem;
+  /* border: 2px solid white; */
+  margin-top: 0.8%;
+  margin-bottom: 0%;
+}
+.homeherocontent1 p{
+  font-size: 1rem;
+  margin-top: 0.5%;
+  margin-bottom: 1.8%;
+}
+@media (max-width: 480px) {
+  
+
+  .homehero-content {
+    position: absolute; /* Or relative, depending on your need */
+    top: 10%;    /* Move from the top */
+    left: 20px;   /* Move from the left */
+    right: 20px;  /* Move from the right */
+    bottom: 20px; /* Move from the bottom */
+    text-align: center;
+  }
+  
+  
+}
+
+
+
+
+
+
+
+
+
+.homecta-btn {
+  padding: 3px 8px;
+  background-color: #ff7f00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+ margin-bottom: 0%;
+  
+}
+
+.homecta-btn:hover {
+  background-color: #e67600;
+}
+
+/* Featured Properties */
+.homefeatured-properties {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.homefeatured-properties h2 {
+  font-size: 2rem;
+}
+
+.homeproperties-list {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.homeproperty-card {
+  width: 250px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.homeproperty-card img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.homeproperty-card h3 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.homeproperty-card p {
+  font-size: 1.2rem;
+  color: #ff7f00;
+}
+
+.homedetails-btn {
+  padding: 10px;
+  background-color: #ff7f00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.homedetails-btn:hover {
+  background-color: #e67600;
+}
+
+/* About Us Section */
+.homeabout-us {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.homeabout-us h2 {
+  font-size: 2rem;
+}
+
+.homeabout-us p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Contact Us Section */
+.homecontact-us {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.homecontact-us h2 {
+  font-size: 2rem;
+}
+
+.homecontact-us p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Styling for the filter bar */
+.homefilter-bar {
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(0, 0, 0,0.5); /* Clean white background */
+  padding: 20px 30px; /* More space for a modern look */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  width: 55%;
+  margin: 150px auto; /* Centered and some space on top */
+  border: 1px solid #ddd; /* Soft border around the bar */
+}
+.homefliter1 h2{
+ margin-top: 0%;
+  /* border: 2px solid white; */
+  margin-bottom: 0%;
+}
+.homefliter1 p{
+  margin-top: 0.5%;
+  /* border: 2px solid white; */
+  /* margin-bottom: 0.5%; */
+}
+/* Styling for each dropdown */
+.homefilter-select {
+  padding: 12px 15px; /* Larger padding for better feel */
+  font-size: 1rem;
+  margin: 0 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(243, 241, 241, 0.8) ; /* Light background */
+  transition: all 0.3s ease; /* Smooth transition on hover */
+  cursor: pointer;
+  color: rgb(5, 5, 5);
+  
+}
+
+/* Styling for when you hover over the dropdown */
+.homefilter-select:hover {
+  border-color: #ff7f00;
+
+}
+
+/* Styling for the search button */
+.homesearch-btn {
+  padding: 12px 25px; /* Slightly larger button */
+  background-color: #ff7f00;
+  color: white;
+  font-size: 1.1rem; /* Slightly larger text */
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer !important;
+  transition: all 0.3s ease; /* Smooth hover transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow on button */
+}
+
+/* Change background color when hovering over the search button */
+.homesearch-btn:hover {
+  background-color: #e67600;
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 480px) {
+  .homefilter-bar {
+    flex-direction: column;
+    align-items: stretch; /* Stretch items to full width */
+    padding: 15px 20px; /* Slightly smaller padding */
+    width: 90%; /* Take more width on mobile */
+  
+  }
+  
+  .homefilter-select {
+    width: 100%;
+    margin-bottom: 15px; /* More space between dropdowns */
+  }
+
+  .homesearch-btn {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+}
+/* Initially hide on large screens (laptops, desktops) */
+.homeflitermobile {
+  display: none;
+}
+
+/* Display on small screens like tablets and mobiles */
+@media (max-width: 768px) {
+  .homeflitermobile {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .homefilter-bar {
+    flex-direction: column;
+    align-items: center; /* Stack items vertically */
+    padding: 10px 30px; /* Adjust padding for smaller screens */
+    width: 80%; /* Take more width on smaller screens */
+  }
+
+  .homefilter-select {
+    width: 100%; /* Make dropdowns take full width */
+    margin-bottom: 15px; /* Add spacing between dropdowns */
+  }
+
+  .homesearch-btn {
+    width: 100%; /* Make the search button full width */
+    margin-top: 10px; /* Add spacing above the button */
+    cursor: pointer;
+   
+  }
+  @media (max-width: 768px) {
+    .homefilter-select {
+      z-index: 10; /* Bring the dropdown to the front */
+      position: relative; /* Ensure dropdown appears above other elements */
+    }
+  }
+  
+
+}
+
+.homelocations {
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+}
+
+.homelocationsheadings h2 {
+  font-size: 28px;
+  color: #333;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.homelocationsimage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 images in a row on larger screens */
+  gap: 20px;
+  justify-items: center;
+}
+
+.homelocationsimage img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2); */
+  transition: transform 0.3s ease-in-out;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.homelocationsimage img:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1024px) { /* For tablets and smaller screens */
+  .homelocationsimage {
+    grid-template-columns: repeat(2, 1fr); /* 2 images in a row */
+  }
+
+  .homelocationsimage img {
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) { /* For mobile screens */
+  .homelocationsimage {
+    grid-template-columns: repeat(2, 1fr); /* 2 images in a row */
+  }
+
+  .homelocationsimage img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) { /* For mobile screens */
+  .homelocationsimage {
+    grid-template-columns: repeat(2, 1fr); /* 2 images in a row */
+  }
+
+  .homelocationsimage img {
+    height: 45px;
+   /* border: 2px solid black; */
+   margin-bottom: 0%;
+   margin-top: 0%;
+  }
+}
+
+
+

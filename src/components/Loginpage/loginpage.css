@@ -1,0 +1,202 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('./../../assests/images/loginbackgroundimage2.jpg') no-repeat center center;
+    background-size: cover;
+    width: 100%;
+    margin-top: -5.9%;
+}
+
+/* Ensuring the full background image is visible on tablets */
+@media (max-width: 1024px) {
+    .login-container {
+        background-size: cover; /* Keep full background */
+        background-position: center;
+    }
+}
+
+/* Mobile view adjustments */
+@media (max-width: 600px) {
+    .login-container {
+        background-size: cover; /* Ensure the background fully covers the screen */
+        background-position: center;
+        height: 100vh; /* Full height to cover mobile screens */
+      
+    }
+
+    .login-box {
+        width: 90%;
+        padding: 1.5rem;
+        backdrop-filter: blur(10px); /* Keeps readability */
+    }
+}
+
+/* Login Box Styling */
+.login-box {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(254, 132, 1, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.login-title {
+    margin-bottom: 1rem;
+    font-size: 26px;
+    color: orange;
+    font-weight: bold;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.login-input:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(255, 126, 95, 0.7);
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width:768px) {
+    .login-container{
+        margin-top: -12%;
+        /* border: 2px solid black;  */
+    }
+}
+
+
+@media (max-width:480px) {
+    .login-container{
+        margin-top: -22%;
+        /* border: 2px solid black; */
+    }
+    .login-box{
+      /* border: 2px solid black; */
+      width: 80%;
+    }
+}
+
+.forgot-password {
+    margin-top: 10px;
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .forgot-password:hover {
+    color: orange;
+  }
+  
+
+  .forgot-password {
+    margin-top: 10px;
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .forgot-password:hover {
+    color: orange;
+  }
+  
+  .forgot-password-form {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+
+  /* OTP Button Styling */
+.otp-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+  }
+  
+  .otp-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+  }
+  
+  /* Styling for OTP input field */
+  .login-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .login-input:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(255, 126, 95, 0.7);
+  }
+  .resend-otp {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .resend-otp span {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .resend-otp span:hover {
+    text-decoration: underline;
+  }  
