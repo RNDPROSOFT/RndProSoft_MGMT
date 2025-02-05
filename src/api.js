@@ -97,6 +97,18 @@ async function addDeveloper(body) {
 }
 
 
+async function addTowers(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.addTowers,body,{
+                headers: { 
+                    'Content-Type': 'multipart/form-data'
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
 
 
 
@@ -106,7 +118,8 @@ const api={
     updatePassword,
     addManagement,
     logOut,
-    addDeveloper
+    addDeveloper,
+    addTowers
 }
 
 

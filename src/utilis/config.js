@@ -10,7 +10,8 @@ const apiName={
     forgotPassword:"api/management/mgmt/forget/password",
     updatePassword:"api/management/mgmt/update/password",
     addManagement:"api/management/add/management",
-    addDeveloper:'api/management/add/developer'
+    addDeveloper:'api/management/add/developer',
+    addTowers:'api/management/add/towers'
 }
 
 const config= {

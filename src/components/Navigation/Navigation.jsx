@@ -12,6 +12,11 @@ import Loginpage from '../Loginpage/Loginpage';
 import Dashhome from '../Dashboard/Dashhome/Dashhome';
 import Addusers from '../Dashboard/Addusers/Addusers';
 import Dashheader from '../Dashboard/Dashheader/Dashheader';
+import Addtowers from '../Dashboard/Addtowers/Addtowers';
+import AddTowersStep2 from '../Dashboard/Addtowers/Addtowerstep2';
+import AddTowersStep3 from '../Dashboard/Addtowers/Addtowerstep3';
+import Addtowerstep4 from '../Dashboard/Addtowers/Addtowerstep4';
+import AddTowersStep5 from '../Dashboard/Addtowers/Addtowerstep5';
 
 
 
@@ -35,6 +40,12 @@ const Navigation = () => {
                 <Route path='/login/dashboard' element={<Dashhome/>} />
                 <Route path='/dashboard/addusers' element={<Addusers/>} />
                 <Route path="/dashboard/:mgmtId" element={<Dashheader/>} />
+                <Route path="/dashboard/addtowers" element={<Addtowers/>} />
+                <Route path="/addtowers/step2" element={<AddTowersStep2 />} />
+                <Route path="/addtowers/step3" element={<AddTowersStep3 />} />
+                <Route path="/addtowers/step4" element={<Addtowerstep4 />} />
+                <Route path="/addtowers/step5" element={<AddTowersStep5 />} />
+
 
             </Routes>
             {/* <Footer/> */}
