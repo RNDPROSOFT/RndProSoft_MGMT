@@ -1,0 +1,136 @@
+/* Main dashboard container */
+.dashhome {
+    padding: 30px;
+    background-color: #f4f4f4;
+}
+
+/* Container for all cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Increased gap for better spacing */
+    justify-content: flex-start; /* Ensures the cards are aligned from the start */
+    margin-top: 20px;
+}
+
+/* Individual tower card style */
+.tower-card {
+    width: 28%; /* Reduced width for the cards */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    position: relative;
+    cursor: pointer;
+    padding: 12px; /* Reduced padding to decrease overall height */
+    display: flex;
+    flex-direction: column;
+    height: auto; /* Allow the card height to adjust based on content */
+}
+
+/* Hover effect on the card */
+.tower-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    opacity: 0.9; /* Slight opacity change for hover effect */
+}
+
+/* Styling for the tower image */
+.image-container {
+    position: relative;
+    width: 100%;
+    height: auto; /* Reduced height for the image container */
+    overflow: hidden;
+    border-radius: 12px; /* Rounded corners for the image container */
+}
+
+.tower-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+    object-position: center; /* Centers the image within the container */
+    border-radius: 8px;
+}
+
+/* Construction status overlay */
+.construction-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 48%;
+    text-align: center;
+}
+
+/* Card info section */
+.card-info {
+    padding: 12px 0; /* Reduced padding to decrease height */
+    font-size: 14px;
+    color: #333;
+    flex-grow: 1; /* Ensures the card info takes up remaining space */
+}
+
+.card-info h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Reduced margin */
+    color: #333;
+}
+
+.card-info p {
+    margin: 6px 0; /* Reduced margin between paragraphs */
+    font-size: 14px;
+}
+
+.card-info p strong {
+    font-weight: bold;
+}
+
+.card-info p {
+    color: #666;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .tower-card {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tower-card {
+        width: 48%; /* Two cards per row */
+    }
+}
+
+@media (min-width: 1024px) {
+    .tower-card {
+        width: 28%; /* Reduced width for three cards per row on large screens */
+    }
+}
+
+/* Add some hover and focus effects */
+.tower-card:focus, .tower-card:hover {
+    outline: none;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-15px);
+}
+
+/* Add animations for loading state or content */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.tower-card {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+

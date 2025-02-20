@@ -17,6 +17,9 @@ import AddTowersStep2 from '../Dashboard/Addtowers/Addtowerstep2';
 import AddTowersStep3 from '../Dashboard/Addtowers/Addtowerstep3';
 import Addtowerstep4 from '../Dashboard/Addtowers/Addtowerstep4';
 import AddTowersStep5 from '../Dashboard/Addtowers/Addtowerstep5';
+import Addcustomer from '../Dashboard/Addcustomer/Addcustomer';
+import Addproject from '../Dashboard/Addproject/Addproject';
+import Addtowerstep6 from '../Dashboard/Addtowers/Addtowerstep6';
 
 
 
@@ -39,13 +42,17 @@ const Navigation = () => {
                 <Route path='/login' element={<Loginpage/>} />
                 <Route path='/login/dashboard' element={<Dashhome/>} />
                 <Route path='/dashboard/addusers' element={<Addusers/>} />
-                <Route path="/dashboard/:mgmtId" element={<Dashheader/>} />
+                {/* <Route path="/dashboard/:mgmtId" element={<Dashheader/>} /> */}
                 <Route path="/dashboard/addtowers" element={<Addtowers/>} />
                 <Route path="/addtowers/step2" element={<AddTowersStep2 />} />
                 <Route path="/addtowers/step3" element={<AddTowersStep3 />} />
                 <Route path="/addtowers/step4" element={<Addtowerstep4 />} />
                 <Route path="/addtowers/step5" element={<AddTowersStep5 />} />
+                <Route path="/addtowers/step6" element={<Addtowerstep6 />} />
 
+
+                <Route path="/dashboard/addcustomer" element={<Addcustomer />} />
+                <Route path="/dashboard/Addproject" element={<Addproject />} />
 
             </Routes>
             {/* <Footer/> */}

@@ -4,6 +4,11 @@ import websitelogo from './../../../assests/images/lyonoralogo.png';
 import { Link, useNavigate, useParams } from 'react-router-dom'; 
 import api from './../../../api.js';
 import utilis from '../../../utilis/index.js';
+import { FiSettings } from 'react-icons/fi';
+import config from './../../../utilis/config'
+import axios from 'axios';
+
+
 
 
 const Dashheader = () => {
@@ -15,6 +20,8 @@ const Dashheader = () => {
   const [companyName, setCompanyName] = useState('');
   const [image, setImage] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+    const [openDropdown, setOpenDropdown] = useState(null); // State for dropdown visibility
+  
   
   
   const handleInputChange = (e) => {
@@ -164,6 +171,128 @@ useEffect(() => {
     setShowLogoutPopup(false); // Close the popup without logging out
   };
 
+
+
+
+
+
+
+
+
+
+
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+
+const toggleSettingsDropdown = () => {
+  setShowSettingsDropdown(!showSettingsDropdown);
+};
+
+// Close dropdown when clicking outside
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (!event.target.closest('.settings-container')) {
+      setShowSettingsDropdown(false);
+    }
+  };
+  document.addEventListener('click', handleClickOutside);
+  return () => {
+    document.removeEventListener('click', handleClickOutside);
+  };
+}, []);
+
+const [showGstPopup, setShowGstPopup] = useState(false);
+const [showGstForm, setShowGstForm] = useState(false);
+const [gst, setGst] = useState("");
+const [remarks, setRemarks] = useState("");
+
+// const handleGstClick = () => {
+//   setShowGstPopup(true); // Show the popup when GST is clicked
+// };
+
+// const handleClosePopup = () => {
+//   setShowGstPopup(false);
+//   setShowGstForm(false); // Reset form when closing popup
+// };
+
+// const handleGstUpdate = (e) => {
+//   e.preventDefault();
+//   console.log("GST:", gst, "Remarks:", remarks);
+//   handleClosePopup(); // Close popup after submission
+// };
+
+
+
+  // Function to open the GST popup
+  const handleGstClick = () => {
+    setShowGstPopup(true);
+    setOpenDropdown(null); // Close the dropdown when clicking GST
+
+  };
+  
+  // Function to close the GST popup
+  const handleClosePopup = () => {
+    setShowGstPopup(false);
+  };
+
+
+   // Fetch States from API
+   const GetGst = async () => {
+    try {
+      let response = await api.getGst();
+      console.log("GST API Response:", response.data);
+        if (response.data.data.length > 0) {
+          setGstId(response.data.data[0]._id); // Store GST ID
+          setGst(response.data.data[0].gst); // Set GST value
+        }
+      console.log("Fetched Gst:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching Gst:", error);
+    }
+  };
+
+  useEffect(() => {
+   
+    GetGst();
+  }, []);
+
+ 
+
+
+  const handleGstUpdate = async (e) => {
+    e.preventDefault();
+    const storedData = JSON.parse(localStorage.getItem('AdminDetails')) || {};
+    let managementId = storedData?.data?.data?._id || null;
+    const body = {
+      gstId: gstId,
+      gst: parseInt(gst),
+      updatedBy: managementId,
+      remarks,
+      isVisible: true
+    };
+  
+    try {
+      let response= await api.updateGst(body)
+      console.log(response,"response")
+      alert("GST updated successfully!");
+       // Clear the remarks field
+    setRemarks("");
+      setShowGstForm(false)
+     
+      setShowGstPopup(false); // Close the popup after updating
+    } catch (error) {
+      console.error("Error updating GST:", error);
+      alert("Failed to update GST");
+    }
+  };
+  
+  const [gstId, setGstId] = useState(""); // State for GST ID
+
+  
+
+
+
+
+
   return (
     <>
       <div className="dashheader">
@@ -173,14 +302,32 @@ useEffect(() => {
         
         {/* Navigation for large screens */}
         <div className="navigationscreens large-screen">
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/login/dashboard">Dashboard</Link>
           <Link to="/dashboard/addtowers">Add Towers</Link>
-          <Link to="/dashboard/addusers">Add users</Link>
+          <Link to="/dashboard/addusers">Add Management</Link>
+          <Link to="/dashboard/addcustomer">Add Customer</Link>
+          <Link to="/dashboard/Addproject">Add Project</Link>
           <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
+         
           {/* Use Link for logout with onClick handler */}
           <Link to="#" onClick={handleLogoutClick} className="logout-btn">
             Logout
           </Link>
+          <div className="settings-container">
+  <div className="settings-icon" onClick={toggleSettingsDropdown}>
+    <FiSettings size={20} />
+  </div>
+
+  {showSettingsDropdown && (
+    <div className="settings-dropdown">
+   
+  <Link onClick={handleGstClick}>GST</Link>
+
+
+    </div>
+  )}
+</div>
+
         </div>
         
         {/* Toggle button for small screens */}
@@ -203,7 +350,7 @@ useEffect(() => {
               >
                 ✖
               </button>
-              <Link to="/dashboard" onClick={toggleMenu}>
+              <Link to="/login/dashboard" onClick={toggleMenu}>
                 Dashboard
               </Link>
               <Link to="/dashboard/addtowers" onClick={toggleMenu}>
@@ -213,10 +360,27 @@ useEffect(() => {
                 Add users
               </Link>
               <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
+              <Link onClick={handleGstClick}>GST</Link>
               {/* Use Link for logout with onClick handler */}
               <Link to="#" onClick={handleLogoutClick} className="logout-btn">
                 Logout
               </Link>
+              {/* <div className="settings-container">
+  <div className="settings-icon" onClick={toggleSettingsDropdown}>
+    <FiSettings size={20} />
+  </div>
+
+  {showSettingsDropdown && (
+    <div className="settings-dropdown">
+   
+  <Link onClick={handleGstClick}>GST</Link>
+
+
+    </div>
+  )}
+</div> */}
+
+              
             </div>
           )}
         </div>
@@ -292,6 +456,7 @@ useEffect(() => {
             placeholder="Enter Phone Number"
           />
         </label>
+       
 
         <div className="popup-buttons">
           <button type="submit" className="submit-button">Submit</button>
@@ -304,7 +469,54 @@ useEffect(() => {
 
 
 
+{showGstPopup && (
+  <div className="gst-popup">
+    <div className="popup-content">
+      {showGstForm ? (
+        // GST Update Form
+       <form className="gst-form-container" onSubmit={handleGstUpdate}>
+  <h2 className="gst-form-title">Update GST</h2>
 
+  <div className="gst-form-group">
+    <label className="gst-form-label">GST:</label>
+    <input
+  type="number"
+  className="gst-form-input"
+  value={gst}
+  onChange={(e) => setGst(e.target.value)}
+  required
+ 
+/>
+
+  </div>
+
+  <div className="gst-form-group">
+    <label className="gst-form-label">Remarks:</label>
+    <textarea
+      className="gst-form-textarea"
+      value={remarks}
+      onChange={(e) => setRemarks(e.target.value)}
+      required
+    />
+  </div>
+
+  <div className="gst-form-actions">
+    <button type="submit" className="gst-form-submit">Submit</button>
+    <button className="gst-form-close" onClick={handleClosePopup}>Close</button>
+  </div>
+</form>
+
+      ) : (
+        // Initial GST Popup
+        <>
+          <h2>GST Management</h2>
+          <button onClick={() => setShowGstForm(true)}>Update GST</button>
+          <button className="close-popup" onClick={handleClosePopup}>Close</button>
+        </>
+      )}
+    </div>
+  </div>
+)}
 
     </>
   );

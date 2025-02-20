@@ -1,5 +1,5 @@
 /* Main contact section */
-.contactus {
+.contactus1 {
     padding: 80px 20px;
     background-image: url('./../../../assests/images/aboutexpertise.jpg'); /* Add your image path here */
     background-size: cover;
@@ -15,7 +15,7 @@
   }
   
   /* Background Blur Effect */
-  .contactus::before {
+  .contactus1::before {
     content: '';
     position: absolute;
     top: 0;
@@ -28,7 +28,7 @@
   }
   
   /* Contact Container */
-  .contact-container {
+  .contact-container1 {
     background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better readability */
     padding: 40px;
     border-radius: 15px;
@@ -40,12 +40,12 @@
   }
   
   /* Contact Header */
-  .contact-header {
+  .contact-header1 {
     text-align: center;
     margin-bottom: 30px;
   }
   
-  .contact-header h2 {
+  .contact-header1 h2 {
     font-size: 36px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -54,7 +54,7 @@
     text-transform: uppercase;
   }
   
-  .contact-header p {
+  .contact-header1 p {
     font-size: 18px;
     font-weight: 300;
     color: #ddd;
@@ -63,18 +63,18 @@
   }
   
   /* Contact Form */
-  .contact-form {
+  .contact-form1 {
     display: flex;
     flex-direction: column;
   }
   
   /* Form Group */
-  .form-group {
+  .form-group1 {
     margin-bottom: 20px;
   }
   
   /* Form Label */
-  .form-group label {
+  .form-group1 label {
     font-size: 14px;
     font-weight: 600;
     color: #ccc;
@@ -83,7 +83,7 @@
   }
   
   /* Form Inputs */
-  .form-input {
+  .form-input1 {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -93,20 +93,20 @@
     background-color: rgba(255, 255, 255, 0.4);
   }
   
-  .form-input:focus {
+  .form-input1:focus {
     border-color: #ff6f00;
     background-color: rgba(255, 255, 255, 1);
     outline: none;
   }
   
   /* Textarea */
-  textarea.form-input {
+  textarea.form-input1 {
     height: 120px;
     resize: none;
   }
   
   /* Submit Button */
-  .submit-btn {
+  .submit-btn1 {
     background-color: #ff6f00;
     color: white;
     padding: 14px;
@@ -119,12 +119,12 @@
     text-transform: uppercase;
   }
   
-  .submit-btn:hover {
+  .submit-btn1:hover {
     background-color: #e65c00;
     transform: scale(1.05); /* Subtle scale effect on hover */
   }
   
-  .submit-btn:focus {
+  .submit-btn1:focus {
     outline: none;
   }
   
@@ -142,20 +142,34 @@
   
   /* Responsive Design */
   @media (max-width: 768px) {
-    .contact-container {
+    .contact-container1 {
       padding: 25px;
     }
   
-    .contact-header h2 {
+    .contact-header1 h2 {
       font-size: 28px;
     }
   
-    .contact-header p {
+    .contact-header1 p {
       font-size: 16px;
     }
   
-    .form-input {
+    .form-input1 {
       font-size: 13px;
     }
+  }
+  
+  .mobile-container1 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .country-code1 {
+    width: 80px;
+  }
+  
+  .mobile-number1 {
+    flex: 1;
   }
   

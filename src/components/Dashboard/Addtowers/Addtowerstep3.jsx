@@ -5,6 +5,14 @@ import axios from 'axios';
 import api from './../../../api.js';
 
 const AddTowersStep3 = () => {
+  const [showExitPopup, setShowExitPopup] = useState(false);
+    
+    
+      const handleExit = () => {
+        setShowExitPopup(false); // Hide the popup
+        navigate('/login/dashboard', { replace: true }); // Navigate to the dashboard
+      };
+      
   const navigate = useNavigate();
   const location = useLocation();
   const { towerId } = location.state || {}; 
@@ -290,6 +298,25 @@ const AddTowersStep3 = () => {
           <button type="submit" disabled={loading}>
             {loading ? 'Submitting...' : 'save and next'}
           </button>
+            
+               {/* Exit button */}
+        <button
+          type="button"
+          onClick={() => setShowExitPopup(true)}
+          className="exit-button"
+        >
+          Exit
+        </button>
+
+        {/* Exit confirmation popup */}
+        {showExitPopup && (
+          <div className="exit-popup">
+            <p>Are you sure you want to exit without saving?</p>
+            <button onClick={handleExit}>Yes</button>
+            <button onClick={() => setShowExitPopup(false)}>No</button>
+          </div>
+        )}
+          
         </form>
       </div>
     </>

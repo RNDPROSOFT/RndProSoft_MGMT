@@ -1,0 +1,186 @@
+.addproject-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .addproject-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .addproject-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  .file-input label {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .file-input input {
+    margin-top: 5px;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .submit-btn {
+    background-color: #ff6600;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: #e65c00;
+  }
+  .addproject-container input,
+  .addproject-container select,
+  .addproject-container textarea {
+    width: 100%;  /* Ensures full width */
+    padding: 10px;
+    margin-bottom: 10px; /* Adds space between fields */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Prevents overflow */
+  }
+  .checkbox-container {
+    display: inline-block; /* Keeps elements in the same line */
+    font-size: 28px; /* Increase text size */
+    vertical-align: middle; /* Aligns checkbox and text properly */
+    color: #333;
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    width: 28px; /* Bigger checkbox */
+    height: 28px;
+    cursor: pointer;
+    margin-right: 10px; /* Small gap between box and text */
+    vertical-align: middle; /* Ensures checkbox aligns well with text */
+  }
+  
+  .gallery-upload {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .gallery-upload label {
+    flex: 1;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .add-image-btn {
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+  
+  .add-image-btn:hover {
+    background-color: #e66a3d;
+  }
+  
+  .gallery-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .gallery-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .gallery-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .add-image-btn {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-image-btn:hover {
+    background-color: #e65c00;
+  }
+  
+  .gallery-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .gallery-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .remove-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  

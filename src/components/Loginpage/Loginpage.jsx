@@ -3,6 +3,12 @@ import "./loginpage.css";
 import api from './../../api.js';
 import { useNavigate } from "react-router-dom"; 
 import { Modal , Button} from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
+
 
 const Loginpage = () => {
   const navigate = useNavigate(); 
@@ -143,7 +149,8 @@ const loginApp=async ()=>{
 
   if (response.data.success) {
     // On successful login, navigate to /dashhome
-    alert('navigating to dashhome page')
+    toast.success("Tower added successfully!")
+    // alert('navigating to dashhome page')
     navigate('/login/dashboard');
     localStorage.setItem(
       "userData",
@@ -151,7 +158,8 @@ const loginApp=async ()=>{
     );
     localStorage.setItem("sessionId", response.data.data.sessionId);
     const mgmtId = response.data.data._id; // Retrieve mgmtId from the response
-    navigate(`/dashboard/${mgmtId}`);
+    // navigate(`/dashboard/${mgmtId}`);
+    navigate('/login/dashboard')
   } else {
     alert("Invalid username or password");
   }

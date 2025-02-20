@@ -85,8 +85,23 @@
     transition: background 0.3s ease, transform 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    
   }
-  
+  .step2navigation{
+    padding: 15px;
+    background: linear-gradient(135deg, #ff6600, #e65c00);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 5%;
+    margin-top: 5%;
+  }
   .addtowers-form button:hover {
     background: linear-gradient(135deg, #e65c00, #cc5200);
     transform: scale(1.05);
@@ -191,3 +206,283 @@
     background-color: #45a049;  /* Darker green on hover */
   }
   
+
+  .price-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .radio-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+ /* Exit button styling */
+.exit-button {
+  background-color: #ff6f61; /* Orange color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.exit-button:hover {
+  background-color: #e55e4a; /* Slightly darker orange */
+}
+
+/* Full-page overlay with opacity */
+.exit-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background covering full screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box that covers full screen */
+.exit-popup {
+  background-color: white;
+  padding: 10px 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  position: relative;
+  width: 80%;  /* Adjust the width to suit your needs */
+  max-width: 500px; /* Limit the max-width for large screens */
+  z-index: 1010;
+}
+
+/* Popup message styling */
+.exit-popup-message {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Button actions layout */
+.exit-popup-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.exit-popup-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 45%;
+  transition: background-color 0.3s;
+}
+
+.exit-popup-button.confirm {
+  background-color: #ff6f61;
+  color: white;
+}
+
+.exit-popup-button.confirm:hover {
+  background-color: #e55e4a;
+}
+
+.exit-popup-button.cancel {
+  background-color: #ddd;
+  color: #333;
+}
+
+.exit-popup-button.cancel:hover {
+  background-color: #bbb;
+}
+.exit-popup button{
+  margin-right: 5%;
+}
+
+
+
+
+
+.addtowerstep6 {
+  font-family: 'Arial', sans-serif;
+  padding: 30px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.addtowerstep6 h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+  color: orange;
+}
+
+.addtowerstep6 .form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.addtowerstep6 .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.addtowerstep6 .form-group label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.addtowerstep6 .form-input,
+.addtowerstep6 .form-select,
+.addtowerstep6 .form-file {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.addtowerstep6 .form-input:focus,
+.addtowerstep6 .form-select:focus,
+.addtowerstep6 .form-file:focus {
+  border-color: #4d90fe;
+  outline: none;
+}
+
+.addtowerstep6 .form-select {
+  cursor: pointer;
+}
+
+.addtowerstep6 .form-file {
+  padding: 10px;
+}
+
+.addtowerstep6 .form-group input[type="file"] {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.addtowerstep6 .form-button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.addtowerstep6 .form-button:hover {
+  background-color: #45a049;
+}
+
+.addtowerstep6 .form-group:nth-child(odd) {
+  background-color: #f7f7f7;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.addtowerstep6 .form-group:nth-child(even) {
+  background-color: #fafafa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.addtowerstep6 .form-group label {
+  color: #666;
+}
+
+.addtowerstep6 .form-container .form-group:last-child {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .addtowerstep6 .form-container {
+    grid-template-columns: 1fr;
+  }
+
+  .addtowerstep6 .form-button {
+    font-size: 16px;
+  }
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: orange;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}

@@ -408,3 +408,234 @@ body {
 
 
 
+
+.settings-icon {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .settings-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .settings-dropdown p {
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .settings-dropdown p:hover {
+    background-color: #f1f1f1;
+  }
+  
+
+  .gst-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .gstpopup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  .gstpopup-content button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .gstpopup-content input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .close-popup {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .gst-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.popup-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.close-popup {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.gst-form-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: #ffffff;
+    padding: 0px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centers all items horizontally */
+    gap: 18px;
+    font-family: 'Poppins', sans-serif;
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    border: 1px solid black;
+  }
+  
+  .gst-form-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .gst-form-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    border-bottom: 2px solid #ff7b00;
+    padding-bottom: 10px;
+  }
+  
+  .gst-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers labels and inputs */
+    gap: 6px;
+    width: 100%;
+  }
+  
+  .gst-form-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #444;
+    text-align: center;
+  }
+  
+  .gst-form-input,
+  .gst-form-textarea {
+    width: 100%;
+    max-width: 320px; /* Restricts width for better alignment */
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #fafafa;
+    text-align: center; /* Centers text inside inputs */
+  }
+  
+  .gst-form-input:focus,
+  .gst-form-textarea:focus {
+    border-color: #ff7b00;
+    box-shadow: 0px 0px 8px rgba(255, 123, 0, 0.3);
+    outline: none;
+  }
+  
+  .gst-form-textarea {
+    height: 90px;
+    resize: none;
+  }
+  
+  .gst-form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .gst-form-submit,
+  .gst-form-close {
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .gst-form-submit {
+    background-color: #ff7b00;
+    color: white;
+  }
+  
+  .gst-form-submit:hover {
+    background-color: #e06b00;
+  }
+  
+  .gst-form-close {
+    background-color: #bbb;
+    color: black;
+  }
+  
+  .gst-form-close:hover {
+    background-color: #999;
+  }
+  
+  .gst-form-submit:active,
+  .gst-form-close:active {
+    transform: scale(0.95);
+  }
+  
+

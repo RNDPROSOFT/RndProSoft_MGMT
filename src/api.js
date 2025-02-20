@@ -14,9 +14,9 @@ const axiosinstance=axios.create({
 async function getAdminLogin(body) {
     try{
             return await axiosinstance.post(utilis.config.apiName.getAdminLogin,body,{
-                // headers: {
-                //     authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
-                //    },
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
             })
     }catch(e){
                 return e.response;
@@ -53,9 +53,9 @@ async function updatePassword(body) {
 async function addManagement(body) {
     try{
             return await axiosinstance.post(utilis.config.apiName.addManagement,body,{
-                // headers:{
-
-                // }
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
             })
     }catch(e){
                 return e.response;
@@ -87,9 +87,9 @@ async function logOut(
 async function addDeveloper(body) {
     try{
             return await axiosinstance.post(utilis.config.apiName.addDeveloper,body,{
-                // headers:{
-
-                // }
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
             })
     }catch(e){
                 return e.response;
@@ -101,7 +101,111 @@ async function addTowers(body) {
     try{
             return await axiosinstance.post(utilis.config.apiName.addTowers,body,{
                 headers: { 
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId)
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function enquiryForm(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.enquiryForm,body,{
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+async function insertGst(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.insertGst,body,{
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function updateGst(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateGst,body,{
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function addCustomer(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.addCustomer,body,{
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                   },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function addProjects(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.addProjects,body,{
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function getProjectdetails() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getProjectdetails,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        });
+        
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+async function getParticularbasedontowers(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getParticularbasedontowers}?towerId=${towerId}`,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function addFlats(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.addFlats,body,{
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
                   },
             })
     }catch(e){
@@ -112,6 +216,75 @@ async function addTowers(body) {
 
 
 
+async function getallprojectsforuser() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getallprojectsforuser,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+async function getTowerdetailsforUser(projectId = "", constructionStatus = "", projectType = "", state = "") {
+    try {
+        const url = `${utilis.config.apiName.getTowerdetailsforUser}&projectId=${projectId}&constructionStatus=${constructionStatus}&projectType=${projectType}&state=${state}`;
+        return await axiosinstance.get(url, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+
+
+async function getStateandcities() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getStateandcities,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function getTowerdetails() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getTowerdetails,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+async function getGst() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getGst,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
 const api={
     getAdminLogin,
     forgotPassword,
@@ -119,7 +292,22 @@ const api={
     addManagement,
     logOut,
     addDeveloper,
-    addTowers
+    addTowers,
+    enquiryForm,
+    insertGst,
+    updateGst,
+    addCustomer,
+    addProjects,
+    getProjectdetails,
+    getParticularbasedontowers,
+    addFlats,
+    getallprojectsforuser,
+    getTowerdetailsforUser,
+    getStateandcities,
+    getTowerdetails,
+    getGst
+   
+
 }
 
 

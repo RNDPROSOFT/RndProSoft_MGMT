@@ -7,6 +7,34 @@ button{
   cursor: pointer !important;
 }
 
+@keyframes backgroundSlider {
+  0% { background-image: url('./../../../assests/images/web_banner2.jpg'); }
+  33% { background-image: url('./../../../assests/images/web_banner2.jpg'); }
+  66% { background-image: url('./../../../assests/images/web_banner3.jpg'); }
+  100% { background-image: url('./../../../assests/images/web_banner2.jpg'); } /* Loop back */
+}
+
+.homelaptopbanner1 {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 0px;
+  display: none;
+  width: 100%;
+  height: 62vh;
+  margin: 0%;
+  animation: backgroundSlider 15s infinite linear; /* Change every 5s, repeat infinitely */
+}
+
+/* Show on large screens */
+@media (min-width: 1024px) {
+  .homelaptopbanner1 {
+    display: block;
+  }
+}
+
+
 /* home banner */
 .homelaptopbanner1 {
   background-image: url('./../../../assests/images/web_banner3.jpg');
@@ -41,6 +69,9 @@ button{
   width: 93%;
   height: 20vh;
 }
+
+
+
 
 /* Adjust homehero-section background only for mobile (max-width: 480px) */
 @media (max-width: 480px) {
@@ -397,6 +428,7 @@ button{
   color: #333;
   text-transform: uppercase;
   margin-bottom: 20px;
+  
 }
 
 .homelocationsimage {
@@ -454,5 +486,195 @@ button{
   }
 }
 
+
+
+.userclientproject {
+  padding: 60px 5%;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.userclientproject h2 {
+  font-size: 40px;
+  margin-bottom: 40px;
+  color: #222;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  animation: fadeIn 1s ease-in-out;
+  
+}
+
+.projects-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.project-card {
+  width: 45%;
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  animation: slideIn 0.8s ease-in-out;
+}
+
+.project-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.project-image {
+  position: relative;
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+  
+  
+}
+
+.project-logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: rotateY(360deg);
+  animation: logoSpin 2s ease-in-out infinite alternate;
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease-in-out;
+}
+
+.project-card:hover .project-thumbnail {
+  transform: scale(1.1);
+}
+
+.project-info {
+  padding: 30px;
+  text-align: left;
+}
+
+.project-info h3 {
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: #222;
+  font-weight: bold;
+  text-transform: uppercase;
+  /* border: 2px solid black; */
+  margin-top: 0%;
+}
+
+.project-info p {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.project-info strong {
+  color: #111;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes logoSpin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .project-card {
+    width: 90%;
+  }
+}
+/* Button Styling */
+.view-details-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #ff7f50, #ff6347);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.view-details-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: linear-gradient(135deg, #ff6347, #ff7f50);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.view-details-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ff6347;
+}
+
+.view-details-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation for Button */
+@keyframes fadeInButton {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-details-btn {
+  animation: fadeInButton 1s ease-in-out;
+}
 
 

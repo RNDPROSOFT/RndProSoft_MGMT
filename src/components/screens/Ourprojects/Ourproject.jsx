@@ -1,108 +1,206 @@
 import React, { useState, useEffect } from 'react';
+import api from './../../../api.js';
 import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
 import './ourprojects.css';
-import { locations } from './../../Location/Location.jsx';
-import { useLocation } from 'react-router-dom';
 
 const Ourproject = () => {
-  // State initialization
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedBHK, setSelectedBHK] = useState("");
-  const [selectedConstructionStatus, setSelectedConstructionStatus] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredFlats, setFilteredFlats] = useState([]);
+  const [towers, setTowers] = useState([]);
+  const [filteredTowers, setFilteredTowers] = useState([]);
+  const [states, setStates] = useState([]); // Store states from API
+  
+  const [constructionStatus, setConstructionStatus] = useState('');
+  const [projectType, setProjectType] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+  const [allTowers, setAllTowers] = useState([]); // Store original unfiltered towers
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
 
-  // Effect to set initial filter values based on URL query params
+  const GetTowerDetails = async (projectId = "", constructionStatus = "", projectType = "", state = "") => {
+    try {
+      let response = await api.getTowerdetailsforUser(projectId, constructionStatus, projectType, state);
+      console.log("Full API Response:", response.data);
+  
+      if (response.data?.data?.length > 0 && Array.isArray(response.data.data[0].data)) {
+        console.log("Extracted Towers Data:", response.data.data[0].data);
+        setAllTowers(response.data.data[0].data); // Store full unfiltered list
+        console.log(response.data.data[0].data,'dataa')
+        setTowers(response.data.data[0].data);
+        setFilteredTowers(response.data.data[0].data);
+      } else {
+        console.log("No Data Found!");
+        setAllTowers([]);
+        setTowers([]);
+        setFilteredTowers([]);
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      setAllTowers([]);
+      setTowers([]);
+      setFilteredTowers([]);
+    }
+  };
+  
+
+  
+
+  // Fetch States from API
+  const GetStates = async () => {
+    try {
+      let response = await api.getStateandcities();
+      setStates(response.data.data);
+      console.log("Fetched States:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
+
   useEffect(() => {
-    const city = queryParams.get('city') || "";
-    const bhk = queryParams.get('bhk') || "";
-    const status = queryParams.get('status') || "";
-
-    setSelectedCity(city);
-    setSelectedBHK(bhk);
-    setSelectedConstructionStatus(status);
-  }, [location]);
-
-  // Effect to filter flats whenever filters or search query change
-  useEffect(() => {
-    const allFlats = Object.values(locations).flat();
-
-    // Apply filters
-    const filtered = allFlats.filter((flat) => {
-      const matchesCity = !selectedCity || flat.city.toLowerCase() === selectedCity.toLowerCase();
-      const matchesBHK = !selectedBHK || flat.bhkType === selectedBHK;
-      const matchesStatus = !selectedConstructionStatus || flat.constructionStatus === selectedConstructionStatus;
-      const matchesSearch = !searchQuery || (flat.city && flat.city.toLowerCase().includes(searchQuery.toLowerCase()));
-
-      return matchesCity && matchesBHK && matchesStatus && matchesSearch;
-    });
-
-    setFilteredFlats(filtered);
-  }, [selectedCity, selectedBHK, selectedConstructionStatus, searchQuery]);
-
-  // Effect to load all flats when the component is mounted
-  useEffect(() => {
-    const allFlats = Object.values(locations).flat();
-    setFilteredFlats(allFlats);
+    GetTowerDetails();
+    GetStates();
   }, []);
+
+  // Filtering Function
+  useEffect(() => {
+    let filtered = allTowers.filter(tower =>
+      (constructionStatus ? tower.constructionStatus === constructionStatus : true) &&
+      (projectType ? tower.projectType === projectType : true) &&
+      (selectedState ? tower.state === selectedState : true)
+    );
+    setFilteredTowers(filtered);
+  }, [constructionStatus, projectType, selectedState, allTowers]);
+  
+
+
+  const [selectedProject, setSelectedProject] = useState('');
+const [selectedProjectId, setSelectedProjectId] = useState('');
+useEffect(() => {
+  GetTowerDetails(selectedProjectId, constructionStatus, projectType, selectedState);
+}, [selectedProjectId, constructionStatus, projectType, selectedState]);
+
+
+
+
+
+  const [projects, setProjects] = useState([]);
+
+  // Fetch project details using the API
+  const GetprojectDetails = async () => {
+    try {
+      let response = await api.getallprojectsforuser();
+      setProjects(response.data.data);
+      console.log(response.data.data)
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
+
+  useEffect(() => {
+    GetprojectDetails();
+  }, []);
+
+  const handleSelectClick = async () => {
+    await GetTowerDetails(); // Call API
+  };
+ 
 
   return (
     <>
       <Header />
-      <div className="ourprojects">
-        <div className="filter-container">
-          {/* City Dropdown */}
-          <select onChange={(e) => setSelectedCity(e.target.value)} value={selectedCity}>
-            <option value="">Select City</option>
-            {Object.values(locations).flat().map((flat) => (
-              <option key={flat.id} value={flat.city}>{flat.city}</option>
-            ))}
-          </select>
+              <div className="our-projects-container">
+      {/* Filters Section */}
+      <div className="filters-container">
+      <h3 className="filters-title">Filter Towers</h3> {/* Added Title */}
 
-          {/* BHK Type Dropdown */}
-          <select onChange={(e) => setSelectedBHK(e.target.value)} value={selectedBHK}>
-            <option value="">Select BHK Type</option>
-            {["1BHK", "2BHK", "3BHK", "4BHK", "5BHK+"].map((bhk) => (
-              <option key={bhk} value={bhk}>{bhk}</option>
-            ))}
-          </select>
+        
+    
+      <select
+      onClick={handleSelectClick} // Fetch data when clicking dropdown
+      onChange={(e) => setConstructionStatus(e.target.value)}
+      value={constructionStatus}
+    >
+      <option value="">Select Construction Status</option>
 
-          {/* Construction Status Dropdown */}
-          <select onChange={(e) => setSelectedConstructionStatus(e.target.value)} value={selectedConstructionStatus}>
-            <option value="">Select Construction Status</option>
-            {["Ready to Move", "Under Construction", "New Launch"].map((status) => (
-              <option key={status} value={status}>{status}</option>
-            ))}
-          </select>
-        </div>
+      {allTowers.length > 0 ? (
+        [...new Set(allTowers.map((tower) => tower.constructionStatus))].map((status, index) => (
+          <option key={index} value={status}>
+            {status}
+          </option>
+        ))
+      ) : (
+        <option disabled>Loading...</option>
+      )}
+    </select>
 
-        {/* Display Filtered Flats */}
-        <div className="flats-container">
-          {filteredFlats.length > 0 ? (
-            filteredFlats.map((flat) => (
-              <div key={flat.id} className="flat-card">
-                <div className="flat-image-container">
-                  <img src={flat.image} alt="Flat" className="flat-image" />
-                  <div className="construction-status">{flat.constructionStatus}</div>
-                </div>
-                <div className="flat-details">
-                  <h3>{flat.city} - {flat.bhkType}</h3>
-                  <p>Status: {flat.constructionStatus}</p>
-                  <p>Price: {/* Add price here if available */}</p>
-                  <p>Area: {/* Add area here if available */}</p>
-                </div>
+
+
+
+<select  onClick={handleSelectClick}  onChange={(e) => setProjectType(e.target.value)} value={projectType}>
+  <option value="">Select Project Type</option>
+  {Array.from(new Set(allTowers.map(tower => tower.projectType))).map((type, index) => (
+    <option key={index} value={type}>{type}</option>
+  ))}
+</select>
+
+
+<select onChange={(e) => setSelectedState(e.target.value)} value={selectedState}>
+  <option value="">Select State</option>
+  {states.map((stateObj, index) => (
+    <option key={index} value={stateObj.state}>{stateObj.state}</option>
+  ))}                   
+</select>
+
+   <select
+  onChange={(e) => {
+    const project = projects.find(proj => proj._id === e.target.value);
+    setSelectedProject(e.target.value);
+    const projectId = project ? project._id : '';
+    setSelectedProjectId(projectId);
+    GetTowerDetails(projectId); // Fetch towers based on project _id
+  }}
+  value={selectedProject}
+>
+  <option value="">Select Patterned Project</option>
+  {projects.map((project, index) => (
+    <option key={index} value={project._id}>{project.name}</option>
+  ))}
+</select>
+
+
+
+
+  </div>
+
+      {/* Display Filtered Towers */}
+      <div className="alltowersforuser">
+        {filteredTowers.length > 0 ? (
+          filteredTowers.map((tower, index) => (
+            <div key={index} className="tower-card">
+              <div className="tower-image-wrapper">
+                <img
+                  src={tower.logoLink?.[0] || "default-logo.jpg"}
+                  alt={tower.title || "No Title"}
+                  className="tower-image"
+                />
+                <span className="construction-status">{tower.constructionStatus}</span>
               </div>
-            ))
-          ) : (
-            <p>No flats found based on your filters.</p>
-          )}
-        </div>
+              <div className="tower-content">
+                <h2 className="tower-title">{tower.title} - {tower.project}</h2>
+                <p className="tower-details"><strong>Location:</strong> {tower.city}, {tower.state}</p>
+                <p className="tower-details"><strong>Price Range:</strong> {tower.priceStartRange} - {tower.priceEndRange}</p>
+                <p className="tower-details"><strong>Project Type:</strong> {tower.projectType}</p>
+                <p className="tower-details"><strong>Total Units:</strong> {tower.totalUnits}</p>
+                <p className="tower-details"><strong>Development Size:</strong> {tower.developmentSize} acres</p>
+                <p className="tower-details"><strong>RERA No:</strong> {tower.reraNo}</p>
+                <button className="view-details-btn">
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No projects found.</p>
+        )}
       </div>
-      <Footer />
+      </div>
     </>
   );
 };

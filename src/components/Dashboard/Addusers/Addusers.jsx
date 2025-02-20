@@ -68,7 +68,7 @@ const Addusers = () => {
       <Dashheader />
       <div className="addusers">
         <div className="addusers-container">
-          <h2 className="addusers-title">Add User</h2>
+          <h2 className="addusers-title">Add Management</h2>
           <form onSubmit={handleSubmit} className="addusers-form">
             <div className="addusers-form-group">
               <label htmlFor="firstName">First Name</label>

@@ -57,7 +57,7 @@
 
 .about-text h2 {
     font-size: 2.5rem;
-    color: #ed712b; /* Gold accent */
+    color: #ed712b; /* orange accent */
     margin-bottom: 1.5rem;
     /* border: 2px solid black; */
     margin-top: 0%;
@@ -728,5 +728,216 @@
     padding: 10px;
   }
 }
+/* Overall Page Styling */
+.homecontactus {
+  margin: 5% auto;
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: black;
+  padding: 50px 20px;
+  animation: fadeIn 1s ease-in-out;
+}
 
+/* Two-column Layout */
+.homecontact-container {
+  /* display: grid; */
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 80%;
+  max-width: 800px;
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(255, 215, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 1px solid white;
+  padding: 2%;
+}
 
+.homecontact-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+/* Left Side - Content Section */
+.homecontact-content {
+  background: linear-gradient(135deg, #333, #111);
+  color: orange;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-right: 2px solid orange;
+  width: 100%;
+}
+
+.homecontact-content h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.homecontact-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.9;
+  color: white;
+}
+
+/* Right Side - Form Section */
+.homecontact-form-container {
+  padding: 40px;
+  width: 100%;
+  animation: slideInRight 1s ease-in-out;
+}
+
+.homecontact-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.homecontact-header h2 {
+  font-size: 26px;
+  color: orange;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.homecontact-header p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Form Styling */
+.homecontact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.homeform-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.homeform-group label {
+  font-size: 14px;
+  color: orange;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.homeform-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: black;
+  color: white;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.homeform-input:focus {
+  border-color: orange;
+  box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.3);
+  outline: none;
+}
+
+/* Mobile Number Section */
+.homemobile-container {
+  display: flex;
+  gap: 10px;
+}
+
+.country-code {
+  flex: 1;
+  padding: 12px;
+  background-color: black;
+  color: white;
+  border: 1px solid #555;
+}
+
+.mobile-number {
+  flex: 2;
+}
+
+/* Checkbox */
+.homeform-checkbox {
+  margin-right: 8px;
+}
+
+/* Submit Button */
+.homesubmit-btn {
+  background-color: orange;
+  color: black;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.homesubmit-btn:hover {
+  background-color: white;
+  color: black;
+  transform: scale(1.05);
+}
+
+.homesubmit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .homecontact-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .homecontact-container {
+    grid-template-columns: 1fr;
+    width: 95%;
+  }
+
+  .homecontact-content, 
+  .homecontact-form-container {
+    width: 100%;
+  }
+
+  .homecontact-content {
+    border-right: none;
+    border-bottom: 2px solid orange;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

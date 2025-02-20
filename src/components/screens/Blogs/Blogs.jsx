@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './blogs.css';
 import Footer from '../../Footer/Footer';
 import Header from '../../Header/Header';
-import tipsfirst from './../../../assests/images/tipsforfirsttimebuyers.jpg'
-import Smart from './../../../assests/images/Smart-real-estate-investment.jpg'
-import rightproperty from './../../../assests/images/rightproperty.jpg'
-import market from './../../../assests/images/realesate market.jpg'
-import impression from './../../../assests/images/impression home.jpg'
+import tipsfirst from './../../../assests/images/tipsforfirsttimebuyers1.jpg'
+import Smart from './../../../assests/images/Smart-real-estate-investment1.jpg'
+import rightproperty from './../../../assests/images/rightproperty1.jpg'
+import market from './../../../assests/images/realesate market1.jpg'
+import impression from './../../../assests/images/impression home1.jpg'
 
 const Blogs = () => {
   const [expandedBlog, setExpandedBlog] = useState(null);
