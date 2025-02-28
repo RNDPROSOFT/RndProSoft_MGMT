@@ -3,9 +3,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Dashhome from '../Dashhome/Dashhome';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
-
+import { useToasts } from "react-toast-notifications";
 const Addtowerstep6 = () => {
-
+  const [showExitPopup, setShowExitPopup] = useState(false);
+      
+      
+        const handleExit = () => {
+          setShowExitPopup(false); // Hide the popup
+          navigate('/login/dashboard', { replace: true }); // Navigate to the dashboard
+        };
+  let navigate = useNavigate();
+  const { addToast } = useToasts();
   const location = useLocation();
    const { towerId, companyId, projectId  } = location.state || {}; // Receive towerId from previous steps
 
@@ -15,33 +23,29 @@ const Addtowerstep6 = () => {
      }, [towerId, companyId, projectId ]);
 
 
-  useEffect(() => {
-    if (towerId) {
-      fetchBlockData(towerId);
-    }
-  }, [towerId]);
-
-
-  const fetchBlockData = async (towerId) => {
-    setLoading(true);
-    try {
-      const response = await api.getParticularbasedontowers(towerId);
-      console.log(response, 'Full Response');
-      
-      // Check if response.data.data exists and contains the block data
-      if (response.data && response.data.data) {
-        setBlockData([response.data.data]);  // Wrap response.data.data in an array
-        console.log(response.data.data,'responsedata')
-      } else {
-        setBlockData([]);  // Fallback to empty array if no block data is available
+     useEffect(() => {
+      if (towerId) {
+        fetchBlockData(towerId);
       }
-    } catch (error) {
-      setError("Failed to fetch block data.");
-      console.error("Error fetching block data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    }, [towerId]);
+  
+    const fetchBlockData = async (towerId) => {
+      setLoading(true);
+      try {
+        const response = await api.getParticularbasedontowers(towerId);
+        if (response.data && response.data.data) {
+          setBlockData(response.data.data);
+        } else {
+          setBlockData([]);
+        }
+      } catch (error) {
+        setError("Failed to fetch block data.");
+        console.error("Error fetching block data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
   
   
 
@@ -58,15 +62,15 @@ const Addtowerstep6 = () => {
     flatNo: '',
     blockId: '',
     bedrooms: '',
-    facing: 'EAST',
+    facing: '',
     vasthu: '',
-    furnishingType: 'FULLY-FURNISHED',
-    isAvaliable: 'BOOKED',
+    furnishingType: '',
+    isAvaliable: '',
     parkingSlot: '',
     sqFeet: '',
     priceStartRange: '',
     priceEndRange: '',
-    constructionStatus: 'READYTOMOVE',
+    constructionStatus: '',
     flatImages: null,
     flatPlanImages: null,
     towerId:towerId,
@@ -102,7 +106,7 @@ const Addtowerstep6 = () => {
           priceEndRange: value ? `${value} ${prevData.priceEndUnit || ""}` : "" 
         };
       }
-  
+      console.log(`Updating ${name} to:`, value); // Debugging log
       return { ...prevData, [name]: value };
     });
   };
@@ -114,21 +118,20 @@ const Addtowerstep6 = () => {
     setFormData({ ...formData, [name]: files[0] });
   };
 
+  const [showForm, setShowForm] = useState(true);
+  const [submittedFlats, setSubmittedFlats] = useState([]);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form Data: ', formData);
   
-    // Create FormData object to send form data including files
     const formDataToSend = new FormData();
-  
-    // Append non-file form data, except priceStartUnit and priceEndUnit
     Object.keys(formData).forEach((key) => {
       if (key !== "priceStartUnit" && key !== "priceEndUnit" && key !== "flatImages" && key !== "flatPlanImages") {
         formDataToSend.append(key, formData[key]);
       }
     });
   
-    // Append files only once
     if (formData.flatImages) {
       formDataToSend.append('flatImages', formData.flatImages);
     }
@@ -141,15 +144,50 @@ const Addtowerstep6 = () => {
       console.log('Step 6 Success:', response.data);
   
       if (response.status === 200) {
-        alert("Flats added successfully");
-        console.log('Data successfully submitted:', response.data);
+        addToast("Step 6 submitted successfully", { appearance: "success", autoDismiss: true });
+  
+        // Store submitted flat details
+        setSubmittedFlats([...submittedFlats, formData]);
+  
+        // Hide form and show Add More button
+        setShowForm(false);
       } else {
-        console.error('Failed to submit data:', response);
+        addToast("Something went wrong", { appearance: "error", autoDismiss: true });
       }
     } catch (error) {
       console.error('Error submitting data:', error);
     }
   };
+  
+  // Show form again for new entry
+  const handleAddMore = () => {
+    setFormData({
+      name: '',
+      floor: '',
+      flatNo: '',
+      blockId: '',
+      bedrooms: '',
+      facing: '',
+      vasthu: '',
+      furnishingType: '',
+      isAvaliable: '',
+      parkingSlot: '',
+      sqFeet: '',
+      priceStartRange: '',
+      priceEndRange: '',
+      constructionStatus: '',
+      flatImages: null,
+      flatPlanImages: null,
+      towerId: towerId,
+      companyId: companyId,
+      projectId: projectId,
+      createdBy: managementId
+    });
+  
+    setShowForm(true); // Show form again
+  };
+  
+  
   
   
   
@@ -159,7 +197,25 @@ const Addtowerstep6 = () => {
     <>
       <Dashheader />
       <div className="addtowerstep6">
-        <h2>Step 6 - Add Flat Details</h2>
+        <h2>Step 7 - Add Flat Details</h2>
+         {/* Show submitted flats list */}
+    {submittedFlats.length > 0 && (
+      <div>
+        <h3>Submitted Flats</h3>
+        <ul>
+          {submittedFlats.map((flat, index) => (
+            <li key={index}>
+              <strong>Flat No:</strong> {flat.flatNo}, <strong>Floor:</strong> {flat.floor}, 
+              <strong>Price:</strong> {flat.priceStartRange} - {flat.priceEndRange}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+        
+         {/* Show Form if showForm is true */}
+  {showForm ? (
         <form onSubmit={handleSubmit} className="form-container">
           <div className="form-group">
             <label>Flat Name:</label>
@@ -223,14 +279,7 @@ const Addtowerstep6 = () => {
 
           <div className="form-group">
             <label>Bedrooms:</label>
-            <input
-              type="text"
-              name="bedrooms"
-              value={formData.bedrooms}
-              onChange={handleChange}
-              required
-              className="form-input"
-            />
+            <input type="text" name="bedrooms" value={formData.bedrooms} onChange={handleChange} required className="form-input" />
           </div>
 
           <div className="form-group">
@@ -242,6 +291,7 @@ const Addtowerstep6 = () => {
               required
               className="form-select"
             >
+               <option >select facing</option>
               <option value="EAST">East</option>
               <option value="WEST">West</option>
               <option value="NORTH">North</option>
@@ -252,8 +302,7 @@ const Addtowerstep6 = () => {
           <div className="form-group">
             <label>Vastu:</label>
             <input
-              type="text"
-              name="vasthu"
+              type="text"  name="vasthu"
               value={formData.vasthu}
               onChange={handleChange}
               required
@@ -270,25 +319,28 @@ const Addtowerstep6 = () => {
               required
               className="form-select"
             >
+               <option> select FURNISHED</option>
               <option value="FULLY-FURNISHED">FULLY-FURNISHED</option>
               <option value="SEMI-FURNISHED">SEMI-FURNISHED</option>
-              <option value="UNFURNISHED">NON-FURNISHED</option>
+              <option value="NON-FURNISHED">NON-FURNISHED</option>
             </select>
           </div>
 
           <div className="form-group">
             <label>Availability:</label>
             <select
-              name="isAvaliable"
-              value={formData.isAvaliable}
-              onChange={handleChange}
-              required
-              className="form-select"
-            >
-              <option value="BOOKED">BOOKED</option>
-              <option value="AVAILABLE">AVALIABLE</option>
-              <option value="AVAILABLE">ONHOLD</option>
-            </select>
+  name="isAvaliable" // Fix the spelling
+  value={formData.isAvaliable} // Ensure it matches state
+  onChange={handleChange}
+  required
+  className="form-select"
+>
+  <option value="">Select Availability</option>
+  <option value="BOOKED">Booked</option>
+  <option value="AVALIABLE">Avaliable</option>
+  <option value="ONHOLD">On Hold</option>
+</select>
+
           </div>
 
           <div className="form-group">
@@ -394,8 +446,10 @@ const Addtowerstep6 = () => {
               required
               className="form-select"
             >
+              <option >SELECT CONSTRUCTION STATUS</option>
               <option value="READYTOMOVE">Ready to Move</option>
               <option value="UNDERCONSTRUCTION">Under Construction</option>
+              <option value="NEWLAUNCH">NEW LAUNCH</option>
             </select>
           </div>
 
@@ -421,8 +475,42 @@ const Addtowerstep6 = () => {
             />
           </div>
 
-          <button type="submit" className="form-button">Submit</button>
-        </form>
+          <button type="submit" className="submit-btn">Submit</button>
+               {/* Exit button */}
+        <button
+          type="button"
+          onClick={() => setShowExitPopup(true)}
+          className="exit-button"
+        >
+          Exit
+        </button>
+          {showExitPopup && (
+              <div className="exit-popup">
+                <p>Are you sure you want to exit without saving?</p>
+                <button onClick={handleExit}>Yes</button>
+                <button onClick={() => setShowExitPopup(false)}>No</button>
+              </div>
+            )}
+        </form> ) : (
+    // Show Add More Flats button when form is hidden
+    <>
+    <button onClick={handleAddMore} className="submit-btn">
+      Add More Flats
+    </button>
+    <button type="button" onClick={() => setShowExitPopup(true)} className="exit-button">Exit</button>
+    </>
+    
+   
+  )}
+  
+
+{showExitPopup && ( 
+  <div className="exit-popup">
+    <p>Are you sure you want to exit ?</p>
+    <button onClick={handleExit}>Yes</button>
+    <button onClick={() => setShowExitPopup(false)}>No</button>
+  </div>
+)}
       </div>
     </>
   );

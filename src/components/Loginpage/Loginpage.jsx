@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { Modal , Button} from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useToasts } from "react-toast-notifications";
 
 
 
 
 const Loginpage = () => {
+    const { addToast } = useToasts();
   const navigate = useNavigate(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +76,11 @@ const Loginpage = () => {
       }
 
      } else {
-     alert("enter username")
+    //  alert("enter username")
+     addToast( "enter username", {
+      appearance: "error",
+      autoDismiss: true,
+    });
     }
   };
 
@@ -129,52 +134,72 @@ const Loginpage = () => {
 
 
 
-const loginApp=async ()=>{
-  console.log('enter into ')
-  try{
-    console.log('enter into try')
-      let body={
-        username : username, 
-        fcmToken :"", 
-        password:password 
+  const loginApp = async () => {
+    console.log("Enter into function");
+  
+    try {
+      console.log("Enter into try block");
+  
+      let body = {
+        username: username,
+        fcmToken: "",
+        password: password,
+      };
+  
+      console.log("Request Body:", body);
+  
+      let response = await api.getAdminLogin(body);
+  
+      console.log("Full Response:", response);
+      
+      if (!response || !response.data) {
+        console.log("Invalid response structure", response);
+        addToast("Server Error. Please try again.", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        return;
       }
-      console.log(body,"body")
-
-     let response= await api.getAdminLogin(body)
-     console.log(response,"response")
-     localStorage.setItem('AdminDetails', JSON.stringify(response));
-    
-
-  let email=   setEmail(response.data.data.emailId)
-
-  if (response.data.success) {
-    // On successful login, navigate to /dashhome
-    toast.success("Tower added successfully!")
-    // alert('navigating to dashhome page')
-    navigate('/login/dashboard');
-    localStorage.setItem(
-      "userData",
-      JSON.stringify(response.data.data)
-    );
-    localStorage.setItem("sessionId", response.data.data.sessionId);
-    const mgmtId = response.data.data._id; // Retrieve mgmtId from the response
-    // navigate(`/dashboard/${mgmtId}`);
-    navigate('/login/dashboard')
-  } else {
-    alert("Invalid username or password");
-  }
-
-
-console.log(email,"email")
-
-
-
+  
+      console.log("response.data:", response.data);
+      console.log("response.data.success:", response.data?.success);
+  
+      localStorage.setItem("AdminDetails", JSON.stringify(response));
+  
+      let email = response.data.data?.emailId || "";
+      setEmail(email);
+  
+      console.log("Email:", email);
+  
+      if (response.data.success === true) {
+        addToast("Login successfully", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+  
+        localStorage.setItem("userData", JSON.stringify(response.data.data));
+        localStorage.setItem("sessionId", response.data.data.sessionId);
+  
+        const mgmtId = response.data.data._id; 
+        navigate(`/login/dashboard`);
+      } else {
+        console.log("Enter into else block");
+        addToast("Something went wrong", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
+    } catch (error) {
+      console.error("API Error:", error);
+      addToast(error?.response?.data?.message || "Something went wrong. Please try again.", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
-  catch (e) {
-    console.log('hbcjkb')
-  }
-
-}
+    
+    
+  };
+  
 
 
 
@@ -202,11 +227,23 @@ const updatePassword=async (e)=>{
     
     
     if (response.data.success) {
-      alert("Login successful!");
+      // alert("Login successful!");
+      addToast( "password updated successfully", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      addToast( "Navigating to loginpage please login here", {
+        appearance: "success",
+        autoDismiss: true,
+      });
       setForgotPasswordMode(false); // Ensures the login form stays visible
       setEmail(response.data.data.emailId); 
     } else {
-      alert("Failed to update password. Please try again.");
+      // alert("Failed to update password. Please try again.");
+      addToast( "Failed to update password. Please try again.", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   
   }catch (e) {
@@ -214,7 +251,11 @@ const updatePassword=async (e)=>{
       }
     }  
     else{
-      alert("password didn't matched")
+      // alert("password didn't matched")
+      addToast( "password didn't matched", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   
 

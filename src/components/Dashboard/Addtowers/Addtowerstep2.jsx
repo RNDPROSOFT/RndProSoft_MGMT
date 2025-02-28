@@ -125,7 +125,7 @@ const AddTowersStep2 = () => {
     <>
       <Dashheader />
       <div className="addtowers">
-        <h2>Add Towers - Step 2</h2>
+        <h2>Add Project - Step 2</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 

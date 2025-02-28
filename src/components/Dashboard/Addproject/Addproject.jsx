@@ -3,15 +3,17 @@ import axios from 'axios';
 import './addproject.css';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
-import config from './../../../utilis/config'
+import config from './../../../utilis/config';
+import { useToasts } from "react-toast-notifications";
 
 const AddProject = () => {
+   const { addToast } = useToasts();
   const storedData = JSON.parse(localStorage.getItem('AdminDetails')) || {};
   let managementId = storedData?.data?.data?._id || null;
 
   const [formData, setFormData] = useState({
     name: '',
-    title: '',
+    // title: '',
     phoneNumber: '',
     emailId: '',
     status: '',
@@ -26,25 +28,27 @@ const AddProject = () => {
     remarks: '',
     isVisible: false,
     createdBy: managementId,
-    companyId: ''
+    companyId: '67ada472e0fd86dfa5cb9e53'
   });
 
   const [projectTitle, setProjectTitle] = useState([]); // Store multiple project titles
 
-  useEffect(() => {
-    axios
-      .get(`${config.baseUrl}/${config.apiName.getCompanydetails}`)
-      .then((response) => {
-        if (response.data.data.length > 0) {
-          setProjectTitle(response.data.data); // Store the entire array
-          console.log(response.data.data)
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching project title:', error);
-      });
-  }, []);
+ 
+// Fetch States from API
+const Getcompandetails = async () => {
+  try {
+    let response = await api.getCompanydetails();
+    setProjectTitle(response.data.data);
+    console.log("Fetched company details:", response.data.data);
+  } catch (error) {
+    console.error("Error company details:", error);
+  }
+};
 
+useEffect(() => {
+ 
+  Getcompandetails();
+}, []);
 
   // const handleChange = (e) => {
   //   const { name, value, type, checked } = e.target;
@@ -59,12 +63,12 @@ const AddProject = () => {
     if (name === "companyId") {
       setFormData({
         ...formData,
-        companyId: value, // Use the _id directly as the value from dropdown
+        companyId: '67ada472e0fd86dfa5cb9e53', // Use the _id directly as the value from dropdown
       });
     } else {
       setFormData({
         ...formData,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: type === 'checkbox' ? checked : value.toUpperCase(),
       });
     }
   };
@@ -122,14 +126,23 @@ const AddProject = () => {
       console.log('Submitting data to API...');
       const response = await api.addProjects(form);
       console.log('API Response:', response);
-
-  // Show success alert
-  alert("Project added successfully!");
+        if(response.status === 200){
+          addToast( "add partner form submitted successfully", {
+            appearance: "success",
+            autoDismiss: true,
+          });  }
+          else{
+            addToast( "something went wrong", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+            console.error('Failed to submit form');
+          }
 
         // Reset form fields after successful submission
     setFormData({
       name: '',
-      title: '',
+      // title: '',
       phoneNumber: '',
       emailId: '',
       status: '',
@@ -144,7 +157,7 @@ const AddProject = () => {
       remarks: '',
       isVisible: false,
       createdBy: managementId,
-      companyId: ''
+      companyId: '67ada472e0fd86dfa5cb9e53'
     });
 
     // Reset file inputs manually
@@ -161,11 +174,11 @@ const AddProject = () => {
     <>
       <Dashheader />
       <div className="addproject-container">
-        <h2 className="addproject-title">Add Project</h2>
+        <h2 className="addproject-title">Add Partner</h2>
         <form className="addproject-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <input type="text" name="name" placeholder="Project Name" onChange={handleChange} value={formData.name} required />
-            <input type="text" name="title" placeholder="Project Title" onChange={handleChange}  value={formData.title} required />
+            <input type="text" name="name" placeholder="Partner Name" onChange={handleChange} value={formData.name} required />
+            {/* <input type="text" name="title" placeholder="Partner Title" onChange={handleChange}  value={formData.title} required /> */}
            
           </div>
           <div className="form-group">
@@ -175,12 +188,12 @@ const AddProject = () => {
 
           <div className="form-group">
              {/* Project Title Dropdown */}
-             <select name="companyId" onChange={handleChange} required>
+             {/* <select name="companyId" onChange={handleChange} required>
   <option value="">Select Company</option>
   {projectTitle.map((project) => (
-    <option key={project._id} value={project._id}>{project.title}</option>
+    <option key={project._id} value={project._id}>{project.name}</option>
   ))}
-</select>
+</select> */}
 
 
           </div>

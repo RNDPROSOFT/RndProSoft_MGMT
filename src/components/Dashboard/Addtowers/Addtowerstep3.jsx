@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import axios from 'axios';
 import api from './../../../api.js';
+import { useToasts } from "react-toast-notifications";
 
 const AddTowersStep3 = () => {
+  const { addToast } = useToasts();
   const [showExitPopup, setShowExitPopup] = useState(false);
     
     
@@ -145,13 +147,20 @@ const AddTowersStep3 = () => {
         const towerId = response.data?._id || response.data?.data?._id;
         console.log('Extracted Tower ID:', towerId);
         
-        
-        alert("navigating step4")
+        addToast( "step3 submitted successfully", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        // alert("navigating step4")
         // Navigate to Step 3 if the response status is 200
         navigate('/addtowers/step4', { state: { towerId: towerId }, replace: true });
       }
    else {
         setMessage({ type: 'error', text: 'Unexpected response format.' });
+        addToast( "something went wrong", {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
     } catch (error) {
       console.error('Error:', error);
@@ -172,7 +181,7 @@ const AddTowersStep3 = () => {
     <>
       <Dashheader />
       <div className="addtowers">
-        <h2>Add Towers - Step 3</h2>
+        <h2>Add Project - Step 3</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 

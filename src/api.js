@@ -229,9 +229,9 @@ async function getallprojectsforuser() {
     }
 }
 
-async function getTowerdetailsforUser(projectId = "", constructionStatus = "", projectType = "", state = "") {
+async function getTowerdetailsforUser(projectId = "", constructionStatus = "", projectType = "", state = "", page = 1) {
     try {
-        const url = `${utilis.config.apiName.getTowerdetailsforUser}&projectId=${projectId}&constructionStatus=${constructionStatus}&projectType=${projectType}&state=${state}`;
+        const url = `${utilis.config.apiName.getTowerdetailsforUser}&projectId=${projectId}&constructionStatus=${constructionStatus}&projectType=${projectType}&state=${state}&page=${page}`;
         return await axiosinstance.get(url, {
             headers: { 
                 authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
@@ -285,6 +285,97 @@ async function getGst() {
         return e.response;
     }
 }
+async function getCompanydetails() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getCompanydetails,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function getDeveloperdetails() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getDeveloperdetails,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+async function getParticularTowerDetailsforser(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getParticularTowerDetailsforser}${towerId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+async function getParticularTowerDetailsformanagement(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getParticularTowerDetailsformanagement}${towerId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+async function getTowerdetailsformanagement(projectId = "", constructionStatus = "", projectType = "", state = "", page = 1) {
+    try {
+        const url = `${utilis.config.apiName.getTowerdetailsformanagement}&projectId=${projectId}&constructionStatus=${constructionStatus}&projectType=${projectType}&state=${state}&page=${page}`;
+        return await axiosinstance.get(url, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+async function getindividualtowerdetails(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getindividualtowerdetails}${towerId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+async function getStateandcitiesformanagement() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getStateandcitiesformanagement,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
 const api={
     getAdminLogin,
     forgotPassword,
@@ -305,7 +396,14 @@ const api={
     getTowerdetailsforUser,
     getStateandcities,
     getTowerdetails,
-    getGst
+    getGst,
+    getCompanydetails,
+    getDeveloperdetails,
+    getParticularTowerDetailsforser,
+    getParticularTowerDetailsformanagement,
+    getTowerdetailsformanagement,
+    getindividualtowerdetails,
+    getStateandcitiesformanagement
    
 
 }

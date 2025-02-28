@@ -10,6 +10,7 @@ import { useToasts } from "react-toast-notifications";
 const Addtowers = () => {
    const { addToast } = useToasts();
   const [projects, setProjects] = useState([]);
+  
 const [selectedProject, setSelectedProject] = useState('');
 
 
@@ -23,23 +24,22 @@ const [selectedProject, setSelectedProject] = useState('');
   };
   
 
-  
-
   useEffect(() => {
-    axios
-      .get(`${config.baseUrl}/${config.apiName.getStateandcities}`)
-      .then((response) => {
+    // Fetch States from API
+    const GetStates = async () => {
+      try {
+        let response = await api.getStateandcitiesformanagement();
         setApidata(response.data.data);
-        console.log(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+        console.log("Fetched States:", response.data.data);
+      } catch (error) {
+        console.error("Error fetching states:", error);
+      }
+    };
+
+    GetStates();
   }, []);
 
-  useEffect(() => {
-    GetprojectDetails()
-  }, []);
+ 
 
   const GetprojectDetails = async () => {
     try {
@@ -52,6 +52,9 @@ const [selectedProject, setSelectedProject] = useState('');
       console.error("Error fetching projects:", error);
     }
   };
+  useEffect(() => {
+    GetprojectDetails();   
+  }, []);
   
 
 
@@ -60,7 +63,7 @@ let managementId = storedData?.data?.data?._id || null;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
-    title: '',
+    // title: '',
     priceStartRange: '',
     priceEndRange: '',
     city: '',
@@ -217,13 +220,13 @@ const handleInputChange = (e) => {
     <>
       <Dashheader />
       <div className="addtowers">
-        <h2>Add Towers - Step 1</h2>
+        <h2>Add Project - Step 1</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 
         <form onSubmit={handleSubmit} className="addtowers-form">
           <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+          {/* <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required /> */}
           {/* <input type="text" name="priceStartRange" placeholder="Price Start Range" value={formData.priceStartRange} onChange={handleChange} required />
           <input type="text" name="priceEndRange" placeholder="Price End Range" value={formData.priceEndRange} onChange={handleChange} required /> */}
           {/* <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} required />
@@ -342,7 +345,7 @@ const handleInputChange = (e) => {
             <option value="">Select Project</option>
             {projects.map((project) => (
               <option key={project._id} value={project._id}>
-                {project.name} - {project.title}
+                {project.name}
               </option>
             ))}
           </select>

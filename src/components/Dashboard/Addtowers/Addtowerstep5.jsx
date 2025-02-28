@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
-
+import { useToasts } from "react-toast-notifications";
 const AddTowersStep5 = () => {
-  
+  const { addToast } = useToasts();
   const [showExitPopup, setShowExitPopup] = useState(false);
     
     
@@ -29,10 +29,10 @@ const AddTowersStep5 = () => {
     createdBy4: managementId,
     step: 5,
     towerId: towerId || '', // Ensure towerId is set
-    companyId:companyId ,
-    projectId:projectId,
-    isVisible :''
+    companyId: companyId,
+    projectId: projectId,
   });
+  
 
 
   const [loading, setLoading] = useState(false);
@@ -61,38 +61,33 @@ const AddTowersStep5 = () => {
   };
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {  // ✅ Add 'async' here
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-// Validate isVisible selection
-if (formData.isVisible === '') {
-  setErrors({ ...errors, isVisible: 'Please select Yes or No.' });
-  setLoading(false);
-  return;
-}
+  
     try {
-      const response = await api.addTowers(formData);
+      const response = await api.addTowers(formData);  // ✅ 'await' works inside 'async'
       console.log('Step 5 Success:', response.data);
       setMessage({ type: 'success', text: 'Step 5 completed successfully!' });
-
+  
       if (response.status === 200) {
-        const towerId = response.data?._id || response.data?.data?._id;
-    console.log('Extracted Tower ID:', towerId);
-    const companyId = response.data?._id || response.data?.data?.companyId;
-    console.log('Extracted Tower ID:', towerId);
-    const projectId = response.data?._id || response.data?.data?.projectId;
-    console.log('Extracted Tower ID:', towerId);;
-        
-       
-    alert("navigating step5")
-    // Navigate to Step 3 if the response status is 200
-    navigate('/addtowers/step6', { state: { towerId: towerId,companyId:companyId,projectId:projectId }});
-       
-        
-       
+        const towerId = response.data?.data?._id;
+        const companyId = response.data?.data?.companyId;
+        const projectId = response.data?.data?.projectId;
+  
+        addToast("Step 5 submitted successfully", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+  
+        navigate('/addtowers/step7', { state: { towerId, companyId, projectId } });
+      } else {
+        addToast("Something went wrong", {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
-
     } catch (error) {
       setMessage({ type: 'error', text: 'Error submitting Step 5. Please try again.' });
       console.error('Error:', error);
@@ -100,12 +95,13 @@ if (formData.isVisible === '') {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
       <Dashheader />
       <div className="addtowers">
-        <h2>Add Towers - Step 5</h2>
+        <h2>Add Project - Step 5</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 
@@ -143,26 +139,9 @@ if (formData.isVisible === '') {
             Add More
           </button>
      {/* Publish toggle switch */}
-<div style={{ marginTop: '15px', display: 'flex', alignItems: 'center' }}>
-  <label style={{ marginRight: '10px', fontWeight: 'bold' }}>
-    Do you want to publish this tower to users?
-  </label>
-  <label className="switch">
-    <input
-      type="checkbox"
-      name="isVisible"
-      checked={formData.isVisible === true}  // Yes = true, No = false
-      onChange={(e) => {
-        setFormData({ ...formData, isVisible: e.target.checked });
-        setErrors({ ...errors, isVisible: '' }); // Clear error when selected
-      }}
-    />
-    <span className="slider round"></span>
-  </label>
-</div>
 
-{/* Show error message if isVisible is not selected */}
-{errors.isVisible && <p style={{ color: 'red', marginTop: '5px' }}>{errors.isVisible}</p>}
+
+
 
 
 

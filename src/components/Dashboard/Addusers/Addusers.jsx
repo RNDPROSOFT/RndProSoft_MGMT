@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './addusers.css';
 import api from './../../../api.js';
 import Dashheader from '../Dashheader/Dashheader';
+import { useToasts } from "react-toast-notifications";
 
 const Addusers = () => {
+    const { addToast } = useToasts();
   // State to hold form data
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -42,7 +44,11 @@ const Addusers = () => {
         let response= await api.addManagement(body)
        console.log(response,"response")
        if (response.data.success) {
-        alert(`${firstName} is added successfully`);
+        // alert(`${firstName} is added successfully`);
+        addToast( `${firstName} is added successfully`, {
+          appearance: "success",
+          autoDismiss: true,
+        });
   
         // Reset the form fields after successful submission
         setFirstName('');
@@ -55,7 +61,11 @@ const Addusers = () => {
         setBirthDate('');
         setGender('Male');
       } else {
-        alert(`Failed to add ${firstName}`);
+        // alert(`Failed to add ${firstName}`);
+        addToast( `Failed to add ${firstName}`, {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
       
     }catch{

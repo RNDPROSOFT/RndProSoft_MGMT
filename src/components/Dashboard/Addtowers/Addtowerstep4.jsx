@@ -5,9 +5,11 @@ import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import config from './../../../utilis/config'
 import { Select } from 'antd';  // <-- Add this import for Select
+import { useToasts } from "react-toast-notifications";
 
 const AddTowersStep4 = () => {
-
+  
+ const { addToast } = useToasts();
   const [showExitPopup, setShowExitPopup] = useState(false);
     
     
@@ -25,21 +27,36 @@ const AddTowersStep4 = () => {
   };
   
 
+
+  // Fetch project details using the API
+  const GetdeveloperDetails = async () => {
+    try {
+      let response = await api.getDeveloperdetails();
+      setApidata(response.data.data);
+      console.log(response.data.data)
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(`${config.baseUrl}/${config.apiName.getDeveloperdetails}`)
-      .then((response) => {
-        setApidata(response.data.data);
-        const options = response.data.data.map((developer) => ({
-          value: developer._id,
-          label: developer.title,
-        }));
-        setDeveloperOptions(options);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    GetdeveloperDetails();
   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${config.baseUrl}/${config.apiName.getDeveloperdetails}`)
+  //     .then((response) => {
+  //       setApidata(response.data.data);
+  //       const options = response.data.data.map((developer) => ({
+  //         value: developer._id,
+  //         label: developer.title,
+  //       }));
+  //       setDeveloperOptions(options);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, []);
   
 
   const navigate = useNavigate();
@@ -102,15 +119,21 @@ const AddTowersStep4 = () => {
     console.log('Extracted Tower ID:', towerId);
     const projectId = response.data?._id || response.data?.data?.projectId;
     console.log('Extracted Tower ID:', towerId);
+    addToast( "step4 successfully completed", {
+      appearance: "success",
+      autoDismiss: true,
+    });
     
-    
-    alert("navigating step5")
+    // alert("navigating step5")
     // Navigate to Step 3 if the response status is 200
     navigate('/addtowers/step5', { state: { towerId: towerId,companyId:companyId,projectId:projectId } , replace: true});
   }
 else {
     setMessage({ type: 'error', text: 'Unexpected response format.' });
-    alert("step4 not added sucessfully")
+    addToast( "something went wrong", {
+      appearance: "error",
+      autoDismiss: true,
+    });
   }
  
 } catch (error) {
@@ -126,7 +149,7 @@ else {
     <>
       <Dashheader />
       <div className="addtowers">
-        <h2>Add Towers - Step 4</h2>
+        <h2>Add Project - Step 4</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 
@@ -148,7 +171,7 @@ else {
   <option value="">Select Developer</option>
   {apiData.map((developer) => (
     <option key={developer._id} value={developer._id}>
-      {developer.title}
+      {developer.name}
     </option>
   ))}
 </select>

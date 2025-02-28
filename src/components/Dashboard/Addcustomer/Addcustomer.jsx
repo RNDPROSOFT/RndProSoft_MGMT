@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Dashheader from '../Dashheader/Dashheader';
 import './addcustomer.css';
 import api from './../../../api.js';
-
+import { useToasts } from "react-toast-notifications";
 const AddCustomer = () => {
+    const { addToast } = useToasts();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -38,48 +39,61 @@ const AddCustomer = () => {
     setLoading(true);
 
     try {
-        console.log('Submitting data to API...');
+        console.log("Submitting data to API...");
         const response = await api.addCustomer(formData);
-  
-        console.log('API Response:', response.formData);
 
-      const data = await response.json();
-      setLoading(false);
-      const storedData = JSON.parse(localStorage.getItem('AdminDetails')) || {};
-      let managementId = storedData?.data?.data?._id || null;
+        console.log("Full API Response:", response);
 
-      if (response.ok) {
-        alert("Customer added successfully!");
-        setFormData({
-          name: "",
-          surname: "",
-          birthDate: "",
-          gender: "",
-          emailId: "",
-          phoneNumber: "",
-          phoneNumber2: "",
-          countryCode: "91",
-          countryCode2: "91",
-          whatsappNumber: "",
-          govtIdProof: "",
-          houseNo: "",
-          street: "",
-          city: "",
-          state: "",
-          pinCode: "",
-          source: "",
-          occupation: "",
-          registeredBy: managementId,
-        });
-      } else {
-        alert(data.message || "Something went wrong!");
-      }
+        if (response.status === 200) {  // Axios should return `status`
+            console.log("API Success - Showing toast...");
+            addToast("Customer added successfully!", {
+                appearance: "success",
+                autoDismiss: true,
+            });
+
+            const storedData = JSON.parse(localStorage.getItem("AdminDetails")) || {};
+            let managementId = storedData?.data?.data?._id || null;
+
+            setFormData({
+                name: "",
+                surname: "",
+                birthDate: "",
+                gender: "",
+                emailId: "",
+                phoneNumber: "",
+                phoneNumber2: "",
+                countryCode: "91",
+                countryCode2: "91",
+                whatsappNumber: "",
+                govtIdProof: "",
+                houseNo: "",
+                street: "",
+                city: "",
+                state: "",
+                pinCode: "",
+                source: "",
+                occupation: "",
+                registeredBy: managementId,
+            });
+
+        } else {
+            console.log("API Error - Showing toast...");
+            addToast(response.data?.message || "Something went wrong!", {
+                appearance: "error",
+                autoDismiss: true,
+            });
+        }
     } catch (error) {
-      setLoading(false);
-      console.error("Error:", error);
-      alert("Failed to add customer.");
+        console.error("Error:", error);
+        addToast("Failed to add customer!", {
+            appearance: "error",
+            autoDismiss: true,
+        });
+    } finally {
+        setLoading(false);
     }
-  };
+};
+
 
   return (
     <>

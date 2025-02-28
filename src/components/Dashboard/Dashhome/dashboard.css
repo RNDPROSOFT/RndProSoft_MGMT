@@ -1,136 +1,365 @@
-/* Main dashboard container */
-.dashhome {
-    padding: 30px;
-    background-color: #f4f4f4;
-}
+/* Premium Styling for Our Projects */
 
-/* Container for all cards */
-.cards-container {
+.alltowersforuser {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Increased gap for better spacing */
-    justify-content: flex-start; /* Ensures the cards are aligned from the start */
-    margin-top: 20px;
-}
-
-/* Individual tower card style */
-.tower-card {
-    width: 28%; /* Reduced width for the cards */
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    gap: 25px;
+    justify-content: start;
+    padding: 40px 20px;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+   
+  }
+  
+  .tower-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    width: 380px;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
     position: relative;
-    cursor: pointer;
-    padding: 12px; /* Reduced padding to decrease overall height */
-    display: flex;
-    flex-direction: column;
-    height: auto; /* Allow the card height to adjust based on content */
-}
-
-/* Hover effect on the card */
-.tower-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    opacity: 0.9; /* Slight opacity change for hover effect */
-}
-
-/* Styling for the tower image */
-.image-container {
+    animation: fadeInUp 0.8s ease-in-out;
+    /* border: 2px solid black; */
+  }
+  
+  .tower-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Premium Image Styling */
+  .tower-image-wrapper {
     position: relative;
-    width: 100%;
-    height: auto; /* Reduced height for the image container */
     overflow: hidden;
-    border-radius: 12px; /* Rounded corners for the image container */
-}
-
-.tower-image {
+  }
+  
+  .tower-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the container */
-    object-position: center; /* Centers the image within the container */
-    border-radius: 8px;
-}
-
-/* Construction status overlay */
-.construction-status {
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transition: transform 0.6s ease-in-out;
+  }
+  
+  .tower-card:hover .tower-image {
+    transform: scale(1.05);
+  }
+  
+  /* Construction Status Tag */
+  .construction-status {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
+    top: 15px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.75);
     color: #fff;
-    padding: 8px 15px;
+    padding: 6px 14px;
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    width: 48%;
+    letter-spacing: 1px;
+    backdrop-filter: blur(3px);
+  }
+  
+  /* Content Styling */
+  .tower-content {
+    padding: 20px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .tower-card:hover .tower-content {
+    background: linear-gradient(to right, #f3f4f6, #f8f9fb);
+  }
+  
+  .tower-title {
+    font-size: 22px;
+    font-weight: bold;
     text-align: center;
-}
-
-/* Card info section */
-.card-info {
-    padding: 12px 0; /* Reduced padding to decrease height */
-    font-size: 14px;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .tower-card:hover .tower-title {
+    color: #1d3557;
+  }
+  
+  /* Tower Details */
+  .tower-details {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.6;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .tower-card:hover .tower-details {
     color: #333;
-    flex-grow: 1; /* Ensures the card info takes up remaining space */
-}
-
-.card-info h3 {
-    font-size: 20px;
+  }
+  
+  /* Tower Gallery */
+  .tower-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .tower-gallery-img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  }
+  
+  .tower-gallery-img:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .alltowersforuser {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .tower-card {
+      width: 95%;
+    }
+  
+    .tower-image {
+      height: 200px;
+    }
+  }
+  
+  
+  /* Our Projects Section */
+  .our-projects-container {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    justify-content: center;
+  }
+  
+  
+  /* Towers Section - Two Cards per Row */
+  .alltowersforuser {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  
+  /* Tower Card - Two in a Row */
+  .tower-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    flex-basis: calc(50% - 25px);
+    max-width: 450px;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    position: relative;
+    animation: fadeInUp 0.8s ease-in-out;
+  }
+  
+  
+  .tower-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .our-projects-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .filters-container {
+      width: 100%;
+      max-width: 400px;
+    }
+  
+    .tower-card {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+  /* Filters Section */
+  .filters-container {
+    width: 650px; /* Good width for structure */
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid #ea8c2f; /* Elegant orange accent */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+  }
+  
+  
+  
+  /* Filters Title */
+  .filters-title {
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 8px; /* Reduced margin */
     color: #333;
-}
-
-.card-info p {
-    margin: 6px 0; /* Reduced margin between paragraphs */
-    font-size: 14px;
-}
-
-.card-info p strong {
-    font-weight: bold;
-}
-
-.card-info p {
-    color: #666;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .tower-card {
-        width: 100%;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-    .tower-card {
-        width: 48%; /* Two cards per row */
-    }
-}
-
-@media (min-width: 1024px) {
-    .tower-card {
-        width: 28%; /* Reduced width for three cards per row on large screens */
-    }
-}
-
-/* Add some hover and focus effects */
-.tower-card:focus, .tower-card:hover {
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  
+  /* Dropdown Styling */
+  .filters-container select {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333;
     outline: none;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-    transform: translateY(-15px);
-}
-
-/* Add animations for loading state or content */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-.tower-card {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Hover & Focus Effects */
+  .filters-container select:hover,
+  .filters-container select:focus {
+    border-color: #ff7f00;
+    box-shadow: 0 0 6px rgba(255, 127, 0, 0.4);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .filters-container {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+  
+  
+  .our-projects-container {
+    display: flex;
+    align-items: flex-start; /* Keeps filter bar stable */
+  }
+  
+  .filters-container {
+    width: 300px; /* Set a fixed width */
+    flex-shrink: 0; /* Prevents it from resizing */
+  }
+  
+  .alltowersforuser {
+    flex-grow: 1; /* Allows towers to take available space */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: start;
+    min-width: 60%; /* Prevents width shrink when filtering */
+  }
+  
+  /* Ensuring the layout remains stable */
+  .our-projects-container {
+    display: flex;
+    align-items: flex-start; /* Keeps filter bar aligned */
+  }
+  
+  /* Filter Container - Fixed for Laptops */
+  .filters-container {
+    width: 300px;
+    flex-shrink: 0; /* Prevents it from resizing */
+    position: sticky; /* Keeps it fixed while scrolling */
+    top: 120px; /* Sticks to the top with spacing */
+    height: auto; /* Full viewport height */
+    overflow-y: auto; /* Allows scrolling if filters exceed screen */
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid #ea8c2f;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Towers Container - Scrollable */
+  .alltowersforuser {
+    flex-grow: 1; /* Allows towers to take available space */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: start;
+    min-width: 60%; /* Prevents width shrink when filtering */
+    max-height: 90vh; /* Allows scrolling only for towers */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+  }
+  
+  /* Mobile & Tablet - Allow Filter Bar to Scroll */
+  @media (max-width: 992px) {
+    .filters-container {
+      position: relative; /* Normal position for mobile */
+      height: auto;
+      /* border: 2px solid black; */
+      top: 0%;
+    }
+  
+    .alltowersforuser {
+      max-height: none;
+      overflow-y: visible;
+    }
+    
+  }
+  
+  
+  
+  .alltowerforhome1 {
+    text-align: center;
+    padding: 0px 20px;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    border-radius: 12px;
+    /* border: 2px solid black; */
+   
+  }
+  
+  .alltowerforhome1 h1{
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .alltowerforhome1 h1::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background-color: #ea8c2f;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+  
