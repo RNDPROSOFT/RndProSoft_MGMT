@@ -60,7 +60,11 @@ const AddTowersStep3 = () => {
       if (file.size <= maxSize) {
         return true; // Accept file
       } else {
-        alert(`File "${file.name}" exceeds 5MB and will not be uploaded.`);
+        // alert(`File "${file.name}" exceeds 5MB and will not be uploaded.`);
+        addToast(`File "${file.name}" exceeds 1MB and will not be uploaded.`, {
+          appearance: "error",
+          autoDismiss: true,
+        });
         return false; // Reject file
       }
     });

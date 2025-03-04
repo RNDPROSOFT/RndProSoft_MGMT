@@ -33,6 +33,12 @@ const apiName={
     //  for individual tower details
     getindividualtowerdetails:"api/management/get/particular/tower/details?towerId=",
     getStateandcitiesformanagement:"api/management/all/cities/states",
+
+    // editing customer details
+    updateCustomerdetails:"api/management/update/user/details",
+
+    // update project details
+    updateProjectdetails:"api/management/update/tower/details",
      
    
 

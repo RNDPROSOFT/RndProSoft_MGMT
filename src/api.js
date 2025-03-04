@@ -376,6 +376,41 @@ async function getStateandcitiesformanagement() {
         return e.response;
     }
 }
+
+
+
+
+
+// update Customer details
+async function updateCustomerdetails() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.updateCustomerdetails,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+
+
+async function updateProjectdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateProjectdetails,body,{
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
 const api={
     getAdminLogin,
     forgotPassword,
@@ -403,7 +438,9 @@ const api={
     getParticularTowerDetailsformanagement,
     getTowerdetailsformanagement,
     getindividualtowerdetails,
-    getStateandcitiesformanagement
+    getStateandcitiesformanagement,
+    updateCustomerdetails,
+    updateProjectdetails
    
 
 }

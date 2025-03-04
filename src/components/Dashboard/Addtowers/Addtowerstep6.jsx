@@ -113,10 +113,23 @@ const Addtowerstep6 = () => {
   
   
 
+  // const handleFileChange = (e) => {
+  //   const { name, files } = e.target;
+  //   setFormData({ ...formData, [name]: files[0] });
+  // };
+  const [gallery, setGallery] = useState([]);
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+    const file = e.target.files[0];
+
+    if (file && file.size > 1 * 1024 * 1024) { // 1MB limit
+      addToast("File size must be less than 1MB", { appearance: "error", autoDismiss: true });
+      e.target.value = ""; // Prevents file from being added to the input field
+      return;
+    }
+
+    setGallery([...gallery, file]); // Only adds valid images
   };
+
 
   const [showForm, setShowForm] = useState(true);
   const [submittedFlats, setSubmittedFlats] = useState([]);

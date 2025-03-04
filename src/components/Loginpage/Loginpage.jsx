@@ -304,6 +304,7 @@ const updatePassword=async (e)=>{
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+    
             <input type="password"
              placeholder="Password" 
              className="login-input"
