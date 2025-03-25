@@ -18,6 +18,14 @@ import Individualtowermanagement from '../Dashboard/Dashhome/Individualtowermana
 import Addtowersstep7 from '../Dashboard/Addtowers/Addtowersstep7';
 import Editcustomer from '../Dashboard/Addcustomer/Editcustomer/Editcustomer';
 import EditPartner from '../Dashboard/Addproject/Editpartner/EditPartner';
+import Partnerdetails from '../Dashboard/Addproject/Partnerdetails/Partnerdetails';
+import Getcustomerlist from '../Dashboard/Addcustomer/Getcustomerlist/Getcustomerlist';
+import Updateblocks from '../Dashboard/Dashhome/UpdateBlocks/Updateblocks';
+import Updateflats from '../Dashboard/Dashhome/Updateflats/Updateflats';
+import UpdateImages from '../Dashboard/Dashhome/Updateimages/UpdateImages';
+import Flatdetails from '../Dashboard/Dashhome/FlatDetails/Flatdetails';
+import Bookingflat from '../Dashboard/Dashhome/BookingFlat/Bookingflat';
+import AdvancePayment from '../Dashboard/Dashhome/AdvancePayment/AdvancePayment';
 
 
 
@@ -42,13 +50,23 @@ const Navigation = () => {
                 <Route path="/individualtowermanagement/:towerName" element={<Individualtowermanagement />} />
 
 
+                <Route path="/dashboard/Flatdetails" element={<Flatdetails />} />
+                <Route path="/dashboard/updateblocks" element={<Updateblocks />} />
+                <Route path="/dashboard/updateflats" element={<Updateflats />} />
+                <Route path="/dashboard/updateimages" element={<UpdateImages />} />
 
 
                 <Route path="/dashboard/addcustomer" element={<Addcustomer />} />
-                <Route path="/dashboard/editcustomer"  element={<Editcustomer />} />
+                <Route path="/dashboard/editcustomer/:id"  element={<Editcustomer />} />
+                <Route path="/dashboard/getcustomerlist"  element={<Getcustomerlist />} />
 
                 <Route path="/dashboard/Addproject" element={<Addproject />} />
-                <Route path="/dashboard/editpartner" element={<EditPartner />} />
+                <Route path="/dashboard/editpartner/:id" element={<EditPartner />} />
+
+                <Route path="/dashboard/partnerdetails" element={<Partnerdetails />} />
+
+                <Route path="/dashboard/bookingflats" element={<Bookingflat />} />
+                <Route path="/dashboard/advancepayment" element={<AdvancePayment/>} />
 
 
             </Routes>

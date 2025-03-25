@@ -1,0 +1,125 @@
+.advancepayment {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.advancepayment__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.advancepayment__header h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ED712B; /* Your logo color */
+}
+
+.advancepayment__submit {
+  padding: 14px 36px;
+  background-color: #ED712B; /* Your logo color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.advancepayment__submit:hover {
+  background-color: #d35a24;
+}
+
+/* Input Fields Design */
+.advancepayment__input {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.advancepayment__input:focus {
+  border-color: #ED712B; /* Logo color for focus */
+  box-shadow: 0 0 8px rgba(237, 113, 43, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .advancepayment {
+      padding: 20px;
+  }
+
+  .advancepayment__header h2 {
+      font-size: 28px;
+  }
+
+  .advancepayment__column {
+      margin-bottom: 16px;
+  }
+}
+
+
+.advancepayment__phone {
+  margin-top: 20px; /* Add spacing below the heading */
+  width: 100%; /* Ensure it spans the container width */
+}
+
+.advancepayment__phone label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ED712B; /* Highlight label with logo color */
+  display: block;
+  margin-bottom: 8px;
+}
+
+.advancepayment__phone-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between input and button */
+}
+
+.advancepayment__input {
+  width: 250px; /* Set a fixed width for the input field */
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ED712B; /* Highlight border with logo color */
+  box-shadow: none; /* Remove the glowing effect */
+  transition: border-color 0.3s ease;
+}
+
+.advancepayment__input:focus {
+  border-color: #d35a24; /* Darker highlight on focus */
+  box-shadow: none; /* Remove blue hover effect */
+  outline: none; /* Remove default blue outline */
+}
+
+.advancepayment__input:hover {
+  border-color: #d35a24; /* Keep the same border color on hover */
+  box-shadow: none; /* Remove blue hover effect */
+}
+.advancepayment__input:focus {
+  border-color: #d35a24; /* Darker highlight on focus */
+  box-shadow: 0 0 12px rgba(211, 90, 36, 0.5); /* Enhance glowing effect */
+}
+
+.advancepayment__search-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ED712B; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.advancepayment__search-button:hover {
+  background-color: #d35a24; /* Darker button color on hover */
+}

@@ -1,0 +1,165 @@
+/* Main Container */
+.updateflatdetails-container {
+  max-width: 100%;
+  padding: 20px;
+  overflow-x: auto; /* Enables smooth horizontal scrolling */
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+/* Table Styling */
+.updateflatdetails-table {
+  width: 100%;
+  min-width: 1400px; /* Ensures columns have enough space */
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  table-layout: auto; /* Allows dynamic column width */
+}
+
+/* Table Headers & Cells */
+.updateflatdetails-table th,
+.updateflatdetails-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds "..." for long text */
+}
+
+/* Header Styling */
+.updateflatdetails-table th {
+  background: #e65c00;
+  color: white;
+  font-weight: bold;
+}
+
+/* Input Fields Inside Table */
+.updateflatdetails-table td input {
+  width: 100%;
+  max-width: 150px; /* Ensures inputs don't stretch too much */
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  box-sizing: border-box; /* Includes padding inside width */
+}
+
+/* Save Button */
+.updateflatdetails-save-btn {
+  background: #e65c00;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.updateflatdetails-save-btn:hover {
+  background: #c74c00;
+}
+
+/* 🔹 Responsive Adjustments for Tablets */
+@media screen and (max-width: 1024px) {
+  .updateflatdetails-table {
+      font-size: 14px;
+      min-width: 1200px;
+  }
+
+  .updateflatdetails-table td input {
+      font-size: 12px;
+      max-width: 120px;
+  }
+}
+
+/* 🔸 Mobile Version - Keeps Table Scrollable */
+@media screen and (max-width: 768px) {
+  .updateflatdetails-container {
+      overflow-x: auto; /* Enables horizontal scrolling */
+      display: block;
+  }
+
+  .updateflatdetails-table {
+      min-width: 1200px; /* Prevents extreme shrinking */
+  }
+
+  .updateflatdetails-table th,
+  .updateflatdetails-table td {
+      padding: 6px;
+      font-size: 12px;
+  }
+
+  .updateflatdetails-table td input {
+      max-width: 100px;
+  }
+
+  .updateflatdetails-save-btn {
+      font-size: 12px;
+      padding: 5px 8px;
+  }
+}
+
+/* 📱 Mobile View - Scrollable Table Instead of Stacking */
+@media screen and (max-width: 600px) {
+  .updateflatdetails-container {
+      overflow-x: auto;
+  }
+
+  .updateflatdetails-table {
+      min-width: 1100px; /* Ensures proper width */
+  }
+
+  .updateflatdetails-table th,
+  .updateflatdetails-table td {
+      font-size: 12px;
+      padding: 6px;
+  }
+
+  .updateflatdetails-table td input {
+      max-width: 80px;
+  }
+
+  .updateflatdetails-save-btn {
+      font-size: 12px;
+      padding: 5px 8px;
+  }
+}
+.updateflatdetails-heading {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  color: #e65c00; /* Theme color */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 20px;
+  margin: 20px auto; /* Centers the heading */
+  border-bottom: 3px solid #e65c00; /* Underline effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content; /* Ensures no extra width */
+}
+.add-flat-btn {
+  background-color: #ff6600; /* Orange color matching your company's logo */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.add-flat-btn:hover {
+  background-color: #e65c00; /* Slightly darker shade on hover */
+}
+
+.add-flat-btn:active {
+  background-color: #cc5200; /* Even darker shade when clicked */
+  transform: scale(0.95);
+}
+

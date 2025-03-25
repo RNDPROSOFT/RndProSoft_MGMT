@@ -381,10 +381,29 @@ async function getStateandcitiesformanagement() {
 
 
 
-// update Customer details
-async function updateCustomerdetails() {
+
+
+
+
+
+async function updateProjectdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateProjectdetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+// get partner details for management
+
+async function getPartnerdetails() {
     try {
-        return await axiosinstance.get(utilis.config.apiName.updateCustomerdetails,{
+        return await axiosinstance.get(utilis.config.apiName.getPartnerdetails,{
             headers: { 
                
                 authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
@@ -395,15 +414,34 @@ async function updateCustomerdetails() {
     }
 }
 
+// get particular partner details for management
+
+async function getParticularPartnerdetails(projectId) {
+    try {
+        const response = await axiosinstance.get(
+            `${utilis.config.apiName.getParticularPartnerdetails}=${projectId}`, // Correctly append the projectId
+            {
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                },
+            }
+        );
+        return response; // Return the response directly
+    } catch (error) {
+        console.error("Error in getParticularPartnerdetails:", error.message);
+        return error.response || { status: 500, message: "Internal Server Error" }; // Return a fallback response
+    }
+}
 
 
 
+// update partner details for management
 
-async function updateProjectdetails(body) {
+async function updatePartnerdetails(body) {
     try{
-            return await axiosinstance.post(utilis.config.apiName.updateProjectdetails,body,{
+            return await axiosinstance.post(utilis.config.apiName.updatePartnerdetails,body,{
                 headers: { 
-                    'Content-Type': 'multipart/form-data',
+                    // 'Content-Type': 'multipart/form-data',
                     authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
                   },
             })
@@ -411,6 +449,278 @@ async function updateProjectdetails(body) {
                 return e.response;
     }
 }
+
+
+
+
+
+// get customer details
+async function getCustomerdetails(search = "", limit = 5, page = 1) {
+    try {
+        return await axiosinstance.get(`api/management/user/list?search=${search}&limit=${limit}&page=${page}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+// get particular customer details
+// get particular partner details for management
+
+async function getParticularCustomerdetails(userId) { // Accept userId as a parameter
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getParticularCustomerdetails}${userId}`, { // Append userId to the URL
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+// update partner details for management
+
+async function updateCustomerdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateCustomerdetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+
+// update partner details for management
+
+async function updateAboutdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateAboutdetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+
+// update partner details for management
+
+async function updateBlockdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateBlockdetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+// update partner details for management
+
+async function updateFlatdetails(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateFlatdetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+async function createEmiPlan(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.createEmiPlan,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+async function getAllEmiPlans() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getAllEmiPlans,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+async function updateEmiPlan(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.updateEmiPlan,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function getImagesforProject(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getImagesforProject}${towerId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function deleteImageproject(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.deleteImageproject,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+async function isProjectIsvisble(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.isProjectIsvisble,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+async function getAllFlatsDetailsForBooking(towerId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getAllFlatsDetailsForBooking}${towerId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+
+
+async function AddIMages(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.AddIMages,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+async function createEstimationForm(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.createEstimationForm,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+async function bookingFlats(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.bookingFlats,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
+
+// api.js
+
+async function userdetailsforbooking(phoneNumber) {
+    try {
+        // Dynamically add the phoneNumber to the URL
+        const url = `${utilis.config.apiName.userdetailsforbooking}${phoneNumber}`;
+        return await axiosinstance.get(url, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+
+async function advancePayment(body) {
+    try{
+            return await axiosinstance.post(utilis.config.apiName.advancePayment,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
+
+
 const api={
     getAdminLogin,
     forgotPassword,
@@ -440,7 +750,28 @@ const api={
     getindividualtowerdetails,
     getStateandcitiesformanagement,
     updateCustomerdetails,
-    updateProjectdetails
+    updateProjectdetails,
+    getPartnerdetails,
+    getParticularPartnerdetails,
+    getCustomerdetails,
+    updatePartnerdetails,
+    getParticularCustomerdetails,
+    updateAboutdetails,
+    updateBlockdetails,
+    updateFlatdetails,
+    createEmiPlan,
+    getAllEmiPlans,
+    updateEmiPlan,
+    getImagesforProject,
+    deleteImageproject,
+    isProjectIsvisble,
+    getAllFlatsDetailsForBooking,
+    AddIMages,
+    createEstimationForm,
+    bookingFlats,
+    userdetailsforbooking,
+    advancePayment
+
    
 
 }

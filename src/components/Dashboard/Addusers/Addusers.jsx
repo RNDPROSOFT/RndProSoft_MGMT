@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import './addusers.css';
 import api from './../../../api.js';
 import Dashheader from '../Dashheader/Dashheader';
 import { useToasts } from "react-toast-notifications";
+import utilis from '../../../utilis';
 
 const Addusers = () => {
+  let navigate = useNavigate();
     const { addToast } = useToasts();
   // State to hold form data
   const [firstName, setFirstName] = useState('');
@@ -43,6 +47,12 @@ const Addusers = () => {
         console.log(body,"body")
         let response= await api.addManagement(body)
        console.log(response,"response")
+       if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
        if (response.data.success) {
         // alert(`${firstName} is added successfully`);
         addToast( `${firstName} is added successfully`, {

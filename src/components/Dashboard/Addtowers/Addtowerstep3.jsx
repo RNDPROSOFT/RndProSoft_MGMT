@@ -4,6 +4,8 @@ import Dashheader from '../Dashheader/Dashheader';
 import axios from 'axios';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
 
 const AddTowersStep3 = () => {
   const { addToast } = useToasts();
@@ -24,18 +26,18 @@ const AddTowersStep3 = () => {
 
   const storedData = JSON.parse(localStorage.getItem('AdminDetails')) || {};
   let managementId = storedData?.data?.data?._id || null;
-      console.log(towerId,'towerid')
+      // console.log(towerId,'towerid')
   const [formData, setFormData] = useState({
     towerId: towerId || '',
     projectType: '',
     developmentSize: '',
     totalUnits: '',
     constructionStatus: '',
-    aminities: '',
-    specification: '',
+    // aminities: [''],
+    specification:null,
     noOfBlocks: '',
     noOfFlats: '',
-    remarks: '',
+    remarks: null,
     createdBy2: managementId,
     step: 3,
   });
@@ -131,7 +133,9 @@ const AddTowersStep3 = () => {
       Object.keys(formData).forEach((key) => {
         data.append(key, formData[key]);
       });
-  
+          // Append array fields (PRINT HERE BEFORE SENDING)
+    console.log("Aminities being sent to backend:", aminities);
+    console.log("Bedrooms being sent to backend:", bedrooms);
       // Append array fields
       bedrooms.forEach((bedroom) => data.append('bedrooms[]', bedroom));
       aminities.forEach((aminity) => data.append('aminities[]', aminity));
@@ -145,7 +149,12 @@ const AddTowersStep3 = () => {
   
       console.log('Response:', response);
       console.log(data)
-  
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
      
       if (response.status === 200) {
         const towerId = response.data?._id || response.data?.data?._id;
@@ -161,7 +170,7 @@ const AddTowersStep3 = () => {
       }
    else {
         setMessage({ type: 'error', text: 'Unexpected response format.' });
-        addToast( "something went wrong", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -184,6 +193,9 @@ const AddTowersStep3 = () => {
   return (
     <>
       <Dashheader />
+       {loading ? (
+            <Loading/>
+          ) : (
       <div className="addtowers">
         <h2>Add Project - Step 3</h2>
 
@@ -191,30 +203,30 @@ const AddTowersStep3 = () => {
 
         <form onSubmit={handleSubmit} className="addtowers-form">
           <select name="projectType" value={formData.projectType} onChange={handleChange} required>
-            <option value="">Select Project Type</option>
+            <option value="">Select Project Type*</option>
             <option value="APARTMENT">Apartment</option>
             <option value="VILLA">Villa</option>
             <option value="COMMERCIAL">Commercial</option>
           </select>
           
-          <input type="text" name="developmentSize" placeholder="Development Size" value={formData.developmentSize} onChange={handleChange} required />
-          <input type="text" name="totalUnits" placeholder="Total Units" value={formData.totalUnits} onChange={handleChange} required />
+          <input type="text" name="developmentSize" placeholder="Development Size*" value={formData.developmentSize} onChange={handleChange} required />
+          <input type="text" name="totalUnits" placeholder="Total Units*" value={formData.totalUnits} onChange={handleChange} required />
           
           <select name="constructionStatus" value={formData.constructionStatus} onChange={handleChange} required>
-            <option value="">Select Construction Status</option>
+            <option value="">Select Construction Status*</option>
             <option value="READY TO MOVE">Ready to Move</option>
             <option value="UNDER CONSTRUCTION">Under Construction</option>
             <option value="NEW LAUNCH">New Launch</option>
           </select>
 
-          <input type="text" name="specification" placeholder="Specification" value={formData.specification} onChange={handleChange} required />
-          <input type="text" name="noOfBlocks" placeholder="No of Blocks" value={formData.noOfBlocks} onChange={handleChange} required />
-          <input type="text" name="noOfFlats" placeholder="No of Flats" value={formData.noOfFlats} onChange={handleChange} required />
-          <input type="text" name="remarks" placeholder="Remarks" value={formData.remarks} onChange={handleChange} required />
+          <input type="text" name="specification" placeholder="Specification(Optional)" value={formData.specification} onChange={handleChange}  />
+          <input type="text" name="noOfBlocks" placeholder="No of Blocks*" value={formData.noOfBlocks} onChange={handleChange} required />
+          <input type="text" name="noOfFlats" placeholder="No of Flats*" value={formData.noOfFlats} onChange={handleChange} required />
+          <input type="text" name="remarks" placeholder="Remarks(Optional)" value={formData.remarks} onChange={handleChange}  />
 
           {/* Bedrooms Section */}
           <div className="bedrooms-container">
-            <label>Bedrooms (e.g., 2BHK, 3BHK):</label>
+            <label>Bedrooms* (e.g., 2BHK, 3BHK):</label>
             {bedrooms.map((bedroom, index) => (
               <div key={index} className="bedroom-input">
                 <input
@@ -231,8 +243,8 @@ const AddTowersStep3 = () => {
           </div>
 
           {/* Aminities Section */}
-          <div className="aminities-container">
-            <label>Aminities:</label>
+          {/* <div className="aminities-container">
+            <label>Aminities(Optional):</label>
             {aminities.map((aminity, index) => (
               <div key={index} className="aminity-input">
                 <input
@@ -240,17 +252,17 @@ const AddTowersStep3 = () => {
                   value={aminity}
                   onChange={(e) => handleAminityChange(e, index)}
                   placeholder={`Aminity ${index + 1}`}
-                  required
+                  
                 />
                 <button type="button" className="remove-button" onClick={() => handleRemoveAminity(index)}>Remove</button>
               </div>
             ))}
             <button type="button" className="add-button" onClick={handleAddAminity}>Add More +</button>
-          </div>
+          </div> */}
 
           {/* Gallery Section */}
           <div className="gallery-container">
-  <label>Gallery Images:</label>
+  <label>Gallery Images:*</label>
   <button type="button" onClick={() => document.getElementById('gallery').click()}>
     Add More +
   </button>
@@ -280,7 +292,7 @@ const AddTowersStep3 = () => {
 
           {/* Plan Images Section */}
           <div className="plan-images-container">
-  <label>Plan Images:</label>
+  <label>Plan Images:*</label>
   <button type="button" onClick={() => document.getElementById('planImages').click()}>
     Add More +
   </button>
@@ -292,6 +304,7 @@ const AddTowersStep3 = () => {
     accept="image/*"
     style={{ display: 'none' }}
     onChange={handleFileChange}
+    required
   />
   {planImages.map((file, index) => (
     <div key={index} className="plan-image-item">
@@ -332,6 +345,7 @@ const AddTowersStep3 = () => {
           
         </form>
       </div>
+       )}
     </>
   );
 };

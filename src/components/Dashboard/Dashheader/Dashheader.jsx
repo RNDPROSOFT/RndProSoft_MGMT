@@ -7,15 +7,22 @@
   import { FiSettings } from 'react-icons/fi';
   import config from './../../../utilis/config'
   import axios from 'axios';
-
+  import { useToasts } from "react-toast-notifications";
 
 
 
   const Dashheader = () => {
+     const { addToast } = useToasts();
     const [showCustomerDropdown, setShowCustomerDropdown] = useState(false);
     const [showCustomerDropdownMobile, setShowCustomerDropdownMobile] = useState(false);
     const [showPartnerDropdown, setShowPartnerDropdown] = useState(false);
     const [showPartnerDropdownMobile, setShowPartnerDropdownMobile] = useState(false);
+    const [showEmiDropdownMobile, setShowEmiDropdownMobile] = useState(false);
+    const [showUpdateEmi, setShowUpdateEmi] = useState(false);
+    const [updateemiremarks, setupdateemiRemarks] = useState({});
+
+
+    
 
 
     let navigate = useNavigate()
@@ -61,7 +68,7 @@
       formData.append('name', engineerName);       // Backend expects 'name'
       // formData.append('title', companyName);       
       formData.append('phone', phoneNumber);       // Backend expects 'phone'
-      formData.append('devlogo', image);           // Backend expects 'devlogo'
+      // formData.append('devlogo', null);         
     
       // Debugging: Check the FormData entries
       for (let [key, value] of formData.entries()) {
@@ -162,28 +169,10 @@
     
 
 
-
-    
-
-
-
-
-
-
-
-
     // Function to cancel logout
     const cancelLogout = () => {
       setShowLogoutPopup(false); // Close the popup without logging out
     };
-
-
-
-
-
-
-
-
 
 
 
@@ -226,7 +215,67 @@
   //   handleClosePopup(); // Close popup after submission
   // };
 
+  const [showEmiPopup, setShowEmiPopup] = useState(false);
 
+  const [showCreateEmiForm, setShowCreateEmiForm] = useState(false);
+
+
+
+  const [emiData, setEmiData] = useState({
+    name: "",
+    months: "",
+    intrestRate: "",
+    createdBy:managementId, // Hidden field
+  });
+
+  const handleEmiClick = () => {
+    setShowEmiPopup(true);
+    setShowCreateEmiForm(false); // Ensure form is hidden initially
+  };
+
+  
+  // Handle form input changes
+  const handleCreateEmiChange = (e) => {
+    setEmiData({ ...emiData, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission
+  const handleCreateEmiSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.createEmiPlan(emiData);
+      console.log("EMI Created Successfully", response.data);
+      if (response.data.success) {
+        // alert(`${firstName} is added successfully`);
+        addToast( `emi plan created successfully`, {
+          appearance: "success",
+          autoDismiss: true,
+        })
+        setEmiData({
+          name:"",
+          months: "",
+          intrestRate: "",
+          createdBy:managementId
+
+        })
+      }
+      else{
+        addToast( response.data?.message || "Something went wrong!", {
+          appearance: "error",
+          autoDismiss: true,
+        })
+      }
+      handleClosePopup();
+     
+    } catch (error) {
+      console.error("Error creating EMI:", error);
+      alert("Failed to create EMI plan.");
+    }
+  };
+
+
+  
 
     // Function to open the GST popup
     const handleGstClick = () => {
@@ -238,6 +287,7 @@
     // Function to close the GST popup
     const handleClosePopup = () => {
       setShowGstPopup(false);
+      setShowEmiPopup(false)
     };
 
 
@@ -250,7 +300,7 @@
             setGstId(response.data.data[0]._id); // Store GST ID
             setGst(response.data.data[0].gst); // Set GST value
           }
-        console.log("Fetched Gst:", response.data.data);
+        // console.log("Fetched Gst:", response.data.data);
       } catch (error) {
         console.error("Error fetching Gst:", error);
       }
@@ -279,7 +329,21 @@
       try {
         let response= await api.updateGst(body)
         console.log(response,"response")
-        alert("GST updated successfully!");
+        if (response.data.success) {
+          // alert(`${firstName} is added successfully`);
+          addToast( `Gst updated scuucessfully`, {
+            appearance: "success",
+            autoDismiss: true,
+          })
+         
+        }
+        else{
+          addToast( response.data?.message || "Something went wrong!", {
+            appearance: "error",
+            autoDismiss: true,
+          })
+        }
+        // alert("GST updated successfully!");
         // Clear the remarks field
       setRemarks("");
         setShowGstForm(false)
@@ -293,12 +357,87 @@
     
     const [gstId, setGstId] = useState(""); // State for GST ID
 
-    
+    const [getAllEmiPlans, setgetAllEmiPlans] = useState([]);
+
+    // Fetch project details using the API
+    const GetAllEmiPlans = async () => {
+
+      try {
+        let response = await api.getAllEmiPlans();
+        setgetAllEmiPlans(response.data.data);
+        console.log(response.data.data ,'emiplans')
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+  
+    useEffect(() => {
+      GetAllEmiPlans();
+    }, []);
+  
+   
+    // Handle Remarks Change
+  const handleUpdateEmiRemarksChange = (id, value) => {
+    setupdateemiRemarks((prev) => ({ ...prev, [id]: value }));
+  };
+  const [updatedEmiData, setUpdatedEmiData] = useState({});
+
+// Function to handle input changes
+const handleEmiFieldChange = (id, field, value) => {
+  setUpdatedEmiData((prevData) => ({
+    ...prevData,
+    [id]: {
+      ...prevData[id],
+      [field]: value,
+    },
+  }));
+};
 
 
+const handleUpdateEmi = async (id) => {
+  try {
+    // Get the previous data from the original EMI plan
+    const previousData = getAllEmiPlans.find((plan) => plan._id === id);
+
+    if (!previousData) {
+      alert("EMI plan not found!");
+      return;
+    }
+
+    // Get the updated data (if changed) or keep the previous value
+    const updatedData = updatedEmiData[id] || {};
+
+    const updateData = {
+      _id: id,
+      name: updatedData.name !== undefined ? updatedData.name : previousData.name,
+      months: updatedData.months !== undefined ? updatedData.months : previousData.months,
+      intrestRate: updatedData.intrestRate !== undefined ? updatedData.intrestRate : previousData.intrestRate,
+      isVisible: updatedData.isVisible !== undefined ? updatedData.isVisible : previousData.isVisible,
+      updatedBy: managementId,
+      remarks: updateemiremarks[id] || "", // Remarks from state
+    };
+
+    // Send API request to update EMI plan
+    const response = await api.updateEmiPlan(updateData);
+
+    if (response.status === 200) {
+      console.log("EMI Plan Updated Successfully:", response.data);
+      addToast("EMI updated successfully", { appearance: "success", autoDismiss: true });
+
+      // Refresh EMI plans after update
+      GetAllEmiPlans();
+    } else {
+      console.error("Failed to update EMI plan:", response);
+      addToast(response.data?.message || "Something went wrong!", { appearance: "error", autoDismiss: true });
+    }
+  } catch (error) {
+    console.error("Error updating EMI plan:", error);
+    alert("Error updating EMI plan");
+  }
+};
 
 
-
+ 
     return (
       <>
         <div className="dashheader">
@@ -311,6 +450,8 @@
             <Link to="/login/dashboard">Dashboard</Link>
             <Link to="/dashboard/addtowers">Add Project</Link>
             <Link to="/dashboard/addusers">Add Management</Link>
+            <Link to="/dashboard/advancepayment">Advance Payment</Link>
+
             {/* <Link to="/dashboard/addcustomer">Add Customer</Link> */}
             <div 
     className="customer-dropdown-container" 
@@ -320,7 +461,8 @@
     <Link to="#" className="customer-main-link">Customer</Link>
     <div className={`customer-dropdown ${showCustomerDropdown ? "show" : ""}`}>
       <Link to="/dashboard/addcustomer">Add Customer</Link>
-      <Link to="/dashboard/editcustomer">Edit Customer</Link>
+      <Link to="/dashboard/getcustomerlist">Customer Details</Link>
+      {/* <Link to="/dashboard/editcustomer">Edit Customer</Link> */}
     </div>
   </div>
 
@@ -333,12 +475,15 @@
     <Link to="#" className="customer-main-link">Partner</Link>
     <div className={`customer-dropdown ${showPartnerDropdown ? "show" : ""}`}>
       <Link to="/dashboard/Addproject">Add Partner</Link>
-      <Link to="/dashboard/editpartner">Edit Partner</Link>
+      <Link to="/dashboard/partnerdetails">Partner</Link>
+      {/* <Link to="/dashboard/editpartner">Edit Partner</Link> */}
     </div>
   </div>
             {/* <Link to="/dashboard/Addproject">Add Partner</Link> */}
             
             <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
+           
+
           
             {/* Use Link for logout with onClick handler */}
             <Link to="#" onClick={handleLogoutClick} className="logout-btn">
@@ -352,7 +497,13 @@
     {showSettingsDropdown && (
       <div className="settings-dropdown">
     
-    <Link onClick={handleGstClick}>GST</Link>
+    <div className="dropdown-menu">
+  <Link onClick={handleGstClick} className="dropdown-itemheader">GST</Link>
+  <Link onClick={handleEmiClick} className="dropdown-itemheader">EMI</Link>
+</div>
+
+
+    
 
 
       </div>
@@ -397,7 +548,9 @@
     </Link>
     <div className="customer-dropdown-mobile">
       <Link to="/dashboard/addcustomer" onClick={toggleMenu}>Add Customer</Link>
-      <Link to="/dashboard/editcustomer" onClick={toggleMenu}>Edit Customer</Link>
+      <Link to="/dashboard/getcustomerlist">Customer Details</Link>
+
+      {/* <Link to="/dashboard/editcustomer" onClick={toggleMenu}>Edit Customer</Link> */}
     </div>
   </div>
 {/* for partners */}
@@ -412,13 +565,12 @@
     </Link>
     <div className="customer-dropdown-mobile">
       <Link to="/dashboard/Addproject" onClick={toggleMenu}>Add Partner</Link>
-      <Link to="/dashboard/editpartner" onClick={toggleMenu}>Edit Partner</Link>
+      <Link to="/dashboard/partnerdetails">Partner</Link>
+      {/* <Link to="/dashboard/editpartner" onClick={toggleMenu}>Edit Partner</Link> */}
     </div>
   </div>
-
-
-
-
+             
+  <Link onClick={handleEmiClick} className="dropdown-itemheader">EMI</Link>
                 <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
                 <Link onClick={handleGstClick}>GST</Link>
                 {/* Use Link for logout with onClick handler */}
@@ -494,7 +646,7 @@
             />
           </label> */}
 
-          <label>
+          {/* <label>
             Upload Image:
             <input
               type="file"
@@ -503,7 +655,7 @@
               onChange={handleInputChange}
               required
             />
-          </label>
+          </label> */}
 
           <label>
             Phone Number:
@@ -577,6 +729,93 @@
       </div>
     </div>
   )}
+
+
+
+
+
+{showEmiPopup && (
+  <div className="gst-popup">
+    <div className="popup-content">
+      {!showCreateEmiForm && !showUpdateEmi ? ( // Show options if no form is open
+        <>
+          <h2>EMI PLANS</h2>
+          <button onClick={() => setShowCreateEmiForm(true)}>Create EMI</button>
+          <button onClick={() => setShowUpdateEmi(true)}>Update EMI</button>
+          <button className="close-popup" onClick={handleClosePopup}>Close</button>
+        </>
+      ) : showCreateEmiForm ? ( // Show Create EMI Form
+        <form onSubmit={handleCreateEmiSubmit} className="emi-form">
+          <h2>Create EMI Plan</h2>
+          <input type="text" name="name" placeholder="Plan Name" value={emiData.name} onChange={handleCreateEmiChange} required />
+          <input type="number" name="months" placeholder="Number of Months" value={emiData.months} onChange={handleCreateEmiChange} required />
+          <input type="number" name="intrestRate" placeholder="Interest Rate (%)" step="0.1" value={emiData.intrestRate} onChange={handleCreateEmiChange} required />
+          <button type="submit">Submit</button>
+          <button className="close-popup" onClick={handleClosePopup}>Cancel</button>
+        </form>
+      ) : ( // Show Update EMI List
+        <div className="update-emi">
+  {/* Close (X) Button */}
+  <button className="close-button" onClick={handleClosePopup}>✖</button>
+  
+  <h2>Update EMI</h2>
+  
+  <div className="emi-list">
+    {getAllEmiPlans.length > 0 ? (
+      getAllEmiPlans.map((plan) => (
+        <div className="emi-item" key={plan._id}>
+          <input 
+            type="text" 
+            value={updatedEmiData[plan._id]?.name || plan.name} 
+            onChange={(e) => handleEmiFieldChange(plan._id, "name", e.target.value)}
+          />
+
+          <input 
+            type="number" 
+            value={updatedEmiData[plan._id]?.months || plan.months}  
+            onChange={(e) => handleEmiFieldChange(plan._id, "months", e.target.value)}
+          />
+
+          <input 
+            type="number" 
+            value={updatedEmiData[plan._id]?.intrestRate || plan.intrestRate}  
+            onChange={(e) => handleEmiFieldChange(plan._id, "intrestRate", e.target.value)}
+          />
+          
+          {/* Remarks Field */}
+          <textarea
+            placeholder="Enter remarks..."
+            value={updateemiremarks[plan._id] || ""}
+            onChange={(e) => handleUpdateEmiRemarksChange(plan._id, e.target.value)}
+          />
+
+          {/* Checkbox for isVisible */}
+          <label>
+            <input 
+              type="checkbox" 
+              checked={updatedEmiData[plan._id]?.isVisible ?? plan.isVisible}  
+              onChange={(e) => handleEmiFieldChange(plan._id, "isVisible", e.target.checked)}
+            />
+            Is Visible
+          </label>
+
+          {/* Update EMI Button */}
+          <button className="update-button" onClick={() => handleUpdateEmi(plan._id)}>
+            Update EMI
+          </button>
+        </div>
+      ))
+    ) : (
+      <p>Loading EMI Plans...</p>
+    )}
+  </div>
+</div>
+      )}
+    </div>
+  </div>
+)}
+
+
 
       </>
     );

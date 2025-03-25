@@ -1,0 +1,66 @@
+/* bookingflat.css */
+.bookingflats-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .bookingflats-heading {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .bookingflats-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .bookingflats-submit {
+    background-color: #ed712b;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+  }
+  
+  .bookingflats-submit:hover {
+    background-color: #d56121;
+    transform: scale(1.05);
+  }
+  
+  .bookingflats-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .bookingflats-form {
+      padding: 20px;
+    }
+  
+    .bookingflats-heading {
+      font-size: 1.5rem;
+    }
+  
+    .bookingflats-form .ant-col {
+      padding: 0;
+    }
+  }
+  

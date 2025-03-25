@@ -6,8 +6,12 @@ import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import config from './../../../utilis/config';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from './../../../utilis';
 
 const Addtowers = () => {
+  const [loading, setLoading] = useState(false);
+
    const { addToast } = useToasts();
   const [projects, setProjects] = useState([]);
   
@@ -78,7 +82,7 @@ let managementId = storedData?.data?.data?._id || null;
 
   const [logo, setLogo] = useState(null);
   const [walkThroughVideo, setWalkThroughVideo] = useState(null);
-  const [loading, setLoading] = useState(false);
+
   const [message, setMessage] = useState(null);
 
   // Handle text input changes
@@ -108,20 +112,20 @@ let managementId = storedData?.data?.data?._id || null;
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    setLoading(true);
-    setMessage(null);
+    setLoading(true); 
+  
 
     // Validate file sizes
     if (logo && logo.size > 1048576) {
       alert('Logo size should be 1MB or less.');
-      setLoading(false);
+
       return;
     }
 
     if (walkThroughVideo && walkThroughVideo.size > 9242880) {
       alert('Walkthrough Video size should be 5MB or less.');
-      setLoading(false);
+      setLoading(false); // Hide loading bar if validation fails
+
       return;
     }
 
@@ -155,9 +159,15 @@ let managementId = storedData?.data?.data?._id || null;
       console.log('Submitting data to API...');
       const response = await api.addTowers(data);
       console.log('  Response:', response );
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
 
       console.log('API Response:', response.data);
-      setMessage({ type: 'success', text: 'Tower added successfully!' });
+     
             // alert('navigating to step2')
       // Navigate to Step 2 with towerId
       // const towerId = response.data?._id || response.data?.data?._id;
@@ -174,7 +184,7 @@ let managementId = storedData?.data?.data?._id || null;
       const towerId = response.data?._id || response.data?.data?._id;
       console.log('Extracted Tower ID:', towerId);
 
-     // Navigate to Step 2 with towerId, companyId, and projectId
+    //  Navigate to Step 2 with towerId, companyId, and projectId
      navigate('/addtowers/step2', { 
       state: { 
         towerId, 
@@ -185,7 +195,7 @@ let managementId = storedData?.data?.data?._id || null;
     });
     }
     else{
-      addToast( "something went wrong", {
+      addToast( response.data?.message || "Something went wrong!", {
         appearance: "error",
         autoDismiss: true,
       });
@@ -197,8 +207,8 @@ let managementId = storedData?.data?.data?._id || null;
     } catch (error) {
       console.error('API Error:', error);
       setMessage({ type: 'error', text: 'Error submitting form. Please try again.' });
-    } finally {
-      setLoading(false);
+    } finally{
+      setLoading(false); 
     }
   };
 
@@ -219,20 +229,24 @@ const handleInputChange = (e) => {
   return (
     <>
       <Dashheader />
+      {loading ? (
+      <Loading/>
+    ) : (
+
       <div className="addtowers">
         <h2>Add Project - Step 1</h2>
 
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
 
         <form onSubmit={handleSubmit} className="addtowers-form">
-          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+          <input type="text" name="name" placeholder="Name of the Project *" value={formData.name} onChange={handleChange} required  />
           {/* <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required /> */}
           {/* <input type="text" name="priceStartRange" placeholder="Price Start Range" value={formData.priceStartRange} onChange={handleChange} required />
           <input type="text" name="priceEndRange" placeholder="Price End Range" value={formData.priceEndRange} onChange={handleChange} required /> */}
           {/* <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} required />
           <input type="text" name="state" placeholder="State" value={formData.state} onChange={handleChange} required /> */}
               <div className="price-range">
-  <label>Price Start Range:</label>
+  <label>Price Start Range:*</label>
   <div className="price-input-group">
     <input
       type="text"
@@ -269,7 +283,7 @@ const handleInputChange = (e) => {
 </div>
       
 <div className="price-range">
-  <label>Price End Range:</label>
+  <label>Price End Range:*</label>
   <div className="price-input-group">
     <input
       type="text"
@@ -312,7 +326,7 @@ const handleInputChange = (e) => {
         onChange={handleChange}
         required
       >
-        <option value="">Select State</option>
+        <option value="">Select State*</option>
         {apiData.map((item) => (
           <option key={item.state} value={item.state}>
             {item.state}
@@ -327,7 +341,7 @@ const handleInputChange = (e) => {
         onChange={handleChange}
         required
       >
-        <option value="">Select City</option>
+        <option value="">Select City*</option>
         {apiData
           .filter((item) => item.state === formData.state) // Filter cities by selected state
           .map((item) => (
@@ -342,7 +356,7 @@ const handleInputChange = (e) => {
             onChange={(e) => setSelectedProject(e.target.value)}
             required
           >
-            <option value="">Select Project</option>
+            <option value="">Select Partner*</option>
             {projects.map((project) => (
               <option key={project._id} value={project._id}>
                 {project.name}
@@ -352,20 +366,20 @@ const handleInputChange = (e) => {
 
 
 
-          <input type="text" name="street" placeholder="Street" value={formData.street} onChange={handleChange} required />
-          <input type="text" name="pinCode" placeholder="Pin Code" value={formData.pinCode} onChange={handleChange} required />
-          <textarea name="location" placeholder="Location (iframe)" value={formData.location} onChange={handleChange} required />
+          <input type="text" name="street" placeholder="Street*" value={formData.street} onChange={handleChange} required />
+          <input type="text" name="pinCode" placeholder="Pin Code*" value={formData.pinCode} onChange={handleChange} required />
+          <textarea name="location" placeholder="Location (iframe)*" value={formData.location} onChange={handleChange} required />
 
-          <label>Logo (Max 1MB):
+          <label>Logo (Max 1MB)*:
             <input type="file" name="logo" accept="image/*" onChange={handleFileChange} required />
           </label>
 
-          <label>Walkthrough Video (Max 5MB):
+          <label>Walkthrough Video (Max 5MB)*:
             <input type="file" name="walkThroughVideo" accept="video/*" onChange={handleFileChange} required />
           </label>
 
-          <button type="submit" disabled={loading}>
-            {loading ? 'Submitting...' : 'Save and Next'}
+          <button type="submit">
+           'Save and Next'
           </button>
 
                {/* Exit button */}
@@ -387,6 +401,7 @@ const handleInputChange = (e) => {
         )}
         </form>
       </div>
+       )}
     </>
   );
 };

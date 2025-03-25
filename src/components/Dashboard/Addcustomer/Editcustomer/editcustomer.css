@@ -1,0 +1,85 @@
+.edit-customer-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-customer-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.edit-customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.edit-customer-thead {
+    background: #ff7300;
+    color: white;
+    font-weight: bold;
+}
+
+.edit-customer-th, 
+.edit-customer-td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.edit-customer-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.edit-customer-input:focus {
+    outline: none;
+    border-color: #ff7300;
+    box-shadow: 0px 0px 4px rgba(255, 115, 0, 0.5);
+}
+
+.edit-customer-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #ff7300;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.edit-customer-button:hover {
+    background: #e66500;
+}
+
+@media (max-width: 600px) {
+    .edit-customer-th, 
+    .edit-customer-td {
+        padding: 10px;
+    }
+    
+    .edit-customer-input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .edit-customer-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+}

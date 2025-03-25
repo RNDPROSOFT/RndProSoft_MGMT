@@ -4,6 +4,9 @@ import Dashhome from '../Dashhome/Dashhome';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
+
 const Addtowerstep6 = () => {
   const [showExitPopup, setShowExitPopup] = useState(false);
       
@@ -35,6 +38,7 @@ const Addtowerstep6 = () => {
         const response = await api.getParticularbasedontowers(towerId);
         if (response.data && response.data.data) {
           setBlockData(response.data.data);
+          console.log(response.data.data,'blockdata')
         } else {
           setBlockData([]);
         }
@@ -64,10 +68,14 @@ const Addtowerstep6 = () => {
     bedrooms: '',
     facing: '',
     vasthu: '',
-    furnishingType: '',
+    furnishingType: 'NA',
     isAvaliable: '',
     parkingSlot: '',
     sqFeet: '',
+    sqPrice:'',
+    specialFeature:'',
+    specialFeaturePrice:'',
+    unitType:'',
     priceStartRange: '',
     priceEndRange: '',
     constructionStatus: '',
@@ -155,9 +163,15 @@ const Addtowerstep6 = () => {
     try {
       const response = await api.addFlats(formDataToSend);
       console.log('Step 6 Success:', response.data);
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
   
       if (response.status === 200) {
-        addToast("Step 6 submitted successfully", { appearance: "success", autoDismiss: true });
+        addToast("Step 7 submitted successfully", { appearance: "success", autoDismiss: true });
   
         // Store submitted flat details
         setSubmittedFlats([...submittedFlats, formData]);
@@ -165,7 +179,7 @@ const Addtowerstep6 = () => {
         // Hide form and show Add More button
         setShowForm(false);
       } else {
-        addToast("Something went wrong", { appearance: "error", autoDismiss: true });
+        addToast(response.data?.message || "Something went wrong!",{ appearance: "error", autoDismiss: true });
       }
     } catch (error) {
       console.error('Error submitting data:', error);
@@ -182,19 +196,23 @@ const Addtowerstep6 = () => {
       bedrooms: '',
       facing: '',
       vasthu: '',
-      furnishingType: '',
+      furnishingType: 'NA',
       isAvaliable: '',
       parkingSlot: '',
       sqFeet: '',
+      sqPrice:'',
+      specialFeature:'',
+      specialFeaturePrice:'',
+      unitType:'',
       priceStartRange: '',
       priceEndRange: '',
       constructionStatus: '',
       flatImages: null,
       flatPlanImages: null,
-      towerId: towerId,
-      companyId: companyId,
-      projectId: projectId,
-      createdBy: managementId
+      towerId:towerId,
+     companyId:companyId,
+     projectId:projectId,
+     createdBy:managementId
     });
   
     setShowForm(true); // Show form again
@@ -209,6 +227,9 @@ const Addtowerstep6 = () => {
   return (
     <>
       <Dashheader />
+      {loading ? (
+            <Loading/>
+          ) : (
       <div className="addtowerstep6">
         <h2>Step 7 - Add Flat Details</h2>
          {/* Show submitted flats list */}
@@ -237,13 +258,12 @@ const Addtowerstep6 = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
               className="form-input"
             />
           </div>
 
           <div className="form-group">
-            <label>Floor:</label>
+            <label>Floor:*</label>
             <input
               type="text"
               name="floor"
@@ -255,7 +275,7 @@ const Addtowerstep6 = () => {
           </div>
 
           <div className="form-group">
-            <label>Flat Number:</label>
+            <label>Flat Number:*</label>
             <input
               type="text"
               name="flatNo"
@@ -268,7 +288,7 @@ const Addtowerstep6 = () => {
 
          
 <div className="form-group">
-  <label>Block:</label>
+  <label>Block:*</label>
   <select
   name="blockId"
   value={formData.blockId}
@@ -291,12 +311,12 @@ const Addtowerstep6 = () => {
 </div>
 
           <div className="form-group">
-            <label>Bedrooms:</label>
+            <label>Bedrooms:*</label>
             <input type="text" name="bedrooms" value={formData.bedrooms} onChange={handleChange} required className="form-input" />
           </div>
 
           <div className="form-group">
-            <label>Facing:</label>
+            <label>Facing:*</label>
             <select
               name="facing"
               value={formData.facing}
@@ -312,35 +332,10 @@ const Addtowerstep6 = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label>Vastu:</label>
-            <input
-              type="text"  name="vasthu"
-              value={formData.vasthu}
-              onChange={handleChange}
-              required
-              className="form-input"
-            />
-          </div>
+         
 
           <div className="form-group">
-            <label>Furnishing Type:</label>
-            <select
-              name="furnishingType"
-              value={formData.furnishingType}
-              onChange={handleChange}
-              required
-              className="form-select"
-            >
-               <option> select FURNISHED</option>
-              <option value="FULLY-FURNISHED">FULLY-FURNISHED</option>
-              <option value="SEMI-FURNISHED">SEMI-FURNISHED</option>
-              <option value="NON-FURNISHED">NON-FURNISHED</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Availability:</label>
+            <label>Availability:*</label>
             <select
   name="isAvaliable" // Fix the spelling
   value={formData.isAvaliable} // Ensure it matches state
@@ -356,6 +351,92 @@ const Addtowerstep6 = () => {
 
           </div>
 
+          
+<div className="form-group">
+            <label>Square Feet:*</label>
+            <input
+              type="text"
+              name="sqFeet"
+              value={formData.sqFeet}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+          </div>
+         
+          <div className="form-group">
+            <label>Square Price:*</label>
+            <input
+              type="text"
+              name="sqPrice"
+              value={formData.sqPrice}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>special Feature:*</label>
+            <input
+              type="text"
+              name="specialFeature"
+              value={formData.specialFeature}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>special Feature Price:*</label>
+            <input
+              type="text"
+              name="specialFeaturePrice"
+              value={formData.specialFeaturePrice}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+          </div>
+         
+          <div className="form-group">
+            <label>Unit type:*</label>
+            <select
+              name="unitType"
+              value={formData.unitType}
+              onChange={handleChange}
+              required
+              className="form-select"
+            >
+              <option >SELECT Unit type</option>
+              <option value="FALT">FLAT</option>
+              <option value="OFFICE">OFFICE</option>
+              <option value="SHOWROOM">SHOWROOM</option>
+            </select>
+          </div> 
+          <div className="form-group">
+            <label>Vastu:</label>
+            <input
+              type="text"  name="vasthu"
+              value={formData.vasthu}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Furnishing Type:</label>
+            <select
+              name="furnishingType"
+              value={formData.furnishingType}
+              onChange={handleChange}
+              className="form-select"
+            >
+               <option> select FURNISHED</option>
+              <option value="FULLY-FURNISHED">FULLY-FURNISHED</option>
+              <option value="SEMI-FURNISHED">SEMI-FURNISHED</option>
+              <option value="NON-FURNISHED">NON-FURNISHED</option>
+            </select>
+          </div>
           <div className="form-group">
             <label>Parking Slot:</label>
             <input
@@ -376,7 +457,7 @@ const Addtowerstep6 = () => {
     value={formData.priceStartRange}
     onChange={handleChange}
     className="form-input"
-    required
+    
   />
   <div className="radio-group">
     <label>
@@ -386,7 +467,7 @@ const Addtowerstep6 = () => {
         value="Lakhs"
         checked={formData.priceStartUnit === "Lakhs"}
         onChange={handleChange}
-        required
+        
       />
       Lakhs
     </label>
@@ -397,7 +478,7 @@ const Addtowerstep6 = () => {
         value="Crores"
         checked={formData.priceStartUnit === "Crores"}
         onChange={handleChange}
-        required
+        
       />
       Crores
     </label>
@@ -412,7 +493,7 @@ const Addtowerstep6 = () => {
     value={formData.priceEndRange}
     onChange={handleChange}
     className="form-input"
-    required
+    
   />
   <div className="radio-group">
     <label>
@@ -422,7 +503,7 @@ const Addtowerstep6 = () => {
         value="Lakhs"
         checked={formData.priceEndUnit === "Lakhs"}
         onChange={handleChange}
-        required
+        
       />
       Lakhs
     </label>
@@ -433,23 +514,12 @@ const Addtowerstep6 = () => {
         value="Crores"
         checked={formData.priceEndUnit === "Crores"}
         onChange={handleChange}
-        required
+        
       />
       Crores
     </label>
   </div>
-</div>
-<div className="form-group">
-            <label>Square Feet:</label>
-            <input
-              type="text"
-              name="sqFeet"
-              value={formData.sqFeet}
-              onChange={handleChange}
-              className="form-input"
-            />
-          </div>
-
+</div>         
           <div className="form-group">
             <label>Construction Status:</label>
             <select
@@ -466,7 +536,7 @@ const Addtowerstep6 = () => {
             </select>
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Flat Images:</label>
             <input
               type="file"
@@ -486,7 +556,7 @@ const Addtowerstep6 = () => {
               accept="image/*"
               className="form-file"
             />
-          </div>
+          </div> */}
 
           <button type="submit" className="submit-btn">Submit</button>
                {/* Exit button */}
@@ -525,6 +595,7 @@ const Addtowerstep6 = () => {
   </div>
 )}
       </div>
+             )}
     </>
   );
 };

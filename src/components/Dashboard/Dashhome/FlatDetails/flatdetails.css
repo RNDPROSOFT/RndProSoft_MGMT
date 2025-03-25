@@ -1,0 +1,356 @@
+/* Container */
+.flat-details-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  .flat-details-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #ff6600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  
+  /* Title Underline */
+  .flat-details-title::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #ff6600;
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+  
+  /* Card Grid */
+  .flat-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Card */
+  .flat-card {
+    background: linear-gradient(135deg, #fff, #f8f8f8);
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-left: 6px solid #ff6600;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Hover Effects */
+  .flat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Card Header */
+  .flat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  /* Title */
+  .flat-card-header h3 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+  }
+  
+  /* Availability Status */
+  .availability {
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  /* Status Colors */
+  .availability.booked {
+    background: red;
+    color: white;
+  }
+  
+  .availability.avaliable {
+    background: green;
+    color: white;
+  }
+  
+  /* Card Body */
+  .flat-card-body p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #444;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Card Footer */
+  .flat-card-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .flat-card-footer button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+  }
+  
+  .check-feasibility-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .check-feasibility-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .book-flat-btn {
+    background-color: #ff6600;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .book-flat-btn:hover {
+    background-color: #e65c00;
+  }
+  
+  /* No Flats Message */
+  .no-flats {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    font-weight: bold;
+  }
+  
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .flat-buttons-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensures buttons wrap properly on small screens */
+    justify-content: center;
+    gap: 10px;
+}
+
+.flat-button {
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: 0.3s;
+    width: 15%; /* Default width for larger screens */
+    height: auto; /* Allow height to adjust */
+    font-weight: 550;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* Tablets */
+    .flat-button {
+        width: 20%;
+        font-size: 18px;
+        padding: 12px 18px;
+    }
+}
+
+@media (max-width: 768px) { /* Mobile Screens */
+    .flat-button {
+        width: 30%;
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) { /* Smallest screens */
+    .flat-button {
+        width: 45%;
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+}
+
+ 
+  
+  .flat-button.available {
+    background-color: green;
+    color: white;
+  }
+  
+  .flat-button.not-available {
+    background-color: red;
+    color: white;
+  }
+  
+  .flat-button:hover {
+    opacity: 0.8;
+  }
+  
+  .flat-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .flat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .flat-card-body p {
+    margin: 5px 0;
+  }
+  
+  /* Action Buttons */
+  .flat-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .action-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .create-estimation {
+    background-color: blue;
+    color: white;
+  }
+  
+  .book-flat {
+    background-color: #ed712b;
+    color: white;
+  }
+  
+  .action-button:hover {
+    opacity: 0.8;
+  }
+  
+
+  .blockname{
+    font-weight: normal;
+    margin-top: 8%;
+    font-size: medium;
+  }
+
+
+
+ /* Modal Styling */
+.createestimation-modal .ant-modal {
+  margin-top: 20px; /* Reduced from default to 20px */
+}
+
+.createestimation-modal .ant-modal-title {
+  color: #ed712b;
+  font-weight: bold;
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* Form Container */
+.createestimation-form {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* Form Grid */
+.createestimation-form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Form Field */
+.createestimation-form-field {
+  width: 48%;
+  display: flex;
+  align-items: center;
+}
+
+/* Form Label */
+.createestimation-form-label {
+  width: 150px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form Input */
+.createestimation-form-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Disabled Input */
+.createestimation-form-input-disabled {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+/* Form Select */
+.createestimation-form-select {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit Button */
+.createestimation-submit-button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #ed712b;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.createestimation-submit-button:hover {
+  background-color: #d66027;
+}

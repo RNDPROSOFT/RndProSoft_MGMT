@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
 
 const AddTowersStep2 = () => {
 
@@ -34,7 +36,7 @@ const AddTowersStep2 = () => {
     name: '',
     noOfFloors: '',
     noOfFlats: '',
-    parkingSpace: '',
+    parkingSpace: null,
     createdBy: managementId,
     step: 2,
     towerId: towerId || '',
@@ -60,7 +62,13 @@ const AddTowersStep2 = () => {
     try {
       const response = await api.addTowers(formData);
       console.log('Step 2 Success:', response.data);
-      setMessage({ type: 'success', text: 'Step 2 completed successfully!' });
+      // setMessage({ type: 'success', text: 'Step 2 completed successfully!' });
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
 
       if (response.status === 200) {
         addToast("Step 2 submitted successfully", {
@@ -74,7 +82,7 @@ const AddTowersStep2 = () => {
         // Hide the form after the first block is added
         setIsFormVisible(false);
       } else {
-        addToast("Something went wrong", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -96,7 +104,7 @@ const AddTowersStep2 = () => {
       name: '',
       noOfFloors: '',
       noOfFlats: '',
-      parkingSpace: '',
+      parkingSpace: null,
       createdBy: managementId,
       step: 2,
       towerId: towerId || '',
@@ -124,6 +132,9 @@ const AddTowersStep2 = () => {
   return (
     <>
       <Dashheader />
+      {loading ? (
+      <Loading/>
+    ) : (
       <div className="addtowers">
         <h2>Add Project - Step 2</h2>
 
@@ -147,7 +158,7 @@ const AddTowersStep2 = () => {
             <input
               type="text"
               name="name"
-              placeholder="Block Name (e.g., Block A)"
+              placeholder="Block Name* (e.g., Block A)"
               value={formData.name}
               onChange={handleChange}
               required
@@ -155,7 +166,7 @@ const AddTowersStep2 = () => {
             <input
               type="text"
               name="noOfFloors"
-              placeholder="No of Floors"
+              placeholder="No of Floors*"
               value={formData.noOfFloors}
               onChange={handleChange}
               required
@@ -163,7 +174,7 @@ const AddTowersStep2 = () => {
             <input
               type="text"
               name="noOfFlats"
-              placeholder="No of Flats"
+              placeholder="No of Flats*"
               value={formData.noOfFlats}
               onChange={handleChange}
               required
@@ -171,10 +182,10 @@ const AddTowersStep2 = () => {
             <input
               type="text"
               name="parkingSpace"
-              placeholder="Parking Space"
+              placeholder="Parking Space(Optional)"
               value={formData.parkingSpace}
               onChange={handleChange}
-              required
+              
             />
 
             {/* Hidden fields */}
@@ -223,6 +234,7 @@ const AddTowersStep2 = () => {
 
         
       </div>
+          )}
     </>
   );
 };

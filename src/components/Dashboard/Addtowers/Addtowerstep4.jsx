@@ -6,7 +6,8 @@ import api from './../../../api.js';
 import config from './../../../utilis/config'
 import { Select } from 'antd';  // <-- Add this import for Select
 import { useToasts } from "react-toast-notifications";
-
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
 const AddTowersStep4 = () => {
   
  const { addToast } = useToasts();
@@ -72,18 +73,17 @@ const AddTowersStep4 = () => {
 
   const [formData, setFormData] = useState({
     reraNo: '',
-    apparRegistrationNo: '',
-    gst: '',
-    approvalNo: '',
-    DICPApprovalNo: '',
-    govtCertificate: '',
+    gstNo: '',
     developerId: '',
-    phone: '',
-    appatAge: '',
-    createdBy3: managementId,  // Updated this field name to 'createdBy3'
+    phone:0,
+    appatAge: 0,
+    createdBy3: managementId,
     step: 4,
     towerId: towerId || '',
+    otherStateRegNo: [''], // Array to store "State or Local No."
+    otherCentralRegNo: [''], // Array to store "Other Central No."
   });
+  
   
 
   const [loading, setLoading] = useState(false);
@@ -102,52 +102,74 @@ const AddTowersStep4 = () => {
   };
   
 
+  const handleAddStateLocalNo = () => {
+    setFormData({ ...formData, otherStateRegNo: [...formData.otherStateRegNo, ''] });
+  };
+  
+  const handleRemoveStateLocalNo = (index) => {
+    const updatedotherStateRegNo = formData.otherStateRegNo.filter((_, i) => i !== index);
+    setFormData({ ...formData, otherStateRegNo: updatedotherStateRegNo });
+  };
+  
+  const handleAddCentralRegNo = () => {
+    setFormData({ ...formData, otherCentralRegNo: [...formData.otherCentralRegNo, ''] });
+  };
+  
+  const handleRemoveCentralRegNo = (index) => {
+    const updatedotherCentralRegNo = formData.otherCentralRegNo.filter((_, i) => i !== index);
+    setFormData({ ...formData, otherCentralRegNo: updatedotherCentralRegNo });
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-
-   try {
-  const response = await api.addTowers(formData);
-  console.log('Step 4 Success:', response);  // Log the entire response object
-  setMessage({ type: 'success', text: 'Step 4 completed successfully!' });
- 
-  if (response.status === 200) {
-    const towerId = response.data?._id || response.data?.data?._id;
-    console.log('Extracted Tower ID:', towerId);
-    const companyId = response.data?._id || response.data?.data?.companyId;
-    console.log('Extracted Tower ID:', towerId);
-    const projectId = response.data?._id || response.data?.data?.projectId;
-    console.log('Extracted Tower ID:', towerId);
-    addToast( "step4 successfully completed", {
-      appearance: "success",
-      autoDismiss: true,
-    });
-    
-    // alert("navigating step5")
-    // Navigate to Step 3 if the response status is 200
-    navigate('/addtowers/step5', { state: { towerId: towerId,companyId:companyId,projectId:projectId } , replace: true});
-  }
-else {
-    setMessage({ type: 'error', text: 'Unexpected response format.' });
-    addToast( "something went wrong", {
-      appearance: "error",
-      autoDismiss: true,
-    });
-  }
- 
-} catch (error) {
-  console.error('Error response:', error?.response);  // Log detailed error info from response
-  setMessage({ type: 'error', text: error?.response?.data?.message || 'Error submitting Step 4. Please try again.' });
-}
- finally {
+  
+    try {
+      const response = await api.addTowers(formData);
+      console.log('Step 4 Success:', response);  // Log the entire response object
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
+      setMessage({ type: 'success', text: 'Step 4 completed successfully!' });
+  
+      if (response.status === 200) {
+        const towerId = response.data?._id || response.data?.data?._id;
+        const companyId = response.data?._id || response.data?.data?.companyId;
+        const projectId = response.data?._id || response.data?.data?.projectId;
+        
+        addToast("Step 4 successfully completed", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+  
+        navigate('/addtowers/step5', { state: { towerId, companyId, projectId }, replace: true });
+      } else {
+        setMessage({ type: 'error', text: 'Unexpected response format.' });
+        addToast(response.data?.message || "Something went wrong!", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error response:', error?.response);
+      setMessage({ type: 'error', text: error?.response?.data?.message || 'Error submitting Step 4. Please try again.' });
+    } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
       <Dashheader />
+      {loading ? (
+            <Loading/>
+          ) : (
       <div className="addtowers">
         <h2>Add Project - Step 4</h2>
 
@@ -155,12 +177,61 @@ else {
 
         <form onSubmit={handleSubmit} className="addtowers-form">
           {/* New fields */}
-          <input type="text" name="reraNo" placeholder="RERA No." value={formData.reraNo} onChange={handleChange} required />
-          <input type="text" name="apparRegistrationNo" placeholder="Appar Registration No." value={formData.apparRegistrationNo} onChange={handleChange} required />
-          <input type="text" name="gst" placeholder="GST" value={formData.gst} onChange={handleChange} required />
-          <input type="text" name="approvalNo" placeholder="Approval No." value={formData.approvalNo} onChange={handleChange} required />
-          <input type="text" name="DICPApprovalNo" placeholder="DICP Approval No." value={formData.DICPApprovalNo} onChange={handleChange} required />
-          <input type="text" name="govtCertificate" placeholder="Govt Certificate" value={formData.govtCertificate} onChange={handleChange} required />
+          <input type="text" name="reraNo" placeholder="RERA No.*" value={formData.reraNo} onChange={handleChange} required />
+          {/* <input type="text" name="otherStateRegNo" placeholder="State or Local No.*" value={formData.otherStateRegNo} onChange={handleChange} required /> */}
+           {/* Dynamic fields for State or Local No. */}
+  {formData.otherStateRegNo.map((stateLocalNo, index) => (
+    <div key={index}>
+      <input
+        type="text"
+        name={`otherStateRegNo[${index}]`}
+        placeholder="State or Local No.*"
+        value={stateLocalNo}
+        onChange={(e) => {
+          const updatedotherStateRegNo = [...formData.otherStateRegNo];
+          updatedotherStateRegNo[index] = e.target.value;
+          setFormData({ ...formData, otherStateRegNo: updatedotherStateRegNo });
+        }}
+        required
+      />
+      <button type="button" onClick={() => handleRemoveStateLocalNo(index)}>
+        Remove
+      </button>
+    </div>
+  ))}
+  <button type="button" onClick={handleAddStateLocalNo}>
+    Add State or Local No.
+  </button>
+
+          <input type="text" name="gstNo" placeholder="GSTNO*" value={formData.gstNo} onChange={handleChange} required />
+          {/* <input type="text" name="approvalNo" placeholder="Approval No." value={formData.approvalNo} onChange={handleChange} required /> */}
+          {/* <input type="text" name="DICPApprovalNo" placeholder="DICP Approval No." value={formData.DICPApprovalNo} onChange={handleChange} required /> */}
+          {/* <input type="text" name="otherCentralRegNo" placeholder="Other Central No*" value={formData.otherCentralRegNo} onChange={handleChange} required /> */}
+
+          {/* Dynamic fields for Other Central No. */}
+  {formData.otherCentralRegNo.map((centralRegNo, index) => (
+    <div key={index}>
+      <input
+        type="text"
+        name={`otherCentralRegNo[${index}]`}
+        placeholder="Other Central No.*"
+        value={centralRegNo}
+        onChange={(e) => {
+          const updatedotherCentralRegNo = [...formData.otherCentralRegNo];
+          updatedotherCentralRegNo[index] = e.target.value;
+          setFormData({ ...formData, otherCentralRegNo: updatedotherCentralRegNo });
+        }}
+        required
+      />
+      <button type="button" onClick={() => handleRemoveCentralRegNo(index)}>
+        Remove
+      </button>
+    </div>
+  ))}
+  <button type="button" onClick={handleAddCentralRegNo}>
+    Add Other Central No.
+  </button>
+
           {/* <input type="text" name="developerId" placeholder="Developer ID" value={formData.developerId} onChange={handleChange} required /> */}
           <select
   name="developerId"
@@ -168,7 +239,7 @@ else {
   onChange={handleChange}
   required
 >
-  <option value="">Select Developer</option>
+  <option value="">Select Developer*</option>
   {apiData.map((developer) => (
     <option key={developer._id} value={developer._id}>
       {developer.name}
@@ -177,8 +248,8 @@ else {
 </select>
        
         
-          <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} required />
-          <input type="text" name="appatAge" placeholder="Appat Age" value={formData.appatAge} onChange={handleChange} required />
+          {/* <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange}  /> */}
+          {/* <input type="text" name="appatAge" placeholder="Appat Age" value={formData.appatAge} onChange={handleChange}  /> */}
 
           {/* Hidden fields */}
           <input type="hidden" name="createdBy3" value={formData.createdBy3} />  {/* Updated this field name */}
@@ -208,6 +279,7 @@ else {
         )}
         </form>
       </div>
+         )}
     </>
   );
 };

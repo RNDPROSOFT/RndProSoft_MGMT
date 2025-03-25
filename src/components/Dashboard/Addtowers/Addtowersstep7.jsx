@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
 
 const AddTowersStep7 = () => {
   const { addToast } = useToasts();
@@ -67,10 +69,16 @@ const AddTowersStep7 = () => {
     try {
       const response = await api.addTowers(dataToSubmit);
       console.log('Step 7 Success:', response.data);
+       if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
       setMessage({ type: 'success', text: 'Step 7 completed successfully!' });
 
       if (response.status === 200) {
-        addToast("Step 7 submitted successfully", {
+        addToast("Step 6 submitted successfully", {
           appearance: "success",
           autoDismiss: true,
         });
@@ -89,7 +97,7 @@ const AddTowersStep7 = () => {
         });
         setErrors({});
       } else {
-        addToast("Something went wrong", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -116,6 +124,9 @@ const AddTowersStep7 = () => {
   return (
     <>
       <Dashheader />
+      {loading ? (
+            <Loading/>
+          ) : (
       <div className="addtowers">
         <h2>Add Project - Step 6</h2>
         {message && <div className={`message ${message.type}`}>{message.text}</div>}
@@ -139,17 +150,17 @@ const AddTowersStep7 = () => {
         {!isSubmitted || submittedList.length === 0 ? (
           <form onSubmit={handleSubmit} className="addtowers-form">
             <div>
-              <label htmlFor="towerName">Famous place:</label>
+              <label htmlFor="towerName">Famous place:*</label>
               <input type="text" id="towerName" name="name" value={formData.name} onChange={handleChange} required />
             </div>
 
             <div>
-              <label htmlFor="nearbyImage">Nearby Image:</label>
+              <label htmlFor="nearbyImage">Nearby Image:*</label>
               <input type="file" id="nearbyImage" name="nearbyImage" onChange={handleFileChange} />
             </div>
 
             <div>
-              <label style={{ fontWeight: 'bold' }}>Is the tower visible?</label>
+              <label style={{ fontWeight: 'bold' }}>Is the tower visible?*</label>
               <div>
                 <input type="radio" id="visibleYes" name="isVisible" value="yes" checked={formData.isVisible === 'yes'} onChange={handleChange} />
                 <label htmlFor="visibleYes">Yes</label>
@@ -181,6 +192,7 @@ const AddTowersStep7 = () => {
           </div>
         )}
       </div>
+       )}
     </>
   );
 };

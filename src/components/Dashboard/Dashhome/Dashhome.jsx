@@ -5,7 +5,7 @@ import Dashheader from '../Dashheader/Dashheader';
 import './dashboard.css';
 import { useLocation,useNavigate  } from "react-router-dom";
 import Loading from '../../../utilis/Loading.js';
-
+import utilis from '../../../utilis';
 
 const Dashhome = () => {
    const [loading, setLoading] = useState(true);
@@ -59,6 +59,13 @@ const Dashhome = () => {
       let response = await api.getTowerdetailsformanagement(projectId, constructionStatus, projectType, state);
       console.log("Full API Response:", response.data);
   
+
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
       if (response.data?.data?.length > 0 && Array.isArray(response.data.data[0].data)) {
         console.log("Extracted Towers Data:", response.data.data[0].data);
         setAllTowers(response.data.data[0].data); // Store full unfiltered list
@@ -72,6 +79,7 @@ const Dashhome = () => {
         setFilteredTowers([]);
         return []; // ✅ Return empty array
       }
+
     } catch (error) {
       console.error("Error fetching projects:", error);
       setAllTowers([]);
@@ -160,7 +168,15 @@ useEffect(() => {
   };
   
   
-
+  const handleFlatDetails = (tower) => {
+    if (!tower || !tower.name || !tower._id) return;
+  
+    // Store tower _id in localStorage before navigation
+    localStorage.setItem("selectedTowerId", tower._id);
+  
+    navigate(`/dashboard/Flatdetails`);
+  };
+  
 
 
 
@@ -302,8 +318,16 @@ const filterProjects = (filters, towers) => {
                 <p className="tower-details"><strong>Total Units:</strong> {tower.totalUnits}</p>
                 <p className="tower-details"><strong>Development Size:</strong> {tower.developmentSize} acres</p>
                 <p className="tower-details"><strong>RERA No:</strong> {tower.reraNo}</p>
-                <button className="view-details-btn"onClick={() => handleViewDetails(tower)}>
+                <p className="tower-details">
+  <strong>Is Visible:</strong> {tower.isVisible ? "Yes" : "No"}
+</p>
+
+                
+                <button className="view-details-btn"onClick={() => handleViewDetails(tower)} style={{marginRight:"15px"}}>
                   View Details
+                </button>
+                <button className="view-details-btn"onClick={() => handleFlatDetails(tower)}>
+                  Book Flats
                 </button>
               </div>
             </div>

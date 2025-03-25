@@ -22,11 +22,11 @@ const AddProject = () => {
     street: '',
     houseNo: '',
     pinCode: '',
-    proLogo: null,
-    proGalary: [],
+    // proLogo: null,
+    // proGalary: [],
     about: '',
     remarks: '',
-    isVisible: false,
+    isVisible: true,
     createdBy: managementId,
     companyId: '67ada472e0fd86dfa5cb9e53'
   });
@@ -74,32 +74,32 @@ useEffect(() => {
   };
   
   
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+  // const handleFileChange = (e) => {
+  //   const { name, files } = e.target;
+  //   const maxSize = 5 * 1024 * 1024; // 5MB in bytes
   
-    if (name === 'proLogo') {
-      if (files[0] && files[0].size > maxSize) {
-        alert('Project Logo size should be less than 5MB');
-        e.target.value = ''; // Clear file input
-        return;
-      }
-      setFormData({ ...formData, proLogo: files[0] });
-    } else if (name === 'proGalary') {
-      const validFiles = Array.from(files).filter(file => file.size <= maxSize);
-      const invalidFiles = Array.from(files).filter(file => file.size > maxSize);
+  //   // if (name === 'proLogo') {
+  //   //   if (files[0] && files[0].size > maxSize) {
+  //   //     alert('Project Logo size should be less than 5MB');
+  //   //     e.target.value = ''; // Clear file input
+  //   //     return;
+  //   //   }
+  //   //   setFormData({ ...formData, proLogo: files[0] });
+  //   // } else if (name === 'proGalary') {
+  //   //   const validFiles = Array.from(files).filter(file => file.size <= maxSize);
+  //   //   const invalidFiles = Array.from(files).filter(file => file.size > maxSize);
   
-      if (invalidFiles.length > 0) {
-        alert('Some images exceed 5MB and were not added.');
-        e.target.value = ''; // Clear file input
-      }
+  //   //   if (invalidFiles.length > 0) {
+  //   //     alert('Some images exceed 5MB and were not added.');
+  //   //     e.target.value = ''; // Clear file input
+  //   //   }
   
-      setFormData({
-        ...formData,
-        proGalary: [...formData.proGalary, ...validFiles],
-      });
-    }
-  };
+  //   //   setFormData({
+  //   //     ...formData,
+  //   //     proGalary: [...formData.proGalary, ...validFiles],
+  //   //   });
+  //   // }
+  // };
   
   
 
@@ -151,11 +151,11 @@ useEffect(() => {
       street: '',
       houseNo: '',
       pinCode: '',
-      proLogo: null,
-      proGalary: [],
+      // proLogo: null,
+      // proGalary: [],
       about: '',
       remarks: '',
-      isVisible: false,
+      isVisible: true,
       createdBy: managementId,
       companyId: '67ada472e0fd86dfa5cb9e53'
     });
@@ -177,13 +177,13 @@ useEffect(() => {
         <h2 className="addproject-title">Add Partner</h2>
         <form className="addproject-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <input type="text" name="name" placeholder="Partner Name" onChange={handleChange} value={formData.name} required />
+            <input type="text" name="name" placeholder="Partner Name*" onChange={handleChange} value={formData.name} required />
             {/* <input type="text" name="title" placeholder="Partner Title" onChange={handleChange}  value={formData.title} required /> */}
            
           </div>
           <div className="form-group">
-            <input type="tel" name="phoneNumber" placeholder="Phone Number" onChange={handleChange}  value={formData.phoneNumber} required />
-            <input type="email" name="emailId" placeholder="Email ID" onChange={handleChange}  value={formData.emailId} required />
+            <input type="tel" name="phoneNumber" placeholder="Phone Number*" onChange={handleChange}  value={formData.phoneNumber} required />
+            <input type="email" name="emailId" placeholder="Email ID*" onChange={handleChange}  value={formData.emailId} required />
           </div>
 
           <div className="form-group">
@@ -198,7 +198,7 @@ useEffect(() => {
 
           </div>
           <div className="form-group">
-            <select name="status" onChange={handleChange} required value={formData.status}>
+            <select name="status" onChange={handleChange}  value={formData.status}>
               <option>Construction status</option>
               <option>Ready to Move</option>
               <option>Under Construction</option>
@@ -206,17 +206,17 @@ useEffect(() => {
             </select>
           </div>
           <div className="form-group">
-            <input type="text" name="state" placeholder="State" onChange={handleChange}  value={formData.state} required />
-            <input type="text" name="city" placeholder="City" onChange={handleChange}  value={formData.city} required />
+            <input type="text" name="state" placeholder="State" onChange={handleChange}  value={formData.state}  />
+            <input type="text" name="city" placeholder="City" onChange={handleChange}  value={formData.city}  />
           </div>
           <div className="form-group">
-            <input type="text" name="street" placeholder="Street" onChange={handleChange}  value={formData.street} required />
-            <input type="text" name="houseNo" placeholder="House No" onChange={handleChange}  value={formData.houseNo} required />
-            <input type="text" name="pinCode" placeholder="Pincode" onChange={handleChange}  value={formData.pinCode} required />
+            <input type="text" name="street" placeholder="Street" onChange={handleChange}  value={formData.street}  />
+            <input type="text" name="houseNo" placeholder="House No" onChange={handleChange}  value={formData.houseNo}  />
+            <input type="text" name="pinCode" placeholder="Pincode" onChange={handleChange}  value={formData.pinCode}  />
           </div>
-          <div className="form-group file-input">
+          {/* <div className="form-group file-input">
             <label>Project Logo</label>
-            <input type="file" name="proLogo" onChange={handleFileChange}  required />
+            <input type="file" name="proLogo" onChange={handleFileChange}   />
           </div>
           <div className="form-group file-input gallery-upload">
             <label>Gallery Images</label>
@@ -224,16 +224,16 @@ useEffect(() => {
               <input type="file" name="proGalary" multiple onChange={handleFileChange} id="gallery-upload" />
               <button type="button" onClick={() => document.getElementById('gallery-upload').click()} className="add-image-btn">Add Image</button>
             </div>
-          </div>
-          <div className="gallery-preview">
+          </div> */}
+          {/* <div className="gallery-preview">
             {formData.proGalary.map((file, index) => (
               <div key={index} className="gallery-item">
                 <span>{file.name}</span>
                 <button type="button" className="remove-btn" onClick={() => removeImage(index)}>Remove</button>
               </div>
             ))}
-          </div>
-          <textarea name="about" placeholder="About" onChange={handleChange}  value={formData.about} required></textarea>
+          </div> */}
+          <textarea name="about" placeholder="About" onChange={handleChange}  value={formData.about} ></textarea>
           <textarea name="remarks" placeholder="Remarks" onChange={handleChange}  value={formData.remarks}></textarea>
           <div className="form-group checkbox-container">
             <input type="checkbox" name="isVisible" onChange={handleChange}  value={formData.isVisible}/>

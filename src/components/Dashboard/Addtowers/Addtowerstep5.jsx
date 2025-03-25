@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import Loading from '../../../utilis/Loading.js';
+import utilis from '../../../utilis';
+
 const AddTowersStep5 = () => {
   const { addToast } = useToasts();
   const [showExitPopup, setShowExitPopup] = useState(false);
@@ -69,6 +72,12 @@ const AddTowersStep5 = () => {
     try {
       const response = await api.addTowers(formData);  // ✅ 'await' works inside 'async'
       console.log('Step 5 Success:', response.data);
+      if(response.status === 401){
+        console.log("Session Expired! Redirecting to Login.");
+        localStorage.removeItem(utilis.string.localStorage.sessionId);
+        localStorage.removeItem(utilis.string.localStorage.userData);
+        navigate('/');
+      }
       setMessage({ type: 'success', text: 'Step 5 completed successfully!' });
   
       if (response.status === 200) {
@@ -83,7 +92,7 @@ const AddTowersStep5 = () => {
   
         navigate('/addtowers/step7', { state: { towerId, companyId, projectId } });
       } else {
-        addToast("Something went wrong", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -100,6 +109,9 @@ const AddTowersStep5 = () => {
   return (
     <>
       <Dashheader />
+      {loading ? (
+            <Loading/>
+          ) : (
       <div className="addtowers">
         <h2>Add Project - Step 5</h2>
 
@@ -111,7 +123,7 @@ const AddTowersStep5 = () => {
               <input
                 type="text"
                 name={`about.${index}.title`}
-                placeholder="About Tower Title"
+                placeholder="About Tower Title*"
                 value={aboutField.title}
                 onChange={handleChange}
                 required
@@ -119,7 +131,7 @@ const AddTowersStep5 = () => {
               />
               <textarea
                 name={`about.${index}.description`}
-                placeholder="About Tower Description"
+                placeholder="About Tower Description*"
                 value={aboutField.description}
                 onChange={handleChange}
                 required
@@ -173,6 +185,7 @@ const AddTowersStep5 = () => {
         )}
         </form>
       </div>
+       )}
     </>
   );
 };

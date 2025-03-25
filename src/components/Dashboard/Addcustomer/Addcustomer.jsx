@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import Dashheader from '../Dashheader/Dashheader';
 import './addcustomer.css';
 import api from './../../../api.js';
 import { useToasts } from "react-toast-notifications";
+import utilis from '../../../utilis';
 const AddCustomer = () => {
+   const navigate = useNavigate();
     const { addToast } = useToasts();
   const [formData, setFormData] = useState({
     name: "",
@@ -43,6 +46,12 @@ const AddCustomer = () => {
         const response = await api.addCustomer(formData);
 
         console.log("Full API Response:", response);
+        if(response.status === 401){
+          console.log("Session Expired! Redirecting to Login.");
+          localStorage.removeItem(utilis.string.localStorage.sessionId);
+          localStorage.removeItem(utilis.string.localStorage.userData);
+          navigate('/');
+        }
 
         if (response.status === 200) {  // Axios should return `status`
             console.log("API Success - Showing toast...");
