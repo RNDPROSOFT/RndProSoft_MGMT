@@ -721,6 +721,51 @@ async function advancePayment(body) {
 }
 
 
+
+async function getFlatHistory() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getFlatHistory,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function getPaymentHistory() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getPaymentHistory,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
+
+
+
+
+async function getParticularFlatsDetailsForBooking(flatId) {
+    try {
+        return await axiosinstance.get(`${utilis.config.apiName.getParticularFlatsDetailsForBooking}${flatId}`, {
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
 const api={
     getAdminLogin,
     forgotPassword,
@@ -766,11 +811,15 @@ const api={
     deleteImageproject,
     isProjectIsvisble,
     getAllFlatsDetailsForBooking,
+    getParticularFlatsDetailsForBooking,
     AddIMages,
     createEstimationForm,
     bookingFlats,
     userdetailsforbooking,
-    advancePayment
+    advancePayment,
+    getFlatHistory,
+    getPaymentHistory,
+
 
    
 

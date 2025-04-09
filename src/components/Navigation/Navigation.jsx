@@ -26,6 +26,8 @@ import UpdateImages from '../Dashboard/Dashhome/Updateimages/UpdateImages';
 import Flatdetails from '../Dashboard/Dashhome/FlatDetails/Flatdetails';
 import Bookingflat from '../Dashboard/Dashhome/BookingFlat/Bookingflat';
 import AdvancePayment from '../Dashboard/Dashhome/AdvancePayment/AdvancePayment';
+import Checkhistory from '../Checkhistory/Checkhistory';
+
 
 
 
@@ -67,6 +69,9 @@ const Navigation = () => {
 
                 <Route path="/dashboard/bookingflats" element={<Bookingflat />} />
                 <Route path="/dashboard/advancepayment" element={<AdvancePayment/>} />
+                <Route path="/dashboard/history" element={<Checkhistory/>} />
+
+             
 
 
             </Routes>

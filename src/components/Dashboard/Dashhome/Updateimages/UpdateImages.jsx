@@ -127,12 +127,6 @@ const UpdateImages = () => {
             return;
         }
     
-        // Validate name for nearby images
-        if (imageType === "TOWER-NEARBY" && !newNearbyName.trim()) {
-            addToast("Please enter a name for the nearby image.", { appearance: "warning", autoDismiss: true });
-            return;
-        }
-    
         const storedData = JSON.parse(localStorage.getItem("AdminDetails")) || {};
         let managementId = storedData?.data?.data?._id || null;
     
@@ -152,7 +146,12 @@ const UpdateImages = () => {
             formData.append("name", "Project Image"); // Default name for other image types
         }
     
-        formData.append("remarks", imageType);
+        // Set remarks for the backend
+        if (imageType === "WALKTHROUGH-VIDEO") {
+            formData.append("remarks", "TOWER-WLAKTHROUGH"); // Correct remarks for walkthrough video
+        } else {
+            formData.append("remarks", imageType);
+        }
     
         switch (imageType) {
             case "TOWER-GALARY":
@@ -170,7 +169,7 @@ const UpdateImages = () => {
             case "WALKTHROUGH-VIDEO":
                 formData.append("walkThroughVideo", newImage);
                 break;
-            case "TOWER-NEARBY": // Handle nearby images
+            case "TOWER-NEARBY":
                 formData.append("nearbyImage", newImage);
                 break;
             case "PRO-LOGO":

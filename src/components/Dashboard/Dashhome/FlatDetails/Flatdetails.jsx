@@ -54,6 +54,7 @@ const Flatdetails = () => {
     try {
       let response = await api.getAllFlatsDetailsForBooking(towerId);
       let allFlats = response.data.data;
+      console.log(response.data.data ,'allflatdetails')
       if(response.status === 401){
         console.log("Session Expired! Redirecting to Login.");
         localStorage.removeItem(utilis.string.localStorage.sessionId);
@@ -244,8 +245,11 @@ const handleSubmit = async (e) => {  // ✅ Add 'async' here
 let navigate=useNavigate()
   const handleBookFlat=()=>{
     const towerId = localStorage.getItem("selectedTowerId") || "";
+    const flatId = selectedFlat?.flatId || ""; // Retrieve the flatId from the selected flat
+    console.log("Selected flatId:", flatId);
   console.log("Retrieved towerId from localStorage:", towerId);
-    navigate('/dashboard/bookingflats', { state: { towerId } })
+ 
+    navigate('/dashboard/bookingflats', { state: { towerId,flatId} })
   }
 
   return (
@@ -292,6 +296,7 @@ let navigate=useNavigate()
       <div className="flat-card-body">
         {/* <p><strong>Price&nbsp;:&nbsp; </strong> {selectedFlat.priceStartRange?.toUpperCase()} - {selectedFlat.priceEndRange?.toUpperCase()}</p> */}
         <p><strong>Size&nbsp;:&nbsp;  </strong> {selectedFlat.sqFeet} SQPT</p>
+        
         <p><strong>Bedrooms&nbsp;:&nbsp;</strong> {selectedFlat.bedrooms?.toUpperCase()}</p>
         <p><strong>Furnishing&nbsp;:&nbsp;</strong> {selectedFlat.furnishingType?.toUpperCase()}</p>
         <p><strong>Facing&nbsp;:&nbsp;</strong> {selectedFlat.facing?.toUpperCase()}</p>

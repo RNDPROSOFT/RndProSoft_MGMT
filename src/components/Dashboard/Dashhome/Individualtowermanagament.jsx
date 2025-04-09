@@ -91,8 +91,18 @@ const Individualtowermanagement = () => {
       street: formData.street,
       pinCode: Number(formData.pinCode) || 0,
       reraNo: formData.reraNo,
-      gstNo: formData.gstNo,
-      otherStateRegNo: formData.otherStateRegNo,
+      // gstNo: formData.gstNo,
+      gstNo: Array.isArray(formData.gstNo)
+      ? formData.gstNo
+      : formData.gstNo?.trim()
+          ? formData.gstNo.split(",").map((item) => item.trim())
+          : [], // Ensure gstNo is not empty
+      // otherStateRegNo: formData.otherStateRegNo,
+      otherStateRegNo: Array.isArray(formData.otherStateRegNo)
+  ? formData.otherStateRegNo
+  : formData.otherStateRegNo?.trim()
+      ? formData.otherStateRegNo.split(",").map((item) => item.trim())
+      : [], // Ensure otherStateRegNo is not empty
       bedrooms: formData.bedrooms?.split(",").map((b) => b.trim()) || [],
       totalUnits: formData.totalUnits,
       constructionStatus: formData.constructionStatus,
@@ -122,7 +132,7 @@ const Individualtowermanagement = () => {
       console.log("API Response:", response);
       if (response.status === 200) {
         setTowerDetails(payload);
-        addToast("project details updated successfully", {
+        addToast(response.data?.message ||"project details updated successfully", {
           appearance: "success",
           autoDismiss: true,
         });

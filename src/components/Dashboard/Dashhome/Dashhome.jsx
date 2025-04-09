@@ -8,7 +8,7 @@ import Loading from '../../../utilis/Loading.js';
 import utilis from '../../../utilis';
 
 const Dashhome = () => {
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -229,7 +229,7 @@ const filterProjects = (filters, towers) => {
               <div className="our-projects-container">
       {/* Filters Section */}
       <div className="filters-container">
-      <h3 className="filters-title">Filter Towers</h3> {/* Added Title */}
+      <h3 className="filters-title">Filter projects</h3> {/* Added Title */}
 
         
     
@@ -319,8 +319,8 @@ const filterProjects = (filters, towers) => {
                 <p className="tower-details"><strong>Development Size:</strong> {tower.developmentSize} acres</p>
                 <p className="tower-details"><strong>RERA No:</strong> {tower.reraNo}</p>
                 <p className="tower-details">
-  <strong>Is Visible:</strong> {tower.isVisible ? "Yes" : "No"}
-</p>
+                <strong>Is Visible:</strong> {tower.isVisible ? "Yes" : "No"}
+              </p>
 
                 
                 <button className="view-details-btn"onClick={() => handleViewDetails(tower)} style={{marginRight:"15px"}}>

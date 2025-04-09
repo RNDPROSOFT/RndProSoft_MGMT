@@ -233,6 +233,11 @@
     setShowCreateEmiForm(false); // Ensure form is hidden initially
   };
 
+  const handlehistoryClick = () => {
+    console.log('Navigating to history');
+    navigate("/dashboard/bookingflats");
+    // alert('Navigating to history');
+  };
   
   // Handle form input changes
   const handleCreateEmiChange = (e) => {
@@ -500,6 +505,8 @@ const handleUpdateEmi = async (id) => {
     <div className="dropdown-menu">
   <Link onClick={handleGstClick} className="dropdown-itemheader">GST</Link>
   <Link onClick={handleEmiClick} className="dropdown-itemheader">EMI</Link>
+  <Link to='/dashboard/history' className="dropdown-itemheader">Report</Link>
+
 </div>
 
 
@@ -536,11 +543,13 @@ const handleUpdateEmi = async (id) => {
                   Dashboard
                 </Link>
                 <Link to="/dashboard/addtowers" onClick={toggleMenu}>
-                  Add Towers
+                  Add Project
                 </Link>
                 <Link to="/dashboard/addusers" onClick={toggleMenu}>
                   Add Management
                 </Link>
+                <Link to="/dashboard/advancepayment">Advance Payment</Link>
+                <Link to='/dashboard/history' className="dropdown-itemheader">Report</Link>
                 {/* Add Customer with Dropdown */}
                 <div className={`customer-dropdown-container-mobile ${showCustomerDropdownMobile ? 'show' : ''}`}>
     <Link to="#" onClick={() => setShowCustomerDropdownMobile(!showCustomerDropdownMobile)}>

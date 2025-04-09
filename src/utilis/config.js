@@ -1,9 +1,9 @@
 //production server
-// const baseUrl='https://rndserver.rndprosoft.com'
+const baseUrl='https://rndserver.rndprosoft.com'
 
 
 // Testing server
-const baseUrl='http://65.1.111.97:3000'
+// const baseUrl='http://65.1.111.97:3000'
 
 
 const apiName={
@@ -93,6 +93,10 @@ const apiName={
     getAllFlatsDetailsForBooking:"api/management/all/flats/for/booking?towerId=",
 
 
+      // get particular flat details for booking
+      getParticularFlatsDetailsForBooking:"api/management/particular/flat/details?flatId=",
+
+
     // add images
     AddIMages:"api/management/update/images",
 
@@ -111,10 +115,12 @@ userdetailsforbooking: "api/management/get/user/details?phoneNumber=",  // Make 
 // advancePayment
 advancePayment:"api/management/make/payment",
 
+        // flathistory
+        getFlatHistory:"api/management/get/booked/flats/history",
 
 
-
-
+        // paymentHistory
+        getPaymentHistory:"api/management/get/payment/history",
 
 
 

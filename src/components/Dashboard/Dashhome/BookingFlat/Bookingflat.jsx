@@ -24,9 +24,15 @@ const BookingFlat = () => {
    const [loading, setLoading] = useState(false);
   const { addToast } = useToasts();
   const location = useLocation();
-  const towerId = location.state?.towerId || localStorage.getItem("selectedTowerId");
+  // const towerId = location.state?.towerId || localStorage.getItem("selectedTowerId");
   const storedData = JSON.parse(localStorage.getItem("AdminDetails")) || {};
   const managementId = storedData?.data?.data?._id || null;
+  const { towerId, flatId } = location.state || {};
+
+  useEffect(() => {
+    console.log("Tower ID:", towerId);
+    console.log("Flat ID:", flatId);
+  }, [towerId, flatId]);
 
   const initialData = {
     flatId: "",
@@ -194,7 +200,7 @@ const BookingFlat = () => {
   // Fetch flat details from the API
   const GetFlatdetails = async () => {
     try {
-      let response = await api.getAllFlatsDetailsForBooking(towerId);
+      let response = await api.getParticularFlatsDetailsForBooking(flatId);
       const fetchedFlat = response.data.data[0]; // Assuming the first flat in the list for pre-filling
       console.log(fetchedFlat, 'fetchedFlat');
       if(response.status === 401){
@@ -205,10 +211,12 @@ const BookingFlat = () => {
       }
       // Pre-fill form fields using Ant Design's form instance
       form.setFieldsValue({
-        towerName: fetchedFlat.name,
+        // towerName: fetchedFlat.name,
+        towerName: fetchedFlat.towerDetails?.name, // Use towerDetails.name instead of flat name
         unitType: fetchedFlat.unitType,
         flatNo: fetchedFlat.flatNo,
-        block: fetchedFlat.blockName,
+        // block: fetchedFlat.blockName,
+        block: fetchedFlat.blockDetails?.name, // Use blockDetails.name instead of block name
         floor: fetchedFlat.floor,
         facing: fetchedFlat.facing,
         sqFeet: fetchedFlat.sqFeet,
@@ -222,7 +230,7 @@ const BookingFlat = () => {
       // Update state for all fields
       setFormData((prevFormData) => ({
         ...prevFormData,
-        flatId: fetchedFlat.flatId,
+        flatId: fetchedFlat._id,
         blockId: fetchedFlat.blockId,
         towerId: fetchedFlat.towerId,
         projectId: fetchedFlat.projectId,
@@ -230,11 +238,13 @@ const BookingFlat = () => {
         sqFeet: fetchedFlat.sqFeet, // Ensure sqFeet is set in formData
         sqPrice: fetchedFlat.sqPrice, // Ensure sqPrice is set in formData
         specialFeaturePrice: fetchedFlat.specialFeaturePrice, // Ensure specialFeaturePrice is set
-        block: fetchedFlat.blockName,
+        // block: fetchedFlat.blockName,
+        block: fetchedFlat.blockDetails?.name, // Use blockDetails.name here as well
         floor: fetchedFlat.floor,
         facing: fetchedFlat.facing,
         flatNo: fetchedFlat.flatNo,
-        towerName: fetchedFlat.name,
+        // towerName: fetchedFlat.name,
+        towerName: fetchedFlat.towerDetails?.name, // Use towerDetails.name here as well
         unitType: fetchedFlat.unitType,
         userId: prevFormData.userId, // Keep existing userId if needed
         createdBy: prevFormData.createdBy,

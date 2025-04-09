@@ -154,7 +154,7 @@ const Loginpage = () => {
       
       if (!response || !response.data) {
         console.log("Invalid response structure", response);
-        addToast("Server Error. Please try again.", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -184,7 +184,7 @@ const Loginpage = () => {
         navigate(`/login/dashboard`);
       } else {
         console.log("Enter into else block");
-        addToast("Something went wrong", {
+        addToast(response.data?.message || "Something went wrong!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -240,7 +240,7 @@ const updatePassword=async (e)=>{
       setEmail(response.data.data.emailId); 
     } else {
       // alert("Failed to update password. Please try again.");
-      addToast( "Failed to update password. Please try again.", {
+      addToast( response.data?.message || "Something went wrong!", {
         appearance: "error",
         autoDismiss: true,
       });
