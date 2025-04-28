@@ -408,7 +408,7 @@ const Addtowerstep6 = () => {
               className="form-select"
             >
               <option >SELECT Unit type</option>
-              <option value="FALT">FLAT</option>
+              <option value="FLAT">FLAT</option>
               <option value="OFFICE">OFFICE</option>
               <option value="SHOWROOM">SHOWROOM</option>
             </select>

@@ -124,7 +124,7 @@ const Updateflats = () => {
       projectId: projectId,
       towerId: towerId,
       companyId: companyId,
-      isAvaliable: "BOOKED",
+      isAvaliable: "AVALIABLE",
     };
   
     try {
