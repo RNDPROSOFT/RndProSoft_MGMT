@@ -63,7 +63,32 @@ const AdvancePayment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-  
+    console.log("Total Amount:", paymentData.totalAmount);
+  // Validate the total amount
+  // if (Number(paymentData.totalAmount) < 500000) {
+  //   setLoading(false); // Stop the loading state
+  //   addToast("Total Amount must be 500,000 or more to proceed.", {
+  //     appearance: "error",
+  //     autoDismiss: true,
+  //   });
+  //   return; // Stop form submission
+  // }
+  // Validate the total amount based on paymentCount
+  if (bookedFlats.length > 0) {
+    const selectedFlat = bookedFlats.find(flat => flat.flatNo === paymentData.flatNo);
+    if (selectedFlat) {
+      const paymentCount = selectedFlat.paymentCount || 0;
+
+      if (paymentCount === 0 && Number(paymentData.totalAmount) < 500000) {
+        setLoading(false); // Stop the loading state
+        addToast("Total Amount must be 500,000 or more to proceed for the first payment.", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        return; // Stop form submission
+      }
+    }
+  }
     try {
       // Create a payload excluding unnecessary fields like username and phoneNumber
       const { username, phoneNumber, aadharNumber, ...payload } = paymentData;

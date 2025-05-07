@@ -31,6 +31,7 @@ const Flatdetails = () => {
     pinCode: '',
     flatNo: "",
     blockNo: "",
+    bedrooms: "", 
     sqFeet: "",
     sqPrice: "",
     unitType: "",
@@ -106,6 +107,7 @@ const Flatdetails = () => {
         towerName:selectedFlat.name || "",
         flatNo: selectedFlat.flatNo || "",
         blockNo: selectedFlat.blockName || "",
+        bedrooms: selectedFlat.bedrooms || "", 
         sqFeet: selectedFlat.sqFeet || "",
         sqPrice: selectedFlat.sqPrice || "",
         unitType: selectedFlat.unitType || "", // ensure this is being set
@@ -214,6 +216,7 @@ const handleSubmit = async (e) => {  // ✅ Add 'async' here
     pinCode: '',
     flatNo: "",
     blockNo: "",
+    bedrooms: "", // Add this line
     sqFeet: "",
     sqPrice: "",
     unitType: "",
@@ -295,13 +298,14 @@ let navigate=useNavigate()
     <div className="flat-card">
       <div className="flat-card-body">
         {/* <p><strong>Price&nbsp;:&nbsp; </strong> {selectedFlat.priceStartRange?.toUpperCase()} - {selectedFlat.priceEndRange?.toUpperCase()}</p> */}
-        <p><strong>Size&nbsp;:&nbsp;  </strong> {selectedFlat.sqFeet} SQPT</p>
+        <p><strong>Size&nbsp;:&nbsp;  </strong> {selectedFlat.sqFeet} SQFT</p>
         
         <p><strong>Bedrooms&nbsp;:&nbsp;</strong> {selectedFlat.bedrooms?.toUpperCase()}</p>
         <p><strong>Furnishing&nbsp;:&nbsp;</strong> {selectedFlat.furnishingType?.toUpperCase()}</p>
         <p><strong>Facing&nbsp;:&nbsp;</strong> {selectedFlat.facing?.toUpperCase()}</p>
         <p><strong>Unit Type&nbsp;:&nbsp;</strong> {selectedFlat.unitType?.toUpperCase()}</p>
-        <p><strong>Construction Status&nbsp;:&nbsp;</strong> {selectedFlat.constructionStatus?.toUpperCase()}</p>
+        <p><strong>Premium Add-On&nbsp;:&nbsp;</strong> {selectedFlat.specialFeature?.toUpperCase()}</p>
+        {/* <p><strong>Construction Status&nbsp;:&nbsp;</strong> {selectedFlat.constructionStatus?.toUpperCase()}</p> */}
         <p><strong>Block&nbsp;:&nbsp;</strong> {selectedFlat.blockName?.toUpperCase()} |&nbsp; <strong>Floor&nbsp;:&nbsp;</strong> {selectedFlat.floor}</p>
         {/* <p><strong>Parking&nbsp;:&nbsp;</strong> {selectedFlat.parkingSlot?.toUpperCase()}</p> */}
         {/* <p><strong>Vasthu&nbsp;:&nbsp;</strong> {selectedFlat.vasthu?.toUpperCase()}</p> */}
@@ -331,20 +335,21 @@ let navigate=useNavigate()
     <div className="createestimation-form-grid">
       {[
         { label: "Name", name: "name", placeholder: "Enter Name" },
-        { label: "Tower Name", name: "towerName", placeholder: "Enter Tower Name" },
+        { label: "Tower Name", name: "towerName", placeholder: "Enter Tower Name", disabled: true  },
         { label: "Phone", name: "phone", placeholder: "Enter Phone" },
         { label: "Country Code", name: "countryCode", placeholder: "Enter Country Code" },
         { label: "Email ID", name: "emailId", placeholder: "Enter Email" },
         { label: "Address", name: "address", placeholder: "Enter Address" },
         { label: "Pin Code", name: "pinCode", placeholder: "Enter Pin Code" },
-        { label: "Flat No", name: "flatNo", placeholder: "Enter Flat No" },
-        { label: "Block No", name: "blockNo", placeholder: "Enter Block No" },
-        { label: "Square Feet", name: "sqFeet", placeholder: "Enter Square Feet" },
-        { label: "Unit Type", name: "unitType", placeholder: "Enter Unit Type" },
-        { label: "Square Feet Amount", name: "sqPrice", placeholder: "Enter Price per Sq Ft" },
-        { label: "Premium Add-On", name: "specialFeature", placeholder: "Enter Special Feature" },
-        { label: "Premium Add-On Price", name: "specialFeaturePrice", placeholder: "Enter Special Feature Price" },
-        { label: "Total Amount", name: "totalAmount", placeholder: "Enter Total Amount" },
+        { label: "Flat No", name: "flatNo", placeholder: "Enter Flat No", disabled: true  },
+        { label: "Block No", name: "blockNo", placeholder: "Enter Block No" , disabled: true },
+        { label: "bedrooms", name: "bedrooms", placeholder: "Enter bedrooms", disabled: true  },
+        { label: "Square Feet", name: "sqFeet", placeholder: "Enter Square Feet", disabled: true  },
+        { label: "Unit Type", name: "unitType", placeholder: "Enter Unit Type" , disabled: true },
+        { label: "Square Feet Amount", name: "sqPrice", placeholder: "Enter Price per Sq Ft", disabled: true  },
+        { label: "Premium Add-On", name: "specialFeature", placeholder: "Enter Special Feature", disabled: true  },
+        { label: "Premium Add-On Price", name: "specialFeaturePrice", placeholder: "Enter Special Feature Price", disabled: true  },
+        { label: "Total Amount", name: "totalAmount", placeholder: "Enter Total Amount", disabled: true  },
         { label: "Remarks", name: "remarks", placeholder: "Enter Remarks" },
       ].map((field) => (
         <div key={field.name} className="createestimation-form-field">
@@ -354,7 +359,9 @@ let navigate=useNavigate()
             value={formData[field.name]}
             onChange={handleInputChange}
             placeholder={field.placeholder}
-            className="createestimation-form-input"
+            // className="createestimation-form-input"
+            className={`createestimation-form-input ${field.disabled ? "disabled-input" : ""}`}
+            disabled={field.disabled || false} // Apply disabled if true
           />
         </div>
       ))}

@@ -173,6 +173,7 @@ const BookingFlat = () => {
       gst: parseFloat(formData.gst) || 0,
       totalAmount: parseFloat(formData.totalAmount) || 0,
       intrestRate: parseFloat(formData.intrestRate) || 0,
+      bedrooms: formData.bedrooms, // Add bedrooms here
     };
   
     try {
@@ -223,6 +224,7 @@ const BookingFlat = () => {
         sqPrice: fetchedFlat.sqPrice,
         specialFeature: fetchedFlat.specialFeature,
         specialFeaturePrice: fetchedFlat.specialFeaturePrice,
+        bedrooms: fetchedFlat.bedrooms, // Add bedrooms here
         // parkingSlot: fetchedFlat.parkingSlot,
         // Keep other fields empty or set default values if needed
       });
@@ -248,6 +250,7 @@ const BookingFlat = () => {
         unitType: fetchedFlat.unitType,
         userId: prevFormData.userId, // Keep existing userId if needed
         createdBy: prevFormData.createdBy,
+        bedrooms: fetchedFlat.bedrooms, // Add bedrooms here
         specialFeature: fetchedFlat.specialFeature, // Ensure specialFeature is set in formData
       }));
 
@@ -321,7 +324,6 @@ const BookingFlat = () => {
   };
 
  
-
 
   const [userdetails, setuserdetails] = useState([]); // Store API response
   const [phoneNumber, setPhoneNumber] = useState(""); // Store phone number entered
@@ -546,6 +548,15 @@ const handlePhoneNumberChange = async (e) => {
             </Col>
             <Col span={8}>
               <Form.Item
+                label="bedrooms"
+                name="bedrooms"
+                rules={[{ required: true, message: 'Please input the bedrooms!' }]}
+              >
+                <Input value={formData.bedrooms} name="bedrooms" onChange={handleChange}  disabled style={disabledStyle} />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
                 label="Facing"
                 name="facing"
                 rules={[{ required: true, message: 'Please input the facing direction!' }]}
@@ -555,23 +566,7 @@ const handlePhoneNumberChange = async (e) => {
             </Col>
             <Col span={8}>
               <Form.Item
-                label="Square Feet"
-                name="sqFeet"
-                rules={[{ required: true, message: 'Please input the square feet!' }]}
-              >
-                <Input
-                  value={formData.sqFeet}
-                  name="sqFeet"
-                  onChange={handleChange}
-                  type="number"
-                  disabled
-                  style={disabledStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item
-                label="Square Price"
+                label=" Per Square Price"
                 name="sqPrice"
                 rules={[{ required: true, message: 'Please input the square price!' }]}
               >
@@ -585,6 +580,23 @@ const handlePhoneNumberChange = async (e) => {
                 />
               </Form.Item>
             </Col>
+            <Col span={8}>
+              <Form.Item
+                label=" Total Square Feet"
+                name="sqFeet"
+                rules={[{ required: true, message: 'Please input the square feet!' }]}
+              >
+                <Input
+                  value={formData.sqFeet}
+                  name="sqFeet"
+                  onChange={handleChange}
+                  type="number"
+                  disabled
+                  style={disabledStyle}
+                />
+              </Form.Item>
+            </Col>
+            
             <Col span={8}>
               <Form.Item
                 label="Special Feature"
@@ -635,7 +647,20 @@ const handlePhoneNumberChange = async (e) => {
               <Form.Item
                 label="Discount"
                 name="discount"
-                rules={[{ required: true, message: 'Please input the discount!' }]}
+                rules={[
+                  { required: true, message: 'Please input the discount!' },
+                  {
+                    validator: (_, value) => {
+                      if (value === undefined || value === null || value === '') {
+                        return Promise.resolve();
+                      }
+                      if (value >= 0 && value <= 5) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('Discount must be between 0% and 5%!'));
+                    },
+                  },
+                ]}
               >
                 <Input value={formData.discount} name="discount" onChange={handleChange} type="number" />
               </Form.Item>
@@ -717,3 +742,4 @@ const handlePhoneNumberChange = async (e) => {
 };
 
 export default BookingFlat;
+      
