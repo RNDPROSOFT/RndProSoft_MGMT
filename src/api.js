@@ -766,6 +766,63 @@ async function getParticularFlatsDetailsForBooking(flatId) {
         return e.response;
     }
 }
+
+
+async function getControlsForAdmin(managementId) {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getControlsForAdmin, {
+            params: { mgmtId: managementId },
+            headers: { 
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+            },
+        });
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+async function getManagementList() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getManagementList,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+// async function getParticularManagementDetails() {
+//     try{
+//             return await axiosinstance.post(utilis.config.apiName.getParticularManagementDetails,{
+//                 headers: { 
+//                     // 'Content-Type': 'multipart/form-data',
+//                     authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+//                   },
+//             })
+//     }catch(e){
+//                 return e.response;
+//     }
+// }
+
+
+
+async function postParticularManagementDetails(body) {
+    try{
+            return await axiosinstance.patch(utilis.config.apiName.postParticularManagementDetails,body,{
+                headers: { 
+                    // 'Content-Type': 'multipart/form-data',
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                  },
+            })
+    }catch(e){
+                return e.response;
+    }
+}
 const api={
     getAdminLogin,
     forgotPassword,
@@ -819,6 +876,9 @@ const api={
     advancePayment,
     getFlatHistory,
     getPaymentHistory,
+    getControlsForAdmin,
+    getManagementList,
+    postParticularManagementDetails
 
 
    

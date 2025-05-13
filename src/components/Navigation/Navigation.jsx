@@ -27,6 +27,8 @@ import Flatdetails from '../Dashboard/Dashhome/FlatDetails/Flatdetails';
 import Bookingflat from '../Dashboard/Dashhome/BookingFlat/Bookingflat';
 import AdvancePayment from '../Dashboard/Dashhome/AdvancePayment/AdvancePayment';
 import Checkhistory from '../Checkhistory/Checkhistory';
+import ManagementControls from '../ManagmentControls/ManagementControls';
+import ShowControls from '../ManagmentControls/ShowControls';
 
 
 
@@ -70,6 +72,9 @@ const Navigation = () => {
                 <Route path="/dashboard/bookingflats" element={<Bookingflat />} />
                 <Route path="/dashboard/advancepayment" element={<AdvancePayment/>} />
                 <Route path="/dashboard/history" element={<Checkhistory/>} />
+                <Route path="/dashboard/managementcontrols" element={<ManagementControls/>} />
+                <Route path="/dashboard/showcontrols/:id/:firstName" element={<ShowControls />} />
+
 
              
 

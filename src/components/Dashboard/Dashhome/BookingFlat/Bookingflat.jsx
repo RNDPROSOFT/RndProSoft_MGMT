@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Form, Input, Button, Row, Col, Typography, message, Select, Radio } from "antd";
 import { useLocation,useNavigate } from "react-router-dom";
 import Dashheader from "../../Dashheader/Dashheader";
@@ -432,6 +432,36 @@ const handlePhoneNumberChange = async (e) => {
     });
   }
 };
+
+
+const [controlsforadmin, setcontrolsforadmin] = useState([]);
+const Getcontrolsforadmin = async (event) => {
+  if (event) event.preventDefault(); // Only call preventDefault when event is available (in case of click)
+
+  try {
+    let response = await api.getControlsForAdmin(managementId);
+    console.log(managementId, 'managementId');
+    setcontrolsforadmin(response.data.data);
+    console.log(response.data.data, 'setcontrolsforadmin');
+
+    const controlsData = response.data.data[0];
+    if (controlsData?.allControls === true || controlsData?.discountControls === true) {
+      
+     
+    } 
+  } catch (error) {
+    console.error("Error setcontrolsforadmin:", error);
+    addToast('An error occurred while checking permissions', {
+      appearance: 'error',
+      autoDismiss: true,
+    });
+  }
+};
+
+useEffect(() => {
+  Getcontrolsforadmin();
+}, []); // Empty dependency array ensures it runs only once on component mount
+ 
   return (
     <>
       <Dashheader />
@@ -644,27 +674,33 @@ const handlePhoneNumberChange = async (e) => {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item
-                label="Discount"
-                name="discount"
-                rules={[
-                  { required: true, message: 'Please input the discount!' },
-                  {
-                    validator: (_, value) => {
-                      if (value === undefined || value === null || value === '') {
-                        return Promise.resolve();
-                      }
-                      if (value >= 0 && value <= 5) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('Discount must be between 0% and 5%!'));
-                    },
-                  },
-                ]}
-              >
-                <Input value={formData.discount} name="discount" onChange={handleChange} type="number" />
-              </Form.Item>
-            </Col>
+  <Form.Item
+    label="Discount"
+    name="discount"
+    rules={[
+      { required: true, message: 'Please input the discount!' },
+      {
+        validator: (_, value) => {
+          if (value === undefined || value === null || value === '') {
+            return Promise.resolve();
+          }
+          if (controlsforadmin[0]?.allControls || controlsforadmin[0]?.discountControls) {
+            // If allControls or discountControls is true, allow any value
+            return Promise.resolve();
+          } else {
+            // If neither is true, restrict to 5 or below
+            if (value >= 0 && value <= 5) {
+              return Promise.resolve();
+            }
+            return Promise.reject(new Error('Discount must be between 0% and 5%!'));
+          }
+        },
+      },
+    ]}
+  >
+    <Input value={formData.discount} name="discount" onChange={handleChange} type="number" />
+  </Form.Item>
+</Col>
             <Col span={8}>
               <Form.Item
                 label="Parking Option"

@@ -442,6 +442,132 @@ const handleUpdateEmi = async (id) => {
 };
 
 
+
+const [controlsforadmin, setcontrolsforadmin] = useState([]);
+
+const Getcontrolsforadmin = async (event, action) => {
+  if (event) event.preventDefault();
+
+  try {
+    let response = await api.getControlsForAdmin(managementId);
+    const controlsData = response.data.data[0];
+    setcontrolsforadmin(response.data.data);
+
+    const {
+      allControls, addMgmt, addProject, addPartner, addDeveloper,
+      gstControls, emiControls, paymentControls,customerControls,reportControls
+    } = controlsData;
+
+    const hasPermission = (permission) => allControls === true || permission === true;
+
+    if (action === 'addMgmt') {
+      if (hasPermission(addMgmt)) {
+        navigate('/dashboard/addusers');
+      } else {
+        addToast('Permission denied for Add Management. Please contact management.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'addProject') {
+      if (hasPermission(addProject)) {
+        navigate('/dashboard/addtowers');
+      } else {
+        addToast('Permission denied for Add Project.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'addPartner') {
+      if (hasPermission(addPartner)) {
+        navigate('/dashboard/Addproject');
+      } else {
+        addToast('Permission denied for Add Partner.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'addDeveloper') {
+      if (hasPermission(addDeveloper)) {
+        setShowAddDeveloperPopup(true);
+      } else {
+        addToast('Permission denied for Add Developer.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'gstControls') {
+      if (hasPermission(gstControls)) {
+        handleGstClick();
+      } else {
+        addToast('Permission denied for GST Controls.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'emiControls') {
+      if (hasPermission(emiControls)) {
+        handleEmiClick();
+      } else {
+        addToast('Permission denied for EMI Controls.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    } else if (action === 'paymentControls') {
+      if (hasPermission(paymentControls)) {
+        navigate('/dashboard/advancepayment');
+      } else {
+        addToast('Permission denied for Advance Payment.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    }else if (action === 'customerControls') {
+      if (hasPermission(customerControls)) {
+        navigate('/dashboard/addcustomer');
+      } else {
+        addToast('Permission denied for Add customer.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    }else if (action === 'allControls') {
+      if (hasPermission(allControls)) {
+        navigate('/dashboard/managementcontrols');
+      } else {
+        addToast('Permission denied for controls.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    }
+    else if (action === 'reportControls') {
+      if (hasPermission(reportControls)) {
+        navigate('/dashboard/history');
+      } else {
+        addToast('Permission denied for report.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+      
+    }
+
+  } catch (error) {
+    console.error("Error setcontrolsforadmin:", error);
+    addToast('An error occurred while checking permissions', {
+      appearance: 'error',
+      autoDismiss: true,
+    });
+  }
+};
+
+
+
+
+
+
  
     return (
       <>
@@ -453,9 +579,9 @@ const handleUpdateEmi = async (id) => {
           {/* Navigation for large screens */}
           <div className="navigationscreens large-screen">
             <Link to="/login/dashboard">Dashboard</Link>
-            <Link to="/dashboard/addtowers">Add Project</Link>
-            <Link to="/dashboard/addusers">Add Management</Link>
-            <Link to="/dashboard/advancepayment">Advance Payment</Link>
+            <Link to="/dashboard/addtowers" onClick={(e) => Getcontrolsforadmin(e,'addProject')}>Add Project</Link>
+            <Link to="/dashboard/addusers" onClick={(e) => Getcontrolsforadmin(e,'addMgmt')}> Add Management</Link>
+            <Link to="/dashboard/advancepayment" onClick={(e) => Getcontrolsforadmin(e ,'paymentControls')} >Payment</Link>
 
             {/* <Link to="/dashboard/addcustomer">Add Customer</Link> */}
             <div 
@@ -465,7 +591,7 @@ const handleUpdateEmi = async (id) => {
   >
     <Link to="#" className="customer-main-link">Customer</Link>
     <div className={`customer-dropdown ${showCustomerDropdown ? "show" : ""}`}>
-      <Link to="/dashboard/addcustomer">Add Customer</Link>
+      <Link to="/dashboard/addcustomer" onClick={(e) => Getcontrolsforadmin(e ,'customerControls')}>Add Customer</Link>
       <Link to="/dashboard/getcustomerlist">Customer Details</Link>
       {/* <Link to="/dashboard/editcustomer">Edit Customer</Link> */}
     </div>
@@ -477,16 +603,21 @@ const handleUpdateEmi = async (id) => {
     onMouseEnter={() => setShowPartnerDropdown(true)} 
     onMouseLeave={() => setShowPartnerDropdown(false)}
   >
-    <Link to="#" className="customer-main-link">Partner</Link>
+    <Link to="#" className="customer-main-link"    >Partner</Link>
     <div className={`customer-dropdown ${showPartnerDropdown ? "show" : ""}`}>
-      <Link to="/dashboard/Addproject">Add Partner</Link>
+      <Link to="/dashboard/Addproject"  onClick={(e) => Getcontrolsforadmin(e ,'addPartner')}>Add Partner</Link>
       <Link to="/dashboard/partnerdetails">Partner</Link>
       {/* <Link to="/dashboard/editpartner">Edit Partner</Link> */}
     </div>
   </div>
             {/* <Link to="/dashboard/Addproject">Add Partner</Link> */}
             
-            <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
+            <Link 
+  to="#" 
+  onClick={(e) => Getcontrolsforadmin(e ,'addDeveloper')}
+>
+  Add Developers
+</Link>
            
 
           
@@ -503,9 +634,10 @@ const handleUpdateEmi = async (id) => {
       <div className="settings-dropdown">
     
     <div className="dropdown-menu">
-  <Link onClick={handleGstClick} className="dropdown-itemheader">GST</Link>
-  <Link onClick={handleEmiClick} className="dropdown-itemheader">EMI</Link>
-  <Link to='/dashboard/history' className="dropdown-itemheader">Report</Link>
+  <Link  onClick={(e) => {Getcontrolsforadmin(e,'gstControls'); ;}} className="dropdown-itemheader">GST</Link>
+  <Link  onClick={(e) => {Getcontrolsforadmin(e,'emiControls'); ; }} className="dropdown-itemheader">EMI</Link>
+  <Link to='/dashboard/history' className="dropdown-itemheader"  onClick={(e) => {Getcontrolsforadmin(e,'reportControls'); ; }}  >Report</Link>
+  <Link to='/dashboard/managementcontrols' className="dropdown-itemheader" onClick={(e) => {Getcontrolsforadmin(e,'allControls'); ; }}  >Controls</Link>
 
 </div>
 
@@ -542,21 +674,21 @@ const handleUpdateEmi = async (id) => {
                 <Link to="/login/dashboard" onClick={toggleMenu}>
                   Dashboard
                 </Link>
-                <Link to="/dashboard/addtowers" onClick={toggleMenu}>
+                <Link to="/dashboard/addtowers" onClick={(e) => { Getcontrolsforadmin(e ,'addProject'); toggleMenu(); }} >
                   Add Project
                 </Link>
-                <Link to="/dashboard/addusers" onClick={toggleMenu}>
+                <Link to="/dashboard/addusers" onClick={(e) => { Getcontrolsforadmin(e ,'addMgmt'); toggleMenu(); }}>
                   Add Management
                 </Link>
-                <Link to="/dashboard/advancepayment">Advance Payment</Link>
-                <Link to='/dashboard/history' className="dropdown-itemheader">Report</Link>
+                <Link to="/dashboard/advancepayment">Payment</Link>
+                <Link to='/dashboard/history' className="dropdown-itemheader" onClick={(e) => { Getcontrolsforadmin(e ,'reportControls'); toggleMenu(); }}>Report</Link>
                 {/* Add Customer with Dropdown */}
                 <div className={`customer-dropdown-container-mobile ${showCustomerDropdownMobile ? 'show' : ''}`}>
     <Link to="#" onClick={() => setShowCustomerDropdownMobile(!showCustomerDropdownMobile)}>
      Customer       ▼
     </Link>
     <div className="customer-dropdown-mobile">
-      <Link to="/dashboard/addcustomer" onClick={toggleMenu}>Add Customer</Link>
+      <Link to="/dashboard/addcustomer" onClick={(e) => { Getcontrolsforadmin(e ,'addcustomerControls'); toggleMenu(); }} >Add Customer</Link>
       <Link to="/dashboard/getcustomerlist">Customer Details</Link>
 
       {/* <Link to="/dashboard/editcustomer" onClick={toggleMenu}>Edit Customer</Link> */}
@@ -573,15 +705,21 @@ const handleUpdateEmi = async (id) => {
   Partner      ▼
     </Link>
     <div className="customer-dropdown-mobile">
-      <Link to="/dashboard/Addproject" onClick={toggleMenu}>Add Partner</Link>
+      <Link to="/dashboard/Addproject"  onClick={(e) => { Getcontrolsforadmin(e,'addPartner'); toggleMenu(); }}>Add Partner</Link>
       <Link to="/dashboard/partnerdetails">Partner</Link>
       {/* <Link to="/dashboard/editpartner" onClick={toggleMenu}>Edit Partner</Link> */}
     </div>
   </div>
              
-  <Link onClick={handleEmiClick} className="dropdown-itemheader">EMI</Link>
-                <Link to="#"  onClick={() => setShowAddDeveloperPopup(true)}>Add Developers</Link>
-                <Link onClick={handleGstClick}>GST</Link>
+  <Link onClick={(e) => Getcontrolsforadmin(e,'emiControls')} className="dropdown-itemheader">EMI</Link>
+  <Link to="/dashboard/managementcontrols"  onClick={(e) => { Getcontrolsforadmin(e,'allControls'); toggleMenu(); }}>Controls</Link>
+  <Link 
+  to="#" 
+  onClick={(e) => Getcontrolsforadmin(e ,'addDeveloper')}
+>
+  Add Developers
+</Link>
+                <Link  onClick={(e) => Getcontrolsforadmin(e,'gstControls')}>GST</Link>
                 {/* Use Link for logout with onClick handler */}
                 <Link to="#" onClick={handleLogoutClick} className="logout-btn">
                   Logout

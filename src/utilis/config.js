@@ -123,6 +123,18 @@ advancePayment:"api/management/make/payment",
         getPaymentHistory:"api/management/get/payment/history",
 
 
+        // superadmin login
+        // getControlsForAdmin:"api/management/mgmt/controls?mgmtId=681b56d54ae8910decaad729",
+           getControlsForAdmin: "api/management/mgmt/controls",
+
+
+        //get management list
+          getManagementList:"api/management/mgmt/list",
+
+        // Edit management details
+        postParticularManagementDetails:"api/management/modify/mgmt/details",
+
+
 
 
     // for user

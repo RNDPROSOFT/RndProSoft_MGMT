@@ -21,6 +21,7 @@ const AdvancePayment = () => {
     flatNo: "",
     block: "",
     floor: "",
+    bedrooms: "",
     withoutGst: "",
     gst: "",
     gstAmount: "",
@@ -121,6 +122,7 @@ const AdvancePayment = () => {
           flatNo: "",
           block: "",
           floor: "",
+          bedrooms: "",
           withoutGst: "",
           gst: "",
           gstAmount: "",
@@ -205,6 +207,7 @@ const AdvancePayment = () => {
               flatNo: firstFlat.flatNo || "",
               block: firstFlat.block || "",
               floor: firstFlat.floor || "",
+              bedrooms: firstFlat.bedrooms || "",
               gst: firstFlat.gst || "",
               paymentFor: firstFlat.flatNo || "", // Set the first flatNo as default
               flatId: firstFlat.flatId || "",
@@ -274,6 +277,7 @@ const handleFlatSelection = (flatNo) => {
       flatNo: selectedFlat.flatNo || "",
       block: selectedFlat.block || "",
       floor: selectedFlat.floor || "",
+      bedrooms: selectedFlat.bedrooms || "",
       gst: selectedFlat.gst || "",
       paymentFor: selectedFlat.flatNo || "",
       flatId: selectedFlat.flatId || "",
@@ -436,6 +440,8 @@ const handleFlatSelection = (flatNo) => {
                 />
               </Form.Item>
             </Col>
+           
+            
             <Col span={8}>
     <Form.Item label="Amount (Without GST)">
       <Input
@@ -451,6 +457,18 @@ const handleFlatSelection = (flatNo) => {
 
           <Row gutter={16}>
             {/* Row 3: GST Percentage, GST Amount, Total Amount */}
+
+            <Col span={8}>
+              <Form.Item label="bedrooms">
+                <Input 
+                 
+                  name="bedrooms" 
+                  value={paymentData.bedrooms} 
+                  onChange={handleChange} 
+                  placeholder="Enter bedrooms" 
+                />
+              </Form.Item>
+            </Col>
             <Col span={8}>
             <Form.Item label="GST Percentage">
   <Input
@@ -473,7 +491,11 @@ const handleFlatSelection = (flatNo) => {
       />
     </Form.Item>
   </Col>
-  <Col span={8}>
+  
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={8}>
     <Form.Item label="Total Amount">
       <Input
         type="number"
@@ -484,11 +506,7 @@ const handleFlatSelection = (flatNo) => {
       />
     </Form.Item>
   </Col>
-          </Row>
 
-          <Row gutter={16}>
-            {/* Row 4: Payment For, Payment Mode, Reference No */}
-          
             <Col span={8}>
               <Form.Item label="Payment Mode">
                 <Input 
