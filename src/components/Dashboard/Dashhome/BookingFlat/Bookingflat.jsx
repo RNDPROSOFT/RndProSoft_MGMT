@@ -54,6 +54,7 @@ const BookingFlat = () => {
     specialFeaturePrice: '',
     installmentType: "",
     intrestRate:'',
+    installmentMonths: "",
     discount: '',
     parkingSlot: "", // Default to empty string for "Yes"
     parkingCharges: '',
@@ -75,7 +76,7 @@ const BookingFlat = () => {
       intrestRate = 0,
       gst = 0,
     } = updatedFormData;
-  
+
     const sqFeetNum = parseFloat(sqFeet) || 0;
     const sqPriceNum = parseFloat(sqPrice) || 0;
     const specialFeaturePriceNum = parseFloat(specialFeaturePrice) || 0;
@@ -83,26 +84,26 @@ const BookingFlat = () => {
     const discountNum = parseFloat(discount) || 0;
     const intrestRateNum = parseFloat(intrestRate) || 0;
     const gstNum = parseFloat(gst) || 0;
-  
+
     const amount = sqFeetNum * sqPriceNum;
     const total = amount + specialFeaturePriceNum + parkingChargesNum;
     const discountAmount = (total * discountNum) / 100;
     const afterDiscountAmount = total - discountAmount;
     const withInterest = afterDiscountAmount + (afterDiscountAmount * (intrestRateNum / 100));
     const gstAmount = (withInterest * gstNum) / 100;
-    const totalAmount = withInterest + gstAmount;
-  
-    // Update formData directly
+    // Round up the total amount for display and backend
+    const totalAmount = Math.round(withInterest + gstAmount);
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       totalAmount,
     }));
-  
+
     form.setFieldsValue({
       totalAmount,
     });
-  
-    return totalAmount; // Return the calculated totalAmount
+
+    return totalAmount;
   };
 
   useEffect(() => {
@@ -135,11 +136,13 @@ const BookingFlat = () => {
         ...prevFormData, // Preserve existing formData
         installmentType: selectedPlan.name, // Update the selected installment type
         intrestRate: selectedPlan.intrestRate !== undefined ? selectedPlan.intrestRate : "", // Handle 0 as a valid value
+         installmentMonths: selectedPlan.months, // for backend
       }));
       form.setFieldsValue({
         ...form.getFieldsValue(), // Preserve existing form values
         installmentType: selectedPlan.name,
         intrestRate: selectedPlan.intrestRate !== undefined ? selectedPlan.intrestRate : "", // Update the form field for interest rate
+         months: selectedPlan.months, // <-- set months here
       });
     } else {
       console.error("Selected plan not found or missing intrestRate field.");
@@ -171,7 +174,9 @@ const BookingFlat = () => {
       sqPrice: parseFloat(formData.sqPrice) || 0,
       specialFeaturePrice: parseFloat(formData.specialFeaturePrice) || 0,
       gst: parseFloat(formData.gst) || 0,
-      totalAmount: parseFloat(formData.totalAmount) || 0,
+      // Always round up totalAmount before sending to backend
+      totalAmount: Math.round(parseFloat(formData.totalAmount) || 0),
+      installmentMonths:parseFloat(formData.installmentMonths) || 0,
       intrestRate: parseFloat(formData.intrestRate) || 0,
       bedrooms: formData.bedrooms, // Add bedrooms here
     };
@@ -664,6 +669,16 @@ useEffect(() => {
                 </Select>
               </Form.Item>
             </Col>
+             <Col span={8}>
+              <Form.Item
+                label="Interest months"
+                name="months"
+                rules={[{ required: true, message: 'Interest months is required!' }]}
+              >
+                <Input value={formData.months} disabled style={{ ...disabledStyle, color: "black" }} />
+              </Form.Item>
+            </Col>
+            {/* <Col span={8}></Col> */}
             <Col span={8}>
               <Form.Item
                 label="Interest Rate"

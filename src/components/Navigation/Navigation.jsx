@@ -29,6 +29,9 @@ import AdvancePayment from '../Dashboard/Dashhome/AdvancePayment/AdvancePayment'
 import Checkhistory from '../Checkhistory/Checkhistory';
 import ManagementControls from '../ManagmentControls/ManagementControls';
 import ShowControls from '../ManagmentControls/ShowControls';
+import Reports from '../Reports/Report';
+import ReportBookedFlat from '../Reports/ReportBookedFlat';
+import ReportPaymentHistory from '../Reports/ReportPaymentHistory';
 
 
 
@@ -75,7 +78,9 @@ const Navigation = () => {
                 <Route path="/dashboard/managementcontrols" element={<ManagementControls/>} />
                 <Route path="/dashboard/showcontrols/:id/:firstName" element={<ShowControls />} />
 
-
+                <Route path="/dashboard/reports" element={<Reports />} />
+<Route path="/reports/bookedflatreport" element={<ReportBookedFlat />} />       
+                <Route path="/reports/paymentHistory" element={<ReportPaymentHistory />} />
              
 
 
