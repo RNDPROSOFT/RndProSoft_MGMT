@@ -142,7 +142,9 @@ advancePayment:"api/management/make/payment",
      getEmiDetailsForPaymentPage: "api/management/emi/schedulers",
 
 
-
+getBookedFlatDetails: "api/management/booked/flats/history/filter",
+    getpaymentHistoryInvoices:"api/management/payment/history/filter",
+getTowerNames: "api/management/all/tower/completed/names",
 
 
 

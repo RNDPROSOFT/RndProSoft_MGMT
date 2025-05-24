@@ -840,7 +840,60 @@ async function getEmiDetailsForPaymentPage(flatId, userId) {
     }
 }
 
+async function getTowerNames() {
+    try {
+        return await axiosinstance.get(utilis.config.apiName.getTowerNames,{
+            headers: { 
+               
+                authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+              },
+        })
+    } catch (e) {
+        return e.response;
+    }
+}
+async function getpaymentHistoryInvoices({ startDate, endDate, towerName,paymentMode }) {
+  try {
+    const response = await axiosinstance.get(utilis.config.apiName.getpaymentHistoryInvoices, {
+      params: {
+        startDate,
+        endDate,
+        towerName,
+        paymentMode
+      },
+      headers: {
+        authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.error('Error fetching booked flat details:', e);
+    return null;
+  }
+}
+
+async function getBookedFlat({ startDate, endDate, towerName }) {
+  try {
+    const response = await axiosinstance.get(utilis.config.apiName.getBookedFlatDetails, {
+      params: {
+        startDate,
+        endDate,
+        towerName,
+      },
+      headers: {
+        authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.error('Error fetching booked flat details:', e);
+    return null;
+  }
+}
 const api={
+    getBookedFlat,
+    getTowerNames,
+    getpaymentHistoryInvoices,
     getAdminLogin,
     forgotPassword,
     updatePassword,

@@ -544,7 +544,7 @@ const Getcontrolsforadmin = async (event, action) => {
     }
     else if (action === 'reportControls') {
       if (hasPermission(reportControls)) {
-        navigate('/dashboard/history');
+        navigate('/dashboard/reports');
       } else {
         addToast('Permission denied for report.', {
           appearance: 'error',
@@ -636,7 +636,9 @@ const Getcontrolsforadmin = async (event, action) => {
     <div className="dropdown-menu">
   <Link  onClick={(e) => {Getcontrolsforadmin(e,'gstControls'); ;}} className="dropdown-itemheader">GST</Link>
   <Link  onClick={(e) => {Getcontrolsforadmin(e,'emiControls'); ; }} className="dropdown-itemheader">EMI</Link>
-  <Link to='/dashboard/history' className="dropdown-itemheader"  onClick={(e) => {Getcontrolsforadmin(e,'reportControls'); ; }}  >Report</Link>
+  {/* <Link to='/dashboard/history' className="dropdown-itemheader"  onClick={(e) => {Getcontrolsforadmin(e,'reportControls'); ; }}  >Report</Link> */}
+   <Link to='/dashboard/reports' className="dropdown-itemheader"  onClick={(e) => {Getcontrolsforadmin(e,'reportControls'); ; }}  >Report</Link>
+
   <Link to='/dashboard/managementcontrols' className="dropdown-itemheader" onClick={(e) => {Getcontrolsforadmin(e,'allControls'); ; }}  >Controls</Link>
 
 </div>
@@ -680,8 +682,22 @@ const Getcontrolsforadmin = async (event, action) => {
                 <Link to="/dashboard/addusers" onClick={(e) => { Getcontrolsforadmin(e ,'addMgmt'); toggleMenu(); }}>
                   Add Management
                 </Link>
-                <Link to="/dashboard/advancepayment">Payment</Link>
-                <Link to='/dashboard/history' className="dropdown-itemheader" onClick={(e) => { Getcontrolsforadmin(e ,'reportControls'); toggleMenu(); }}>Report</Link>
+                {/* <Link to="/dashboard/advancepayment">Payment</Link> */}
+                <Link to='/dashboard/reports' className="dropdown-itemheader" onClick={(e) => {
+  if (window.innerWidth < 768) {
+    addToast('Reports are available on larger screens only.', {
+      appearance: 'warning',
+      autoDismiss: true,
+    });
+    e.preventDefault();
+    return;
+  }
+  Getcontrolsforadmin(e, 'reportControls');
+  toggleMenu();
+}}>
+  Report
+</Link>
+                {/* <Link to='/dashboard/history' className="dropdown-itemheader" onClick={(e) => { Getcontrolsforadmin(e ,'reportControls'); toggleMenu(); }}>Report</Link> */}
                 {/* Add Customer with Dropdown */}
                 <div className={`customer-dropdown-container-mobile ${showCustomerDropdownMobile ? 'show' : ''}`}>
     <Link to="#" onClick={() => setShowCustomerDropdownMobile(!showCustomerDropdownMobile)}>
