@@ -174,49 +174,65 @@ const getTowerNames = async () => {
 
         <Row gutter={[16, 16]} justify="center">
           <Col xs={24} sm={8}>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <DatePicker
-                value={dates[0]}
-                onChange={date => setDates([date, dates[1]])}
-                style={{ width: '50%' }}
-                placeholder="Start date"
-              />
-              <DatePicker
-                value={dates[1]}
-                onChange={date => setDates([dates[0], date])}
-                style={{ width: '50%' }}
-                placeholder="End date"
+            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+              <div style={{ width: '55%' }}>
+                <span style={{ fontSize: 14, color: '#555', fontWeight: 500 }}>Start Date</span>
+                <DatePicker
+                  value={dates[0]}
+                  onChange={date => setDates([date, dates[1]])}
+                  style={{ width: '100%', height: 40, fontSize: 16 }}
+                  placeholder="Start date"
+                  size="large"
+                />
+              </div>
+              <div style={{ width: '55%' }}>
+                <span style={{ fontSize: 14, color: '#555', fontWeight: 500 }}>End Date</span>
+                <DatePicker
+                  value={dates[1]}
+                  onChange={date => setDates([dates[0], date])}
+                  style={{ width: '100%', height: 40, fontSize: 16 }}
+                  placeholder="End date"
+                  size="large"
+                />
+              </div>
+            </div>
+          </Col>
+          <Col xs={24} sm={6}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: 14, color: '#555', fontWeight: 500, marginBottom: 4 }}>Project Name</span>
+              <Select
+                style={{ width: '100%', height: 44, fontSize: 16 }}
+                value={selectedTowerName}
+                onChange={(value) => {
+                  setSelectedTowerName(value);
+                  fetchData();
+                }}
+                options={towerList}
+                placeholder="Select Tower"
+                size="large"
               />
             </div>
           </Col>
           <Col xs={24} sm={6}>
-            <Select
-              style={{ width: '100%' }}
-              value={selectedTowerName}
-              onChange={(value) => {
-                setSelectedTowerName(value);
-                fetchData();
-              }}
-              options={towerList}
-              placeholder="Select Tower"
-            />
-          </Col>
-          <Col xs={24} sm={6}>
-            <Select
-              style={{ width: '80%' }}
-              value={paymentMode}
-              onChange={(value) => {
-                setPaymentMode(value);
-                fetchData();
-              }}
-              options={[
-                { label: 'ALL', value: 'ALL' },
-                { label: 'CHECK', value: 'CHECK' },
-                { label: 'BANK_TRANSFER', value: 'BANK_TRANSFER' },
-                { label: 'CASH', value: 'CASH' },
-              ]}
-              placeholder="Select Payment Mode"
-            />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: 14, color: '#555', fontWeight: 500, marginBottom: 4 }}>Payment Mode</span>
+              <Select
+                style={{ width: '100%', height: 44, fontSize: 16 }}
+                value={paymentMode}
+                onChange={(value) => {
+                  setPaymentMode(value);
+                  fetchData();
+                }}
+                options={[
+                  { label: 'ALL', value: 'ALL' },
+                  { label: 'CHECK', value: 'CHECK' },
+                  { label: 'BANK_TRANSFER', value: 'BANK_TRANSFER' },
+                  { label: 'CASH', value: 'CASH' },
+                ]}
+                placeholder="Select Payment Mode"
+                size="large"
+              />
+            </div>
           </Col>
           <Col xs={24} sm={4} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Button type="primary" onClick={handleDownload} style={{ width: '80%' }}>

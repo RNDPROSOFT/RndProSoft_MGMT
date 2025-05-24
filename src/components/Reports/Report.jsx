@@ -46,7 +46,7 @@ const Reports = () => {
       }}
     >
       <div style={{ padding: '1.5rem' }}>
-        <h5 style={{ fontWeight: '600', color: '#333', marginBottom: '1rem' }}>Booked Flat History</h5>
+        <h3 style={{ fontWeight: '600', color: '#333', marginBottom: '1rem' }}>Booked Flat History</h3>
         <p style={{ color: '#666' }}>All Booked Flat Reports & Invoices.</p>
       </div>
     </div>
