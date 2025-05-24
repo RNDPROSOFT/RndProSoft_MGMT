@@ -29,8 +29,9 @@ body {
 /* Logo */
 
 .dashheader .websitelogo img {
-    width: 150px;  /*increasing the image */
-    height: auto;
+  margin-left: 15%;
+    width: 88px;  /*increasing the image */
+    height:60px;
    
 }
 
