@@ -12,6 +12,7 @@ import { useToasts } from "react-toast-notifications";
 
 const Loginpage = () => {
     const { addToast } = useToasts();
+    const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -305,11 +306,37 @@ const updatePassword=async (e)=>{
               onChange={(e) => setUsername(e.target.value)}
             />
     
-            <input type="password"
-             placeholder="Password" 
-             className="login-input"
-             value={password}
-             onChange={(e) => setPassword(e.target.value)}/>
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="login-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ paddingRight: '10px' }}
+              />
+              <span
+                onClick={() => setShowPassword((prev) => !prev)}
+                style={{
+                  position: 'absolute',
+                  right: '0px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  fontSize: '14px',
+                  color: '#888',
+                  zIndex: 2,
+                  background: 'transparent',
+                  padding: '2px 6px',
+                  borderRadius: '3px',
+                }}
+                tabIndex={0}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </span>
+            </div>
             <button type="submit" onClick={loginApp} className="login-button">Login</button>
 
             <p className="forgot-password" onClick={handleForgotPassword}>

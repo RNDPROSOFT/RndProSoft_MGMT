@@ -823,6 +823,23 @@ async function postParticularManagementDetails(body) {
                 return e.response;
     }
 }
+
+
+async function getEmiDetailsForPaymentPage(flatId, userId) {
+    try {
+        return await axiosinstance.get(
+            `${utilis.config.apiName.getEmiDetailsForPaymentPage}?bookedFlatId=${flatId}&userId=${userId}`,
+            {
+                headers: {
+                    authToken: localStorage.getItem(utilis.string.localStorage.sessionId),
+                },
+            }
+        );
+    } catch (e) {
+        return e.response;
+    }
+}
+
 const api={
     getAdminLogin,
     forgotPassword,
@@ -878,7 +895,8 @@ const api={
     getPaymentHistory,
     getControlsForAdmin,
     getManagementList,
-    postParticularManagementDetails
+    postParticularManagementDetails,
+    getEmiDetailsForPaymentPage
 
 
    

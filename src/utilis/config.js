@@ -6,6 +6,9 @@ const baseUrl='https://rndserver.rndprosoft.com'
 // const baseUrl='http://65.1.111.97:3000'
 
 
+// localhost server
+// const baseUrl='http://localhost:3000'
+
 const apiName={
     // for management
     getAdminLogin:"api/management/login",
@@ -133,6 +136,12 @@ advancePayment:"api/management/make/payment",
 
         // Edit management details
         postParticularManagementDetails:"api/management/modify/mgmt/details",
+
+
+        // emidetailsforpaymentpage
+     getEmiDetailsForPaymentPage: "api/management/emi/schedulers",
+
+
 
 
 
